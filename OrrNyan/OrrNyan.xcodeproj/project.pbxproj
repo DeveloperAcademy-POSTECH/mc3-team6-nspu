@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B3FDC132A5E52770081CCBB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3FDC122A5E52770081CCBB /* MainView.swift */; };
+		1B3FDC152A5E53A70081CCBB /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3FDC142A5E53A70081CCBB /* HeaderView.swift */; };
+		1B3FDC172A5E540C0081CCBB /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3FDC162A5E540C0081CCBB /* UserModel.swift */; };
+		1B3FDC192A5E54660081CCBB /* Extension+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3FDC182A5E54660081CCBB /* Extension+Color.swift */; };
 		695B69252A5E442800129A17 /* OrrNyanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695B69242A5E442800129A17 /* OrrNyanApp.swift */; };
 		695B69272A5E442800129A17 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695B69262A5E442800129A17 /* ContentView.swift */; };
 		695B69292A5E442900129A17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 695B69282A5E442900129A17 /* Assets.xcassets */; };
@@ -44,6 +48,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B3FDC122A5E52770081CCBB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		1B3FDC142A5E53A70081CCBB /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		1B3FDC162A5E540C0081CCBB /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		1B3FDC182A5E54660081CCBB /* Extension+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Color.swift"; sourceTree = "<group>"; };
 		695B69212A5E442800129A17 /* OrrNyan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrrNyan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		695B69242A5E442800129A17 /* OrrNyanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrrNyanApp.swift; sourceTree = "<group>"; };
 		695B69262A5E442800129A17 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +83,96 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B3FDC052A5E50C00081CCBB /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1B3FDC072A5E50D20081CCBB /* Components */,
+				1B3FDC062A5E50C80081CCBB /* Screen */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		1B3FDC062A5E50C80081CCBB /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				1B3FDC112A5E52690081CCBB /* Main */,
+				695B69262A5E442800129A17 /* ContentView.swift */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		1B3FDC072A5E50D20081CCBB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1B3FDC142A5E53A70081CCBB /* HeaderView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		1B3FDC082A5E50DB0081CCBB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				1B3FDC182A5E54660081CCBB /* Extension+Color.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		1B3FDC092A5E50E00081CCBB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				695B69282A5E442900129A17 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1B3FDC0A2A5E50E60081CCBB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1B3FDC162A5E540C0081CCBB /* UserModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1B3FDC0C2A5E51370081CCBB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				695B693A2A5E442900129A17 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1B3FDC0D2A5E51420081CCBB /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1B3FDC0E2A5E51480081CCBB /* Screen */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		1B3FDC0E2A5E51480081CCBB /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				695B69382A5E442900129A17 /* ContentView.swift */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		1B3FDC102A5E51530081CCBB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				695B69482A5E465E00129A17 /* StairTest.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		1B3FDC112A5E52690081CCBB /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				1B3FDC122A5E52770081CCBB /* MainView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		695B69182A5E442800129A17 = {
 			isa = PBXGroup;
 			children = (
@@ -96,9 +194,11 @@
 		695B69232A5E442800129A17 /* OrrNyan */ = {
 			isa = PBXGroup;
 			children = (
+				1B3FDC052A5E50C00081CCBB /* UI */,
+				1B3FDC0A2A5E50E60081CCBB /* Models */,
+				1B3FDC092A5E50E00081CCBB /* Resources */,
+				1B3FDC082A5E50DB0081CCBB /* Utilities */,
 				695B69242A5E442800129A17 /* OrrNyanApp.swift */,
-				695B69262A5E442800129A17 /* ContentView.swift */,
-				695B69282A5E442900129A17 /* Assets.xcassets */,
 				695B692A2A5E442900129A17 /* Preview Content */,
 			);
 			path = OrrNyan;
@@ -115,10 +215,10 @@
 		695B69352A5E442900129A17 /* OrrNyan Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				1B3FDC0D2A5E51420081CCBB /* UI */,
+				1B3FDC0C2A5E51370081CCBB /* Resources */,
+				1B3FDC102A5E51530081CCBB /* Utilities */,
 				695B69362A5E442900129A17 /* OrrNyanApp.swift */,
-				695B69382A5E442900129A17 /* ContentView.swift */,
-				695B69482A5E465E00129A17 /* StairTest.swift */,
-				695B693A2A5E442900129A17 /* Assets.xcassets */,
 				695B693C2A5E442900129A17 /* Preview Content */,
 			);
 			path = "OrrNyan Watch App";
@@ -234,7 +334,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B3FDC152A5E53A70081CCBB /* HeaderView.swift in Sources */,
+				1B3FDC192A5E54660081CCBB /* Extension+Color.swift in Sources */,
 				695B69272A5E442800129A17 /* ContentView.swift in Sources */,
+				1B3FDC132A5E52770081CCBB /* MainView.swift in Sources */,
+				1B3FDC172A5E540C0081CCBB /* UserModel.swift in Sources */,
 				695B69252A5E442800129A17 /* OrrNyanApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
