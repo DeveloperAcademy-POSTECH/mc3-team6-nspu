@@ -16,6 +16,7 @@
 		695B69392A5E442900129A17 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695B69382A5E442900129A17 /* ContentView.swift */; };
 		695B693B2A5E442900129A17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 695B693A2A5E442900129A17 /* Assets.xcassets */; };
 		695B693E2A5E442900129A17 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 695B693D2A5E442900129A17 /* Preview Assets.xcassets */; };
+		695B69492A5E465E00129A17 /* StairTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695B69482A5E465E00129A17 /* StairTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		695B69382A5E442900129A17 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		695B693A2A5E442900129A17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		695B693D2A5E442900129A17 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		695B69482A5E465E00129A17 /* StairTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StairTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 			children = (
 				695B69362A5E442900129A17 /* OrrNyanApp.swift */,
 				695B69382A5E442900129A17 /* ContentView.swift */,
+				695B69482A5E465E00129A17 /* StairTest.swift */,
 				695B693A2A5E442900129A17 /* Assets.xcassets */,
 				695B693C2A5E442900129A17 /* Preview Content */,
 			);
@@ -242,6 +245,7 @@
 			files = (
 				695B69392A5E442900129A17 /* ContentView.swift in Sources */,
 				695B69372A5E442900129A17 /* OrrNyanApp.swift in Sources */,
+				695B69492A5E465E00129A17 /* StairTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +381,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = OrrNyan;
+				INFOPLIST_KEY_NSMotionUsageDescription = "계단 오른 충수 반영을 위함입니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.jay.OrrNyan;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -407,6 +412,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = OrrNyan;
+				INFOPLIST_KEY_NSMotionUsageDescription = "계단 오른 충수 반영을 위함입니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.jay.OrrNyan;
 				LD_RUNPATH_SEARCH_PATHS = (
