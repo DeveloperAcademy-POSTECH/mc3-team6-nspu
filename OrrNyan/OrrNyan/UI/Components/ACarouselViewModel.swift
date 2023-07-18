@@ -115,7 +115,6 @@ extension ACarouselViewModel {
         guard activeIndex < data.count else {
             return 0
         }
-        let activeItem = data[activeIndex as! Data.Index]
         let tempItem = item as! Item
         if activeIndex == tempItem.index {
             return 1
