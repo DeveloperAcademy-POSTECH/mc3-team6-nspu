@@ -105,6 +105,9 @@ extension ACarouselViewModel {
         viewSize.width - defaultPadding * 2
     }
 
+    // 스테이지의 스케일을 조정하는 함수입니다.
+    // StageView에서 인터랙션이 일어날 때마다 실행됩니다.
+    // activeIndex 양 옆의 스케일을 다르게 줍니다.
     /// Defines the scaling based on whether the item is currently active or not.
     /// - Parameter item: The incoming item
     /// - Returns: scaling
@@ -113,7 +116,15 @@ extension ACarouselViewModel {
             return 0
         }
         let activeItem = data[activeIndex as! Data.Index]
-        return activeItem[keyPath: _dataId] == item[keyPath: _dataId] ? 1 : sidesScaling
+        let tst = item as! Item
+        if activeIndex == tst.index {
+            return 1
+        } else if activeIndex < tst.index {
+            return 1.2
+        }
+        else {
+            return 0.8
+        }
     }
 }
 
@@ -234,12 +245,12 @@ extension ACarouselViewModel {
         // 이전으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width > dragThreshold {
             activeIndex -= 1
-            _sidesScaling = 1.2
+//            _sidesScaling = 1.2
         }
         // 다음 방향으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width < -dragThreshold {
             activeIndex += 1
-            _sidesScaling = 0.8
+//            _sidesScaling = 0.8
         }
         // activeIndex가 음수가 되는 것 방지, activeIndex가 최댓값을 넘어가는 것 방지
         self.activeIndex = max(0, min(activeIndex, data.count - 1))
