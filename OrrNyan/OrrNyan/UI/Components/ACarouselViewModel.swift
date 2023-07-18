@@ -19,11 +19,9 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     private let _spacing: CGFloat
     private let _headspace: CGFloat
     private let _isWrap: Bool
-//    private let _sidesScaling: CGFloat
     private var _sidesScaling: CGFloat
-    private let _autoScroll: ACarouselAutoScroll
 
-    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool, autoScroll: ACarouselAutoScroll) {
+    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool) {
         guard index.wrappedValue < data.count else {
             fatalError("The index should be less than the count of data ")
         }
@@ -34,7 +32,6 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
         _headspace = headspace
         _isWrap = isWrap
         _sidesScaling = sidesScaling
-        _autoScroll = autoScroll
 
         if data.count > 1 && isWrap {
             activeIndex = index.wrappedValue + 1
@@ -67,29 +64,11 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
 
     /// size of GeometryProxy
     var viewSize: CGSize = .zero
-
-    /// Counting of time
-    /// work when `isTimerActive` is true
-    /// Toggles the active subviewview and resets if the count is the same as
-    /// the duration of the auto scroll. Otherwise, increment one
-    private var timing: TimeInterval = 0
-
-    /// Define listen to the timer
-    /// Ignores listen while dragging, and listen again after the drag is over
-    /// Ignores listen when App will resign active, and listen again when it become active
-    private var isTimerActive = true
-    func setTimerActive(_ active: Bool) {
-        isTimerActive = active
-    }
-
-    func returnActiveIndex() -> Int {
-        return activeIndex
-    }
 }
 
 extension ACarouselViewModel where ID == Data.Element.ID, Data.Element: Identifiable {
-    convenience init(_ data: Data, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool, autoScroll: ACarouselAutoScroll) {
-        self.init(data, id: \.id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, autoScroll: autoScroll)
+    convenience init(_ data: Data, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool) {
+        self.init(data, id: \.id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap)
     }
 }
 
@@ -126,13 +105,6 @@ extension ACarouselViewModel {
         viewSize.width - defaultPadding * 2
     }
 
-    var timer: TimePublisher? {
-        guard autoScroll.isActive else {
-            return nil
-        }
-        return Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    }
-
     /// Defines the scaling based on whether the item is currently active or not.
     /// - Parameter item: The incoming item
     /// - Returns: scaling
@@ -150,12 +122,6 @@ extension ACarouselViewModel {
 extension ACarouselViewModel {
     private var isWrap: Bool {
         return _data.count > 1 ? _isWrap : false
-    }
-
-    private var autoScroll: ACarouselAutoScroll {
-        guard _data.count > 1 else { return .inactive }
-        guard case let .active(t) = _autoScroll else { return _autoScroll }
-        return t > 0 ? _autoScroll : .defaultActive
     }
 
     private var defaultPadding: CGFloat {
@@ -252,18 +218,11 @@ extension ACarouselViewModel {
         // 현재 드래그된 값을 dragOffset에 저장
         /// set drag offset
         dragOffset = offset
-
-        /// stop active timer
-        isTimerActive = false
     }
 
     private func dragEnded(_ value: DragGesture.Value) {
         /// reset drag offset
         dragOffset = .zero
-
-        /// reset timing and restart active timer
-        resetTiming()
-        isTimerActive = true
 
         /// Defines the drag threshold
         /// At the end of the drag, if the drag value exceeds the drag threshold,
@@ -284,47 +243,6 @@ extension ACarouselViewModel {
         }
         // activeIndex가 음수가 되는 것 방지, activeIndex가 최댓값을 넘어가는 것 방지
         self.activeIndex = max(0, min(activeIndex, data.count - 1))
-    }
-}
-
-// MARK: - Receive Timer
-
-extension ACarouselViewModel {
-    // autoScroll을 위한 타이머
-    /// timer change
-    func receiveTimer(_: Timer.TimerPublisher.Output) {
-        /// Ignores listen when `isTimerActive` is false.
-        guard isTimerActive else {
-            return
-        }
-        /// increments of one and compare to the scrolling duration
-        /// return when timing less than duration
-        activeTiming()
-        timing += 1
-        if timing < autoScroll.interval {
-            return
-        }
-
-        if activeIndex == data.count - 1 {
-            /// `isWrap` is false.
-            /// Revert to the first view after scrolling to the last view
-            activeIndex = 0
-        } else {
-            /// `isWrap` is true.
-            /// Incremental, calculation of offset by `offsetChanged(_: proxy:)`
-            activeIndex += 1
-        }
-        resetTiming()
-    }
-
-    /// reset counting of time
-    private func resetTiming() {
-        timing = 0
-    }
-
-    /// time increments of one
-    private func activeTiming() {
-        timing += 1
     }
 }
 

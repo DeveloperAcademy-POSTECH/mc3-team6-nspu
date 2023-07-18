@@ -14,8 +14,6 @@
 		1B3FDC172A5E540C0081CCBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3FDC162A5E540C0081CCBB /* User.swift */; };
 		1B3FDC192A5E54660081CCBB /* Extension+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3FDC182A5E54660081CCBB /* Extension+Color.swift */; };
 		1BAF6CCE2A66344F003238FA /* StageInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B34B2F92A6629E200012CFA /* StageInfo.json */; };
-		1BAF6CD62A6638B0003238FA /* View+ReceiveTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CD02A6638B0003238FA /* View+ReceiveTimer.swift */; };
-		1BAF6CD72A6638B0003238FA /* ACarouselAutoScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CD12A6638B0003238FA /* ACarouselAutoScroll.swift */; };
 		1BAF6CD82A6638B0003238FA /* ACarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CD22A6638B0003238FA /* ACarousel.swift */; };
 		1BAF6CD92A6638B0003238FA /* ACarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CD32A6638B0003238FA /* ACarouselViewModel.swift */; };
 		1BAF6CDA2A6638B0003238FA /* AppLifeCycleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CD42A6638B0003238FA /* AppLifeCycleModifier.swift */; };
@@ -83,8 +81,6 @@
 		1B3FDC142A5E53A70081CCBB /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		1B3FDC162A5E540C0081CCBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1B3FDC182A5E54660081CCBB /* Extension+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Color.swift"; sourceTree = "<group>"; };
-		1BAF6CD02A6638B0003238FA /* View+ReceiveTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+ReceiveTimer.swift"; sourceTree = "<group>"; };
-		1BAF6CD12A6638B0003238FA /* ACarouselAutoScroll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselAutoScroll.swift; sourceTree = "<group>"; };
 		1BAF6CD22A6638B0003238FA /* ACarousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarousel.swift; sourceTree = "<group>"; };
 		1BAF6CD32A6638B0003238FA /* ACarouselViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselViewModel.swift; sourceTree = "<group>"; };
 		1BAF6CD42A6638B0003238FA /* AppLifeCycleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLifeCycleModifier.swift; sourceTree = "<group>"; };
@@ -251,9 +247,7 @@
 			children = (
 				1BAF6CD32A6638B0003238FA /* ACarouselViewModel.swift */,
 				1BAF6CD42A6638B0003238FA /* AppLifeCycleModifier.swift */,
-				1BAF6CD02A6638B0003238FA /* View+ReceiveTimer.swift */,
 				1BAF6CD22A6638B0003238FA /* ACarousel.swift */,
-				1BAF6CD12A6638B0003238FA /* ACarouselAutoScroll.swift */,
 			);
 			name = ACarousel;
 			sourceTree = "<group>";
@@ -456,12 +450,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BAF6CD72A6638B0003238FA /* ACarouselAutoScroll.swift in Sources */,
 				1BAF6CDA2A6638B0003238FA /* AppLifeCycleModifier.swift in Sources */,
 				1BAF6CD92A6638B0003238FA /* ACarouselViewModel.swift in Sources */,
 				69AA2B302A658F350076DC58 /* StageInfo.swift in Sources */,
 				1B3FDC152A5E53A70081CCBB /* HeaderView.swift in Sources */,
-				1BAF6CD62A6638B0003238FA /* View+ReceiveTimer.swift in Sources */,
 				1B3FDC192A5E54660081CCBB /* Extension+Color.swift in Sources */,
 				695C44372A6638F1003A2D24 /* LoginView.swift in Sources */,
 				695C44412A663952003A2D24 /* SignInWithGoogle.swift in Sources */,
