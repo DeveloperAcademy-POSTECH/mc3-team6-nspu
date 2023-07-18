@@ -15,6 +15,12 @@ struct HeaderView: View {
                     .font(.system(size: 12))
                 Text("123층")
                     .font(.system(size: 32, weight: .bold))
+					.font(.custom("Pretendard-Light", size: 20))
+					.font(.pretendard(size: 20, .extraLight))
+				
+//				Text("12gkgk하하 안녕하세요 취권!123")
+//					.font(.pretendard(size: 20, .bold))
+//					.font(.pretendard(size:30, .regular))
             }
             Spacer()
             Image(systemName: "gearshape.circle.fill")
