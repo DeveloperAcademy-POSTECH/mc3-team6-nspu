@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct User {
+struct User: Codable {
     let id: String
     let name: String
     let email: String
     var nickName: String
-    var lastVisitDate: Date
-    let createdAt: Date
+    var lastVisitDate: Date?
+    var createdAt: Date?
 }

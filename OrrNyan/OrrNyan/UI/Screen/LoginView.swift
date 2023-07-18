@@ -25,11 +25,24 @@ struct LoginView: View {
             }
             
             Button {
-                
+                FirebaseManager.instance.createUser("말티")
             } label: {
-                Text("get Current User")
+                Text("유저 저장")
                     .padding()
             }
+            
+            Button {
+                FirebaseManager.instance.readUserData()
+            } label: {
+                Text("유저 데이터 가져오기")
+            }
+            
+            Button {
+                FirebaseManager.instance.writeUserFloor(userFloor: UserFloor(dailyFloors: 0, totalFloors: 0, date: Date()))
+            } label: {
+                Text("UserFloor 추가")
+            }
+            
             Button {
                 FirebaseManager.instance.logOut()
             } label: {
