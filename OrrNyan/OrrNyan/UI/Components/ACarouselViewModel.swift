@@ -116,10 +116,10 @@ extension ACarouselViewModel {
             return 0
         }
         let activeItem = data[activeIndex as! Data.Index]
-        let tst = item as! Item
-        if activeIndex == tst.index {
+        let tempItem = item as! Item
+        if activeIndex == tempItem.index {
             return 1
-        } else if activeIndex < tst.index {
+        } else if activeIndex < tempItem.index {
             return 1.2
         }
         else {
