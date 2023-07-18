@@ -1,0 +1,29 @@
+[
+    {
+        "stageName" : "Stage01" ,
+        "stageStructureImageTitle" : "StageSt01" ,
+        "stageBgImageTitle" : "StageBg01" ,
+        "stageBgElementArray" : ["StageEm01_01", "StageEm01_02", "StageEm01_03", "StageEm01_04"] ,
+        "stageLocation" : "Korea" ,
+        "stageFloors" : 3 ,
+        "stageHeight" : 11
+    },
+    {
+        "stageName" : "Stage02" ,
+        "stageStructureImageTitle" : "StageSt02" ,
+        "stageBgImageTitle" : "StageBg02" ,
+        "stageBgElementArray" : ["StageEm02_01", "StageEm02_02", "StageEm02_03"] ,
+        "stageLocation" : "Brazil" ,
+        "stageFloors" : 8 ,
+        "stageHeight" : 30
+    },
+    {
+        "stageName" : "Stage03" ,
+        "stageStructureImageTitle" : "StageSt03" ,
+        "stageBgImageTitle" : "StageBg03" ,
+        "stageBgElementArray" : ["StageEm03_01", "StageEm03_02", "StageEm03_03"] ,
+        "stageLocation" : "Italy" ,
+        "stageFloors" : 14 ,
+        "stageHeight" : 56
+    }
+]
