@@ -2,7 +2,7 @@
 //  OrrNyanApp.swift
 //  OrrNyan
 //
-//  Created by Jay on 2023/07/12.
+//  Created by Jay on 2023/07/12.   
 //
 
 import SwiftUI
@@ -11,7 +11,8 @@ import SwiftUI
 struct OrrNyanApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ContentView()
+            StageView()
         }
     }
 }

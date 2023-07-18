@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct StageInfo {
-    let id: UUID
+struct StageInfo: Codable, Hashable, Identifiable {
+    let id = UUID()
     let stageName: String
     let stageStructureImageTitle: String
     let stageBgImageTitle: String
@@ -16,4 +16,8 @@ struct StageInfo {
     let stageLocation: String
     let stageFloors: Int
     let stageHeight: Int
+}
+
+final class Stages {
+    var StageInfos: [StageInfo] = load("StageInfo.json")
 }
