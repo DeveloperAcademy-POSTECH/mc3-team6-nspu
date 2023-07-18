@@ -9,7 +9,18 @@ import SwiftUI
 
 struct HeaderView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            VStack(alignment: .leading) {
+                Text("총 오른 층계")
+                    .font(.system(size: 12))
+                Text("123층")
+                    .font(.system(size: 32, weight: .bold))
+            }
+            Spacer()
+            Image(systemName: "gearshape.circle.fill")
+                .font(.system(size: 32))
+        }
+        .padding(.horizontal, 30)
     }
 }
 
