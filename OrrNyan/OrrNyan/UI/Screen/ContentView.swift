@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("userId") var userId: String?
+    
     var body: some View {
         VStack {
             //test
@@ -15,6 +17,12 @@ struct ContentView: View {
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
             Text("Hello, world!")
+            LoginView()
+            if userId == nil {
+                Text("유저 없다")
+            } else {
+                Text("유저 있다")
+            }
         }
         .padding()
     }
