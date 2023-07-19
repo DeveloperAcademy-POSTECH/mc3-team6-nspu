@@ -13,29 +13,23 @@ import GoogleSignIn
 class SignInWithGoogle: ObservableObject {
     @Published var isLoginSuccessed = false
     
-    func signInWithGoogle() {
+    func signInWithGoogle() async throws {
         guard let clientID = FirebaseApp.app()?.options.clientID else {return}
         
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         
-        GIDSignIn.sharedInstance.signIn(withPresenting: ApplicationUtility.rootViewController) {user, error in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            guard
-                let user = user?.user,
-                let idToken = user.idToken else {return}
-            
-            let accessToken = user.accessToken
-            
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: accessToken.tokenString)
-            
-            let name = user.profile?.name ?? ""
-            
-            FirebaseManager.instance.signInToFirebase(credential: credential, userName: name)
-        }
+        let googleSignInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: ApplicationUtility.rootViewController)
+        
+        let user = googleSignInResult.user
+        guard let idToken = user.idToken else {return}
+        let acessToken = user.accessToken
+        
+        let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString , accessToken: acessToken.tokenString)
+        
+        let name = user.profile?.name ?? ""
+        
+        try await FirebaseManager.instance.signInToFirebase(credential: credential, userName: name)
     }
 }
 

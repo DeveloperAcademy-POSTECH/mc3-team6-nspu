@@ -65,7 +65,7 @@ class SignInWithApple: NSObject, ASAuthorizationControllerDelegate {
         return String(nonce)
     }
     
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    private func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) async throws {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
@@ -93,7 +93,7 @@ class SignInWithApple: NSObject, ASAuthorizationControllerDelegate {
                                                            fullName: appleIDCredential.fullName)
             
 //            print("Sign IN with Apple \(email),  \(name)")
-            FirebaseManager.instance.signInToFirebase(credential: credential, userName: name)
+            try await FirebaseManager.instance.signInToFirebase(credential: credential, userName: name)
         }
     }
     
