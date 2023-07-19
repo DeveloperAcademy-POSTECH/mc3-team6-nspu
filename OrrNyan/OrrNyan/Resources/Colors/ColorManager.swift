@@ -9,14 +9,26 @@ extension Color {
 	
 	
 	// MARK: - Black
-	///Hex : #767680
+	///Hex : #505050
 	static let Black100 = Color("Black100")
 	
-	///Hex : #505050
+	///Hex : #3D3D3D
 	static let Black200 = Color("Black200")
 	
 	///Hex : #202020
 	static let Black300 = Color("Black300")
+	
+	
+
+	// MARK: - Gray
+	///Hex : #E1E1EB
+	static let Gray100 = Color("Gray100")
+	
+	///Hex : #767680
+	static let Gray200 = Color("Gray200")
+	
+	///Hex : #62626B
+	static let Gray300 = Color("Gray300")
 	
 	
 	
