@@ -13,11 +13,13 @@ import GoogleSignIn
 class SignInWithGoogle: ObservableObject {
     @Published var isLoginSuccessed = false
     
+    @MainActor
     func signInWithGoogle() async throws {
         guard let clientID = FirebaseApp.app()?.options.clientID else {return}
         
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
+        
         
         let googleSignInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: ApplicationUtility.rootViewController)
         
@@ -29,23 +31,23 @@ class SignInWithGoogle: ObservableObject {
         
         let name = user.profile?.name ?? ""
         
-        try await FirebaseManager.instance.signInToFirebase(credential: credential, userName: name)
+        try await FirebaseManager.instance.signInToFirebase(credential: credential, userName: name)   
     }
 }
 
 
 final class ApplicationUtility {
-        static var rootViewController: UIViewController {
-    
-            guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-                return .init()
-            }
-    
-            guard let root = screen.windows.first?.rootViewController else {
-                return .init()
-            }
-    
-            return root
+    static var rootViewController: UIViewController {
+        
+        guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            return .init()
         }
+        
+        guard let root = screen.windows.first?.rootViewController else {
+            return .init()
+        }
+        
+        return root
+    }
 }
 

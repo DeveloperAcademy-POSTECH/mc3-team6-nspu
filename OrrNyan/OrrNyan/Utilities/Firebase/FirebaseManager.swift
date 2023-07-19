@@ -48,49 +48,12 @@ class FirebaseManager {
     
     /// 유저 데이터를 불러옵니다.
     func readUserData() async throws {
-//        guard let userid2 = UserDefaults.standard.string(forKey: "userId") else {return}
         guard let userId = getCurrentUserId() else {return}
         
         let documentSnapshot = try await db.collection("User").document(userId).getDocument()
         
         let user = try documentSnapshot.data(as: User.self)
         print("이거지이 \(user)")
-        
-        // TODO: 주석 제거 (데이터 read 예시 코드)
-        /*        db.collection("User").document(userId).getDocument { document, error in
-         if let document = document, document.exists {
-         let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-         print(dataDescription)
-         
-         let name = document.get("name") as? String
-         let email = document.get("email") as? String
-         let nickName = document.get("nickName") as? String
-         let lastVisitStamp = document.get("lastVisitDate") as? Timestamp
-         let lastVisitDate = lastVisitStamp?.dateValue()
-         let createdAtStamp = document.get("createdAt") as? Timestamp
-         let createdAt = createdAtStamp?.dateValue()
-         print("\(name), \(email), \(nickName), \(lastVisitDate), \(createdAt)")
-         }
-         }
-         */
-//        db.collection("User").document(userId).getDocument { document, error in
-//            if let error {
-//                print(error.localizedDescription)
-//            }
-//            else {
-//                if let document {
-//                    do {
-//                        let user = try document.data(as: User.self)
-//                        // TODO: - User 모델로 반환
-//                        print("이거다아아 \(user)")
-//                    }
-//                    catch {
-//                        print(error)
-//                    }
-//                }
-//            }
-//        }
-        
     }
     
     /// 현재 유저의 uid를 가져옵니다.
@@ -113,9 +76,9 @@ class FirebaseManager {
 
 // MARK: - Floor data 계산 CRUD
 extension FirebaseManager {
-    /// Create userFloor
+    /// Create userFloor: UserFloor row를 db에 생성합니다.
+    /// Parameter userFloor: UserFloor 모델 객체
     func createUserFloor(userFloor: UserFloor) {
-        
         if let userId = self.getCurrentUserId(){
             do {
                 try db.collection("User").document(userId).collection("UserFloor").document().setData(from: userFloor)
@@ -137,31 +100,11 @@ extension FirebaseManager {
         print("최근 유저층수 문서id: \(userFloor.id ?? "")")
         
         return userFloor
-        
-        
-//        db.collection("User").document(userId).collection("UserFloor").order(by: "date", descending: true).limit(to:5).getDocuments(completion: { querySnapshot, error in
-//            if let error {
-//                print(error)
-//                return
-//            } else {
-//                do {
-//                    userFloor = try querySnapshot!.documents[0].data(as: UserFloor.self)
-//
-//                    print(userFloor?.id ?? "")
-//                } catch {
-//                    print(error)
-//                }
-//            }
-//
-//        })
-        
-        
-        
     }
     
     /// Update userFloor
     func updateUserFloor() async throws {
-        guard let userId = getCurrentUserId() else {return}//UserDefaults.standard.string(forKey: "userID") else {return}
+        guard let userId = getCurrentUserId() else {return}
         
         let userFloor = try await self.readUserFloor()
         guard let userFloorId = userFloor?.id else {return}
@@ -171,35 +114,5 @@ extension FirebaseManager {
             "totalFloors" : 1,
             "date" : Date()
         ])
-        /*
-        do {
-            db.collection("User").document(userId).collection("UserFloor").order(by: "date", descending: true).limit(to: 5).getDocuments(completion: { querySnapshot, error in
-                if let error {
-                    print(error)
-                    return
-                }
-                
-                else {
-                    do {
-                        let userFloor = try querySnapshot!.documents[0].data(as: UserFloor.self)
-                        print(userFloor.id ?? "")
-                        userFloorId = userFloor.id ?? ""
-                        
-                        // MARK: 업데이트 코드
-                        self.db.collection("User").document(userId).collection("UserFloor").document(userFloorId).updateData([
-                            "dailyFloors" : 1,
-                            "totalFloors" : 1,
-                            "date" : Date()
-                        ])
-                    } catch {
-                        print(error)
-                    }
-                }
-            })
-        }
-        catch {
-            print(error.localizedDescription)
-        }
-*/
     }
 }
