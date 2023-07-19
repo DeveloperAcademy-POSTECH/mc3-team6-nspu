@@ -10,6 +10,10 @@ import SwiftUI
 struct MainParallaxView: View {
     var body: some View {
         ZStack(){
+            Image("StageEm01_01")
+            Image("StageEm01_02")
+            Image("StageEm01_03")
+            Image("StageEm01_04")
             Image("StageSt01")
                 .resizable()
                 .aspectRatio(contentMode: .fill)

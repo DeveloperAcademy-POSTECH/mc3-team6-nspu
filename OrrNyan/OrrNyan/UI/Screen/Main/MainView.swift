@@ -18,12 +18,9 @@ struct MainView: View{
                     .frame(height:650)
                 MainBottomView()
             }
-            Image("upCat")
-                .resizable()
-                .frame(width:30,height:45)
-//            Button("hi", action: $isActive){
-//
-//            }
+            UpCat()
+                .frame(width: UIScreen.main.bounds.width)
+
         }
         .background(Image("StageBg01").resizable())
         .ignoresSafeArea()
