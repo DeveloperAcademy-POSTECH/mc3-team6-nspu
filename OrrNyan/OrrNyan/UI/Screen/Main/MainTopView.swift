@@ -35,12 +35,14 @@ struct MainTopView: View {
                         .frame(width:25,height:25)
                 }
         }
-        .padding(25)
+        .padding(.horizontal, 26)
+//        .padding(25)
         .frame(width: UIScreen.main.bounds.width)
     }
     
     //MARK: - Flip Function
     func flipTitle() {
+        print("flip!!!")
         isFlipped = !isFlipped
         if isFlipped {
             withAnimation(.linear(duration: durationAndDelay)) {
@@ -70,7 +72,7 @@ struct StairCase: View{
         VStack(alignment: .leading){
             Text("총 오른 층계")
                 .font(.system(size:15,weight: .regular))
-            Text("1123 층")
+            Text("\(userFloorTestInstance.totalFloors) 층")
                 .font(.system(size:38, weight: .bold))
         }
         .rotation3DEffect(Angle(degrees: degree), axis: (x: 1, y: 0, z: 0))
@@ -82,7 +84,7 @@ struct Stair: View{
         VStack(alignment: .leading){
             Text("총 오른 계단")
                 .font(.system(size:15,weight: .regular))
-            Text("4567 계단")
+            Text("\(userFloorTestInstance.totalFloors * 16) 계단")
                 .font(.system(size:38, weight: .bold))
         }
         .rotation3DEffect(Angle(degrees: degree), axis: (x: 1, y: 0, z: 0))
