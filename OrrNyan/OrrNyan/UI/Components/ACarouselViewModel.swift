@@ -20,8 +20,9 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     private let _headspace: CGFloat
     private let _isWrap: Bool
     private var _sidesScaling: CGFloat
+    private let _grayScaling: Double
 
-    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool) {
+    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool, grayScale: Double) {
         guard index.wrappedValue < data.count else {
             fatalError("The index should be less than the count of data ")
         }
@@ -32,6 +33,7 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
         _headspace = headspace
         _isWrap = isWrap
         _sidesScaling = sidesScaling
+        _grayScaling = grayScale
 
         if data.count > 1 && isWrap {
             activeIndex = index.wrappedValue + 1
@@ -67,8 +69,8 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
 }
 
 extension ACarouselViewModel where ID == Data.Element.ID, Data.Element: Identifiable {
-    convenience init(_ data: Data, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool) {
-        self.init(data, id: \.id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap)
+    convenience init(_ data: Data, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool, grayScale: Double) {
+        self.init(data, id: \.id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScale: grayScale)
     }
 }
 
@@ -103,6 +105,23 @@ extension ACarouselViewModel {
 
     var itemWidth: CGFloat {
         viewSize.width - defaultPadding * 2
+    }
+
+    var grayScaling: Double {
+        return _grayScaling
+    }
+
+    func grayScaling(_ item: Data.Element) -> Double {
+        guard activeIndex < data.count else {
+            return 0.0
+        }
+        let tempItem = item as! Item
+        if activeIndex < tempItem.index {
+            return 1.0
+        }
+        else {
+            return 0.0
+        }
     }
 
     // 스테이지의 스케일을 조정하는 함수입니다.
