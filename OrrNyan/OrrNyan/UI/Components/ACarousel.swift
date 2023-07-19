@@ -35,9 +35,6 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
         .frame(width: proxy.size.width, height: proxy.size.height, alignment: .leading)
         .offset(x: viewModel.offset)
         .gesture(viewModel.dragGesture)
-        .gesture(TapGesture().onEnded {
-            print(viewModel.activeIndex)
-        })
         .animation(viewModel.offsetAnimation)
     }
 }

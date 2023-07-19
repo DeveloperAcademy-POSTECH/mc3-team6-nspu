@@ -107,9 +107,9 @@ extension ACarouselViewModel {
         viewSize.width - defaultPadding * 2
     }
 
-    var grayScaling: Double {
-        return _grayScaling
-    }
+//    var grayScaling: Double {
+//        return _grayScaling
+//    }
 
     func grayScaling(_ item: Data.Element) -> Double {
         guard activeIndex < data.count else {

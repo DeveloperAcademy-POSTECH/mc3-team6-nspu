@@ -12,15 +12,20 @@ struct StageView: View {
     // UUID를 포함한 Items배열로 변환해 items 변수에 저장합니다.
     let stageStImageTitle = Stages().StageInfos.map { $0.stageStructureImageTitle }.map { Item(image: Image($0)) }
     let stageFloors = Stages().StageInfos.map { $0.stageFloors }
-    
+    @Namespace var nameSpace
     var body: some View {
         VStack {
-            HeaderView()
-                .padding(.top, 54)
-            ACarousel(stageStImageTitle, headspace: 70) { item in
+            MainTopView()
+                .zIndex(.infinity)
+            ACarousel(stageStImageTitle, headspace: 60) { item in
                 item.image
                     .resizable()
                     .scaledToFill()
+                    .matchedGeometryEffect(id: "StageStImage\(item.index)", in: nameSpace)
+                    .onTapGesture {
+                        print(item.index)
+//                        TestTransitionView()
+                    }
             }
         }
     }

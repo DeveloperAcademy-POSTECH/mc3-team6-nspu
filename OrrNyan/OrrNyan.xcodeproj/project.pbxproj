@@ -18,6 +18,7 @@
 		1BAF6CD92A6638B0003238FA /* ACarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CD32A6638B0003238FA /* ACarouselViewModel.swift */; };
 		1BAF6CDA2A6638B0003238FA /* AppLifeCycleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CD42A6638B0003238FA /* AppLifeCycleModifier.swift */; };
 		1BAF6CDE2A676954003238FA /* StageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CDD2A676954003238FA /* StageItem.swift */; };
+		1BAF6CE02A67E19D003238FA /* TestTransitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CDF2A67E19D003238FA /* TestTransitionView.swift */; };
 		1DA8BFC12A66AAE900AA8C66 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA8BFC02A66AAE900AA8C66 /* FontManager.swift */; };
 		1DE9E0C62A66AE33004BC9EB /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0BD2A66AE32004BC9EB /* Pretendard-Bold.otf */; };
 		1DE9E0C72A66AE33004BC9EB /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0BE2A66AE32004BC9EB /* Pretendard-Thin.otf */; };
@@ -99,6 +100,7 @@
 		1BAF6CD32A6638B0003238FA /* ACarouselViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselViewModel.swift; sourceTree = "<group>"; };
 		1BAF6CD42A6638B0003238FA /* AppLifeCycleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLifeCycleModifier.swift; sourceTree = "<group>"; };
 		1BAF6CDD2A676954003238FA /* StageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageItem.swift; sourceTree = "<group>"; };
+		1BAF6CDF2A67E19D003238FA /* TestTransitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTransitionView.swift; sourceTree = "<group>"; };
 		1DA8BFC02A66AAE900AA8C66 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		1DE9E0BD2A66AE32004BC9EB /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		1DE9E0BE2A66AE32004BC9EB /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				1B3FDC112A5E52690081CCBB /* Main */,
 				695B69262A5E442800129A17 /* ContentView.swift */,
 				1B1A95212A60D40800EA1100 /* StageView.swift */,
+				1BAF6CDF2A67E19D003238FA /* TestTransitionView.swift */,
 				83C38BE52A6625530027D281 /* CreateNameView.swift */,
 				695C44362A6638F1003A2D24 /* LoginView.swift */,
 			);
@@ -531,6 +534,7 @@
 				69AA2B2E2A658F2A0076DC58 /* AppPush.swift in Sources */,
 				1B3FDC132A5E52770081CCBB /* MainView.swift in Sources */,
 				1BAF6CDE2A676954003238FA /* StageItem.swift in Sources */,
+				1BAF6CE02A67E19D003238FA /* TestTransitionView.swift in Sources */,
 				69AA2B2C2A658F1C0076DC58 /* UserBadge.swift in Sources */,
 				DE30A0972A66A769004D94E4 /* MainBottomView.swift in Sources */,
 				DE30A09B2A66A7A1004D94E4 /* MainTopView.swift in Sources */,
