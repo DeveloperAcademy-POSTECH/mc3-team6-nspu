@@ -29,14 +29,12 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                 content($0)
                     .frame(width: viewModel.itemWidth)
                     .scaleEffect(x: 1, y: viewModel.itemScaling($0), anchor: .bottom)
+                    .grayscale(viewModel.grayScaling($0))
             }
         }
         .frame(width: proxy.size.width, height: proxy.size.height, alignment: .leading)
         .offset(x: viewModel.offset)
         .gesture(viewModel.dragGesture)
-        .gesture(TapGesture().onEnded {
-            print(viewModel.activeIndex)
-        })
         .animation(viewModel.offsetAnimation)
     }
 }
@@ -64,8 +62,8 @@ public extension ACarousel {
     ///     default is 0.8.
     ///   - isWrap: Define views to scroll through in a loop, default is false.
     ///   - content: The view builder that creates views dynamically.
-    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, @ViewBuilder content: @escaping (Data.Element) -> Content) {
-        viewModel = ACarouselViewModel(data, id: id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap)
+    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, grayScale: Double = 1.0, @ViewBuilder content: @escaping (Data.Element) -> Content) {
+        viewModel = ACarouselViewModel(data, id: id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScale: grayScale)
         self.content = content
     }
 }
@@ -85,8 +83,8 @@ public extension ACarousel where ID == Data.Element.ID, Data.Element: Identifiab
     ///      default is 0.8.
     ///   - isWrap: Define views to scroll through in a loop, default is false.
     ///   - content: The view builder that creates views dynamically.
-    init(_ data: Data, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, @ViewBuilder content: @escaping (Data.Element) -> Content) {
-        viewModel = ACarouselViewModel(data, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap)
+    init(_ data: Data, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, grayScale: Double = 1.0, @ViewBuilder content: @escaping (Data.Element) -> Content) {
+        viewModel = ACarouselViewModel(data, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScale: grayScale)
         self.content = content
     }
 }
