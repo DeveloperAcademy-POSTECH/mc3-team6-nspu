@@ -38,8 +38,6 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
             print(viewModel.activeIndex)
         })
         .animation(viewModel.offsetAnimation)
-        .onReceive(timer: viewModel.timer, perform: viewModel.receiveTimer)
-        .onReceiveAppLifeCycle(perform: viewModel.setTimerActive)
     }
 }
 
@@ -65,11 +63,9 @@ public extension ACarousel {
     ///   - sidesScaling: The scale of the subviews on both sides, limits 0...1,
     ///     default is 0.8.
     ///   - isWrap: Define views to scroll through in a loop, default is false.
-    ///   - autoScroll: A enum that define view to scroll automatically. See
-    ///     ``ACarouselAutoScroll``. default is `inactive`.
     ///   - content: The view builder that creates views dynamically.
-    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, autoScroll: ACarouselAutoScroll = .inactive, @ViewBuilder content: @escaping (Data.Element) -> Content) {
-        viewModel = ACarouselViewModel(data, id: id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, autoScroll: autoScroll)
+    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, @ViewBuilder content: @escaping (Data.Element) -> Content) {
+        viewModel = ACarouselViewModel(data, id: id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap)
         self.content = content
     }
 }
@@ -88,11 +84,9 @@ public extension ACarousel where ID == Data.Element.ID, Data.Element: Identifiab
     ///   - sidesScaling: The scale of the subviews on both sides, limits 0...1,
     ///      default is 0.8.
     ///   - isWrap: Define views to scroll through in a loop, default is false.
-    ///   - autoScroll: A enum that define view to scroll automatically. See
-    ///     ``ACarouselAutoScroll``. default is `inactive`.
     ///   - content: The view builder that creates views dynamically.
-    init(_ data: Data, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, autoScroll: ACarouselAutoScroll = .inactive, @ViewBuilder content: @escaping (Data.Element) -> Content) {
-        viewModel = ACarouselViewModel(data, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, autoScroll: autoScroll)
+    init(_ data: Data, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, @ViewBuilder content: @escaping (Data.Element) -> Content) {
+        viewModel = ACarouselViewModel(data, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap)
         self.content = content
     }
 }
@@ -103,7 +97,7 @@ struct ACarousel_LibraryContent: LibraryContentProvider {
     @LibraryContentBuilder
     var views: [LibraryItem] {
         LibraryItem(ACarousel(Datas) { _ in }, title: "ACarousel", category: .control)
-        LibraryItem(ACarousel(Datas, index: .constant(0), spacing: 10, headspace: 10, sidesScaling: 0.8, isWrap: false, autoScroll: .inactive) { _ in }, title: "ACarousel full parameters", category: .control)
+        LibraryItem(ACarousel(Datas, index: .constant(0), spacing: 10, headspace: 10, sidesScaling: 0.8, isWrap: false) { _ in }, title: "ACarousel full parameters", category: .control)
     }
 
     struct _Item: Identifiable {
