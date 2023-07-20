@@ -8,15 +8,24 @@
 
 import SwiftUI
 struct MainView: View{
+    @EnvironmentObject var stageViewModel: StageViewModel
+    var nameSpace: Namespace.ID
     var body: some View{
         ZStack{
-            MainParallaxView()
+            MainParallaxView(nameSpace: nameSpace)
 //                .frame(maxWidth: .infinity)
             VStack{
                 MainTopView()
                 Spacer()
                     .frame(height:650)
-                MainBottomView()
+//                NavigationLink(destination: StageView()) {
+                    MainBottomView()
+                        .onTapGesture {
+                            stageViewModel.isMainDisplayed = false
+                            print(stageViewModel.isMainDisplayed)
+                    }
+//                }
+                    
             }
             UpCat()
                 .frame(width: UIScreen.main.bounds.width)
@@ -29,8 +38,8 @@ struct MainView: View{
     }
 }
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-    }
-}
+//struct MainView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MainView()
+//    }
+//}
