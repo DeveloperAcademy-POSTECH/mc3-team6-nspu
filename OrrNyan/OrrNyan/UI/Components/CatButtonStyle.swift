@@ -13,16 +13,21 @@ struct CatButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         ZStack{
             Rectangle()
-                .frame(height: 50)
-                .cornerRadius(5)
-                .foregroundColor(isEnabled ? .blue : .gray)
-                .opacity(configuration.isPressed ? 0.8 : 1.0)
+                .frame(maxWidth: .infinity, minHeight: 55, maxHeight: 55, alignment: .center)
+//                .background(isEnabled ? Color("Purple200") : .white)
+                .cornerRadius(16)
+                .foregroundColor(isEnabled ? Color.Purple200 : Color.White100)
+                .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .inset(by: 0.75)
+                    .stroke(isEnabled ? Color.Purple100 : Color.White200))
                 .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+            
             
             configuration.label
               
                 .font(Font.callout)
-                .foregroundColor(isEnabled ? .white : .black)
+                .foregroundColor(isEnabled ? Color.Black300 : Color.Black100)
             
         }
     }
