@@ -37,7 +37,7 @@ struct LoginView: View {
             
             Button {
                 Task {
-                    try await   FirebaseManager.instance.readUserData()
+                    try await FirebaseManager.instance.readUserData()
                 }
             } label: {
                 Text("유저 데이터 가져오기")

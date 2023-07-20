@@ -102,7 +102,7 @@ extension FirebaseManager {
         return userFloor
     }
     
-    /// Update userFloor
+    /// DB의 UserFloor 데이터를 업데이트 합니다.
     func updateUserFloor() async throws {
         guard let userId = getCurrentUserId() else {return}
         
