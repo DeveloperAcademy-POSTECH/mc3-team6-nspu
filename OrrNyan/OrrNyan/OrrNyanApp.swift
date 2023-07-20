@@ -17,6 +17,7 @@ struct OrrNyanApp: App {
         WindowGroup {
 //            ContentView()
             StageView()
+                .environmentObject(StageViewModel())
         }
     }
 }

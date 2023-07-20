@@ -115,7 +115,7 @@ extension ACarouselViewModel {
         guard activeIndex < data.count else {
             return 0.0
         }
-        let tempItem = item as! Item
+        let tempItem = item as! StageItem
         if activeIndex < tempItem.index {
             return 1.0
         }
@@ -134,7 +134,7 @@ extension ACarouselViewModel {
         guard activeIndex < data.count else {
             return 0
         }
-        let tempItem = item as! Item
+        let tempItem = item as! StageItem
         if activeIndex == tempItem.index {
             return 1
         } else if activeIndex < tempItem.index {
