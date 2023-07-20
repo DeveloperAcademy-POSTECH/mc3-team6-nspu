@@ -22,9 +22,9 @@ struct CreateNameView: View {
     @State var isInput = false
     
     // change color of cancel button in Alert
-    init() {
-        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = .gray
-    }
+    //    init() {
+    //        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = .gray
+    //    }
     
     var body: some View {
         VStack{
@@ -39,7 +39,7 @@ struct CreateNameView: View {
                         // input field
                         TextField("정해달라", text: $catName)
                             .frame(width: 180, height: 0)
-                            .foregroundColor(hasInput(curNameStatue: isValid()) ? Color("Black300") : Color("Pink300"))
+                            .foregroundColor(hasInput(catNameStatus: isValid()) ? Color.Black300 : Color.Pink300)
                         Text("냥")
                             .bold()
                     }
@@ -48,11 +48,11 @@ struct CreateNameView: View {
                     Rectangle()
                         .frame(width: 200, height: 2)
                 }
-                .foregroundColor(hasInput(curNameStatue: isValid()) ? Color("Purple300") : Color("Pink300"))
+                .foregroundColor(hasInput(catNameStatus: isValid()) ? Color.Purple300 : Color.Pink300)
                 
                 // inform whether cat name is valid or not
                 Text(isValid().rawValue)
-                    .foregroundColor(isValid() == catNameStatus.availableName ? Color.black : Color("Pink300"))
+                    .foregroundColor(isValid() == catNameStatus.availableName ? Color.Black300 : Color.Pink300)
             }
             .frame(width: 330, alignment: .center)
             
@@ -71,12 +71,13 @@ struct CreateNameView: View {
             .padding(.bottom, 50)
             // alert pop up
             .alert("이름 확정인거냥?", isPresented: $isShowAlert) {
-                Button("확인", role: .destructive){
-                    // save data
-                    // do something
-                    
+                Button(action: {
+                }) {
+                    Text("확인")
                 }
-                Button("취소", role: .cancel){
+                
+                Button("취소"){
+                    isShowAlert = false
                 }
             } message: {
                 Text("한 번 정하면 바꿀 수 없다냥.")
@@ -84,16 +85,15 @@ struct CreateNameView: View {
         }
         .padding(.horizontal, 35)
     }
-
-
-// check if cat name is appropriate
-// has special character
-// has empty space
-// no input
-// 1~8 letters & no special character
-// more than 8 letters
+    
+    
+    // check if cat name is appropriate
+    // has special character
+    // has empty space
+    // no input
+    // 1~8 letters & no special character
+    // more than 8 letters
     func isValid() -> catNameStatus{
-        var curCatName: catNameStatus = catNameStatus.idle
         
         // only en, ko, nums
         let pattern = "[^a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\s]"
@@ -101,46 +101,37 @@ struct CreateNameView: View {
         
         if let _ = regex.firstMatch(in: catName, options: [], range: NSMakeRange(0, catName.count))
         {
-            curCatName = catNameStatus.specialCharater
-            return (curCatName)
+            return catNameStatus.specialCharater
         }
         
         // check catName length, spaces
         switch catName {
         case _ where catName.contains(" ") :
-            curCatName = catNameStatus.emptySpace
-            return (curCatName)
+            return catNameStatus.emptySpace
         case _ where catName.contains("\t") :
-            curCatName = catNameStatus.emptySpace
-            return (curCatName)
+            return catNameStatus.emptySpace
         case _ where catName.count  == 0 :
-            curCatName = catNameStatus.idle
-            return (curCatName)
+            return catNameStatus.idle
         case _ where catName.count < 9 :
-            curCatName = catNameStatus.availableName
-            return (curCatName)
+            return catNameStatus.availableName
         default:
-            curCatName = catNameStatus.tooLong
-            return (curCatName)
+            return catNameStatus.tooLong
         }
     }
     
     
     // check name availability
-    func hasInput (curNameStatue: catNameStatus) -> Bool {
-        switch curNameStatue {
-        case catNameStatus.availableName :
+    func hasInput (catNameStatus: catNameStatus) -> Bool {
+        switch catNameStatus {
+        case .availableName :
             return true
-        case catNameStatus.idle :
+        case .idle :
             return true
         default:
             return (false)
         }
     }
 }
-
-
-
 
 
 struct CreateNameView_Previews: PreviewProvider {
