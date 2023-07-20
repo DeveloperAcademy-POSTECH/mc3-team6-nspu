@@ -15,8 +15,9 @@ struct OrrNyanApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-//            StageView()
+//            ContentView()
+            StageView()
+                .environmentObject(StageViewModel())
         }
     }
 }

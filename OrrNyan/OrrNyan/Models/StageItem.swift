@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Item: Identifiable {
+struct StageItem: Identifiable {
     static var indexCounter = 0
     let id = UUID()
     let index: Int
