@@ -11,7 +11,7 @@ import FirebaseAuth
 import GoogleSignIn
 
 class SignInWithGoogle: ObservableObject {
-    @Published var isLoginSuccessed = false
+     @Published var isLoginSuccessed = false
     
     @MainActor
     func signInWithGoogle() async throws {
@@ -31,7 +31,8 @@ class SignInWithGoogle: ObservableObject {
         
         let name = user.profile?.name ?? ""
         
-        try await FirebaseManager.instance.signInToFirebase(credential: credential, userName: name)   
+        FirebaseManager.instance.signInToFirebase(credential: credential, userName: name)
+        isLoginSuccessed = true
     }
 }
 
