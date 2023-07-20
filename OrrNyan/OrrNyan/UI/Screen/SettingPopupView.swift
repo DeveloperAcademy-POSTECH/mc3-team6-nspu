@@ -2,14 +2,19 @@
 //  SettingPopupView.swift
 //  OrrNyan
 //
-//  Created by Park Jisoo on 2023/07/19.
+//  Created by Park Jisoo on 2023/07/20.
 //
+
+
 import SwiftUI
+
+
 
 struct SettingPopupView: View {
     @State var advertisement = false
     @State var alarmTime = Date()
     @State var isWheelShow = false
+    @State var isAnimating = false
     @State var bGM = false
     @State var sFX = false
     
@@ -17,68 +22,44 @@ struct SettingPopupView: View {
     var body: some View {
         
         Form {
-            Toggle("PUSH알림", isOn: $advertisement)
+            Toggle(isOn: $advertisement) {
+                Text("PUSH 알림")}
             
             
-//            HStack{
-//                Text("알람시간")
-//                Spacer()
-//                
-//                
-//                Button(action: {
-//
-//                    if isWheelShow {
-//                        isWheelShow = false
-//                    }
-//                    else {
-//                        isWheelShow = true
-//                    }
-//
-//                },label: {
-//                    Text("알람")
-//                        .bold()
-//                })
-//            }
-//
-            DatePicker(selection: $alarmTime, displayedComponents: .hourAndMinute, label: {Text("알람시간")})
-                .datePickerStyle(.compact)
+            HStack{
+                Text("알림시간")
+                Spacer()
+                Button(action: {
+                    withAnimation(.easeIn){
+                        
+                        self.isWheelShow.toggle()
+                    }
+                },label: {
+                    Text(alarmTime, style: .time)
+                        .bold()
+                        .foregroundColor(Color.Purple200)
+                        .padding(.horizontal, 11)
+                        .padding(.vertical, 6)
+                        .background(Color.White200)
+                        .cornerRadius(10)
+                })
+                .buttonStyle(BorderlessButtonStyle())
+            }
             
+            if isWheelShow{
+                DatePicker(selection: $alarmTime, displayedComponents: .hourAndMinute, label: {})
+                    .labelsHidden()
+                    .datePickerStyle(.wheel)
+            }
             Toggle(isOn: $bGM) {
                 Text("배경음악")}
             Toggle(isOn: $sFX) {
                 Text("효과음")}
         }
-        .toggleStyle(SwitchToggleStyle(tint: Color("Purple200")))
+        .toggleStyle(SwitchToggleStyle(tint: Color.Purple200))
+        .bold()
     }
 }
-
-
-struct AlarmButton: View{
-    @Binding var isWheelShow: Bool
-    
-    var body: some View {
-        
-        Button(action: {
-            if isWheelShow {
-                isWheelShow = false
-            }
-            else {
-                isWheelShow = true
-            }
-            
-        },label: {
-            Text("알람")
-                .bold()
-                .foregroundColor(.gray)
-        })
-        
-        
-        
-        
-    }
-}
-
-
 
 struct SettingPopupView_Previews: PreviewProvider {
     static var previews: some View {
