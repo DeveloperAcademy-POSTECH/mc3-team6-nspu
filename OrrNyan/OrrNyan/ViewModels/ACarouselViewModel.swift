@@ -38,7 +38,8 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
         if data.count > 1 && isWrap {
             activeIndex = index.wrappedValue + 1
         } else {
-            activeIndex = index.wrappedValue
+//            activeIndex = index.wrappedValue
+            activeIndex = UserDefaults.standard.object(forKey: "selectedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "selectedStageIndex") as! Int
         }
 
         _index = index
@@ -106,10 +107,6 @@ extension ACarouselViewModel {
     var itemWidth: CGFloat {
         viewSize.width - defaultPadding * 2
     }
-
-//    var grayScaling: Double {
-//        return _grayScaling
-//    }
 
     func grayScaling(_ item: Data.Element) -> Double {
         guard activeIndex < data.count else {

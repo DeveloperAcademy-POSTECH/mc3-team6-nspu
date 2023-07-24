@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("userId") var userId: String?
-    
+
     var body: some View {
         VStack {
-            //test
+            // test
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)

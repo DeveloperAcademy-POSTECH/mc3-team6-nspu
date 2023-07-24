@@ -42,7 +42,6 @@ struct MainTopView: View {
     
     //MARK: - Flip Function
     func flipTitle() {
-        print("flip!!!")
         isFlipped = !isFlipped
         if isFlipped {
             withAnimation(.linear(duration: durationAndDelay)) {
