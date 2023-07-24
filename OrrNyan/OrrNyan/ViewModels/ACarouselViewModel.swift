@@ -39,7 +39,7 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
             activeIndex = index.wrappedValue + 1
         } else {
 //            activeIndex = index.wrappedValue
-            activeIndex = UserDefaults.standard.object(forKey: "selectedStage") as! Int
+            activeIndex = UserDefaults.standard.object(forKey: "selectedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "selectedStageIndex") as! Int
         }
 
         _index = index

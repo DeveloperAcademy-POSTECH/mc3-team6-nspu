@@ -18,14 +18,10 @@ struct MainView: View{
                 MainTopView()
                 Spacer()
                     .frame(height:650)
-//                NavigationLink(destination: StageView()) {
                     MainBottomView()
                         .onTapGesture {
                             stageViewModel.isMainDisplayed = false
-                            print(stageViewModel.isMainDisplayed)
-                    }
-//                }
-                    
+                    }                    
             }
             UpCat()
                 .frame(width: UIScreen.main.bounds.width)

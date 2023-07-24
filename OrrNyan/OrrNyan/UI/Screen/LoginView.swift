@@ -11,9 +11,9 @@ struct LoginView: View {
     @StateObject var signInWithApple = SignInWithApple()
     @StateObject var signInWithGoogle = SignInWithGoogle()
     @State var isLoginSuccessed = false
-    
+
     var body: some View {
-        VStack{
+        VStack {
             Button {
                 Task {
                     try await signInWithGoogle.signInWithGoogle()
@@ -22,11 +22,10 @@ struct LoginView: View {
             } label: {
                 Text("구글 로그인")
             }
-            
+
             Button {
                 DispatchQueue.main.async {
                     signInWithApple.startSignInWithAppleFlow()
-                    
                 }
                 isLoginSuccessed = signInWithApple.isLoginSuccessed
             } label: {
@@ -35,16 +34,16 @@ struct LoginView: View {
                         isLoginSuccessed = newValue
                     }
             }
-            
+
             Button {
-                Task{
+                Task {
                     try await FirebaseManager.instance.createUser("말티")
                 }
             } label: {
                 Text("유저 저장")
                     .padding()
             }
-            
+
             Button {
                 Task {
                     try await FirebaseManager.instance.readUserData()
@@ -52,13 +51,13 @@ struct LoginView: View {
             } label: {
                 Text("유저 데이터 가져오기")
             }
-            
+
             Button {
                 FirebaseManager.instance.createUserFloor(userFloor: UserFloor(dailyFloors: 0, totalFloors: 0, date: Date()))
             } label: {
                 Text("UserFloor 추가")
             }
-            
+
             Button {
                 Task {
                     try await FirebaseManager.instance.readUserFloor()
@@ -66,7 +65,7 @@ struct LoginView: View {
             } label: {
                 Text("UserFloor 읽기")
             }
-            
+
             Button {
                 Task {
                     try await FirebaseManager.instance.updateUserFloor()
@@ -74,16 +73,16 @@ struct LoginView: View {
             } label: {
                 Text("UserFloor 업데이트")
             }
-            
+
             Button {
                 FirebaseManager.instance.logOut()
             } label: {
                 Text("logout").padding()
             }
-            
+
             if isLoginSuccessed {
                 Text("로그인 버튼눌리고, 성공했다")
-            }else {
+            } else {
                 Text("실패했다. 안눌리거나")
             }
         }

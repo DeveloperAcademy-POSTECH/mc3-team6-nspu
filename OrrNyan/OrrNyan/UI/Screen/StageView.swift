@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-class StageViewModel: ObservableObject {
-    @Published var selectedIndex: Int = UserDefaults.standard.object(forKey: "selectedStage") as! Int
-    @Published var isMainDisplayed: Bool = false
-}
-
 struct StageView: View {
     
     // stageStructureImageTitle을 String 배열로 만들고,
@@ -35,7 +30,7 @@ struct StageView: View {
                                 .scaledToFill()
                                 .matchedGeometryEffect(id: "StageStImage0\(item.index + 1)", in: nameSpace)
                                 .onTapGesture {
-                                    UserDefaults.standard.set(item.index, forKey: "selectedStage")
+                                    UserDefaults.standard.set(item.index, forKey: "selectedStageIndex")
                                     viewModel.selectedIndex = item.index
                                     withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
                                         viewModel.isMainDisplayed = true
