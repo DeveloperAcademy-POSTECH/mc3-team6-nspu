@@ -29,7 +29,7 @@ struct CreateNameView: View {
     var body: some View {
         VStack{
             LottieView(filename: "firstCat")
-                .frame(width: 330, height: 380)
+                .frame(width: 330, height: 330)
                 .padding(.top, 50)
             Text("내 이름은 뭐냥?")
                 .padding(.top, 20)
