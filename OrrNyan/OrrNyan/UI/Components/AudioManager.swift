@@ -12,24 +12,17 @@ import AVFoundation
 class AudioManager: ObservableObject {
     
     static let instance = AudioManager()
-    
+
+    // Audio players
     var bGMPlayer: AVAudioPlayer?
     var sFXPlayer: AVAudioPlayer?
     
-    @Published var isBGMEnabled: Bool = false
-    @Published var isSFXEnabled: Bool = false
+    // save setting value
+    @AppStorage("BGM") var isBGMEnabled = false
+    @AppStorage("SFX") var isSFXEnabled = false
     
     
-    func toggleBGM(){
-        isBGMEnabled.toggle()
-    }
-    
-    func toggleSFX(){
-        isSFXEnabled.toggle()
-    }
-    
-    
-    func playBGM(fileName: String, fileType: String, isEnabled: Bool){
+    func playBGM(fileName: String, fileType: String){
         guard isBGMEnabled else { return }
         
         playSound(fileName: fileName, fileType: fileType, player: &bGMPlayer, numberOfLoops: -1)
@@ -39,7 +32,7 @@ class AudioManager: ObservableObject {
         stopAudio(player: &bGMPlayer)
     }
     
-    func playSFX(fileName: String, fileType: String, isEnabled: Bool){
+    func playSFX(fileName: String, fileType: String){
         guard isSFXEnabled else { return }
         
         playSound(fileName: fileName, fileType: fileType, player: &sFXPlayer, numberOfLoops: 0)

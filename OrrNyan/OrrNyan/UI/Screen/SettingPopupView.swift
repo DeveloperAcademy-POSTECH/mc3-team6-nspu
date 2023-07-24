@@ -19,11 +19,6 @@ struct SettingPopupView: View {
     // audio manage
     @StateObject var audioManager = AudioManager()
     
-    @State var isSFXEnabled = false
-    @State var isBGMEnabled = false
-    
-    
-    
     var body: some View {
         
         Form {
@@ -56,12 +51,11 @@ struct SettingPopupView: View {
                     .datePickerStyle(.wheel)
             }
             
-            // 수정 중====================================================
-            Toggle("배경음", isOn: $isBGMEnabled)
-            Toggle(isOn: $isSFXEnabled) {
-                Text("효과음")}
-            // 수정 중====================================================
+            // turn on and off BGM
+            Toggle("배경음", isOn: $audioManager.isBGMEnabled)
             
+            // turn on and off sound effects
+            Toggle("효과음", isOn: $audioManager.isSFXEnabled)
             
         }
         .toggleStyle(SwitchToggleStyle(tint: Color.Purple200))
