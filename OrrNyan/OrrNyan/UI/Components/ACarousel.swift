@@ -23,19 +23,55 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
     }
 
     private func generateContent(proxy: GeometryProxy) -> some View {
-        HStack(spacing: viewModel.spacing) {
-            ForEach(viewModel.data, id: viewModel.dataId) {
-                // Carousel로 사용할 컨텐츠들을 배치합니다.
-                content($0)
-                    .frame(width: viewModel.itemWidth)
-                    .scaleEffect(x: 1, y: viewModel.itemScaling($0), anchor: .bottom)
-                    .grayscale(viewModel.grayScaling($0))
+        ZStack {
+            HStack(spacing: viewModel.spacing) {
+                ForEach(viewModel.data, id: viewModel.dataId) { element in
+                    // Carousel로 사용할 컨텐츠들을 배치합니다.
+                    ZStack {
+                        content(element)
+                            .frame(width: viewModel.itemWidth)
+                            .scaleEffect(x: 1, y: viewModel.itemScaling(element), anchor: .bottom)
+                            .grayscale(viewModel.grayScaling(element))
+                            .blur(radius: viewModel.blur(element))
+                            .opacity(viewModel.opacityScaling(element))
+                        Image(systemName: "lock.fill")
+                            .foregroundColor(.White300)
+                            .font(.system(size: 30))
+                            .shadow(radius: 7)
+                            .opacity(viewModel.buttonOpacity(element))
+                    }
+                }
             }
+            .frame(width: proxy.size.width, height: proxy.size.height, alignment: .leading)
+            .offset(x: viewModel.offset)
+            .gesture(viewModel.dragGesture)
+            .animation(viewModel.offsetAnimation)
+            
+            // forward, backward button
+            HStack {
+                Button {
+                    viewModel.reduceActiveIndex()
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+                .opacity(viewModel.activeIndex == 0 ? 0 : 1)
+                Spacer()
+                Button {
+                    viewModel.increaseActiveIndex()
+                } label: {
+                    Image(systemName: "chevron.right")
+                }
+                .opacity(viewModel.activeIndex == viewModel.data.count - 1 ? 0 : 1)
+            }
+            .font(.system(size: 24, weight: .medium))
+            .padding(.horizontal, 20)
+            .foregroundColor(.Gray100)
+            .zIndex(100)
+            
+            // lock
+//            Image(systemName: "lock.fill")
+//                .opacity(viewModel.activeIndex < )
         }
-        .frame(width: proxy.size.width, height: proxy.size.height, alignment: .leading)
-        .offset(x: viewModel.offset)
-        .gesture(viewModel.dragGesture)
-        .animation(viewModel.offsetAnimation)
     }
 }
 
@@ -62,8 +98,8 @@ public extension ACarousel {
     ///     default is 0.8.
     ///   - isWrap: Define views to scroll through in a loop, default is false.
     ///   - content: The view builder that creates views dynamically.
-    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, grayScale: Double = 1.0, @ViewBuilder content: @escaping (Data.Element) -> Content) {
-        viewModel = ACarouselViewModel(data, id: id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScale: grayScale)
+    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, grayScaling: Double = 1.0, blurScaling: Double = 1.0, opacityScaling: Double = 0.0, indexScaling: CGFloat = 1.0, @ViewBuilder content: @escaping (Data.Element) -> Content) {
+        viewModel = ACarouselViewModel(data, id: id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScaling: grayScaling, blurScaling: blurScaling, opacityScaling: opacityScaling, indexScaling: indexScaling)
         self.content = content
     }
 }
@@ -83,8 +119,8 @@ public extension ACarousel where ID == Data.Element.ID, Data.Element: Identifiab
     ///      default is 0.8.
     ///   - isWrap: Define views to scroll through in a loop, default is false.
     ///   - content: The view builder that creates views dynamically.
-    init(_ data: Data, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, grayScale: Double = 1.0, @ViewBuilder content: @escaping (Data.Element) -> Content) {
-        viewModel = ACarouselViewModel(data, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScale: grayScale)
+    init(_ data: Data, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, grayScaling: Double = 1.0, blurScaling: Double = 0.0, opacityScaling: Double = 1.0, indexScaling: CGFloat = 1.0, @ViewBuilder content: @escaping (Data.Element) -> Content) {
+        viewModel = ACarouselViewModel(data, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScaling: grayScaling, blurScaling: blurScaling, opacityScaling: opacityScaling, indexScaling: indexScaling)
         self.content = content
     }
 }

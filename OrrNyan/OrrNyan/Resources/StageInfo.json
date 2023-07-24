@@ -1,6 +1,6 @@
 [
     {
-        "stageName" : "Stage01" ,
+        "stageName" : "석가탑" ,
         "stageStructureImageTitle" : "StageSt01" ,
         "stageBgImageTitle" : "StageBg01" ,
         "stageBgElementArray" : ["StageEm01_01", "StageEm01_02", "StageEm01_03", "StageEm01_04"] ,
@@ -9,7 +9,7 @@
         "stageHeight" : 11
     },
     {
-        "stageName" : "Stage02" ,
+        "stageName" : "그리스도상" ,
         "stageStructureImageTitle" : "StageSt02" ,
         "stageBgImageTitle" : "StageBg02" ,
         "stageBgElementArray" : ["StageEm02_01", "StageEm02_02", "StageEm02_03"] ,
@@ -18,7 +18,7 @@
         "stageHeight" : 30
     },
     {
-        "stageName" : "Stage03" ,
+        "stageName" : "피사의 사탑" ,
         "stageStructureImageTitle" : "StageSt03" ,
         "stageBgImageTitle" : "StageBg03" ,
         "stageBgElementArray" : ["StageEm03_01", "StageEm03_02", "StageEm03_03"] ,

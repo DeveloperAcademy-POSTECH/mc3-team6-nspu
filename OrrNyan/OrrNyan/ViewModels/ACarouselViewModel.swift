@@ -21,8 +21,10 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     private let _isWrap: Bool
     private var _sidesScaling: CGFloat
     private let _grayScaling: Double
-
-    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool, grayScale: Double) {
+    private let _blurScaling: Double
+    private let _opacityScaling: Double
+    private var _indexScaling: CGFloat
+    init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool, grayScaling: Double, blurScaling: Double, opacityScaling: Double, indexScaling: CGFloat) {
         guard index.wrappedValue < data.count else {
             fatalError("The index should be less than the count of data ")
         }
@@ -33,12 +35,17 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
         _headspace = headspace
         _isWrap = isWrap
         _sidesScaling = sidesScaling
-        _grayScaling = grayScale
+        _grayScaling = grayScaling
+        _blurScaling = blurScaling
+        _opacityScaling = opacityScaling
+        _indexScaling = indexScaling
 
         if data.count > 1 && isWrap {
             activeIndex = index.wrappedValue + 1
+            UserDefaults.standard.set(index.wrappedValue + 1, forKey: "stageActiveIndex")
         } else {
 //            activeIndex = index.wrappedValue
+//            UserDefaults.standard.set(0, forKey: "stageActiveIndex")
             activeIndex = UserDefaults.standard.object(forKey: "selectedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "selectedStageIndex") as! Int
         }
 
@@ -67,11 +74,23 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
 
     /// size of GeometryProxy
     var viewSize: CGSize = .zero
+
+    /// reduce active index by 1
+    func reduceActiveIndex() {
+        activeIndex -= 1
+        UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+    }
+
+    /// increase active index by 1
+    func increaseActiveIndex() {
+        activeIndex += 1
+        UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+    }
 }
 
 extension ACarouselViewModel where ID == Data.Element.ID, Data.Element: Identifiable {
-    convenience init(_ data: Data, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool, grayScale: Double) {
-        self.init(data, id: \.id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScale: grayScale)
+    convenience init(_ data: Data, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool, grayScaling: Double, blurScaling: Double, opacityScaling: Double, indexScaling: CGFloat) {
+        self.init(data, id: \.id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScaling: grayScaling, blurScaling: blurScaling, opacityScaling: opacityScaling, indexScaling: indexScaling)
     }
 }
 
@@ -108,12 +127,62 @@ extension ACarouselViewModel {
         viewSize.width - defaultPadding * 2
     }
 
+    var indexScaling: CGFloat {
+        return _indexScaling
+    }
+
     func grayScaling(_ item: Data.Element) -> Double {
         guard activeIndex < data.count else {
             return 0.0
         }
         let tempItem = item as! StageItem
-        if activeIndex < tempItem.index {
+        // 현재 클리어중인 스테이지보다 높은 스테이지는 흑백처리
+        if userStageTestInstance.currentStage - 1 < tempItem.index {
+            return 1.0
+        }
+        else {
+            return 0.0
+        }
+    }
+
+    func blur(_ item: Data.Element) -> Double {
+        guard activeIndex < data.count else {
+            return 0.0
+        }
+        let tempItem = item as! StageItem
+        // 현재 보고있는 스테이지가 아닌 스테이지는 블러처리
+        if activeIndex != tempItem.index {
+            return 5.0
+        }
+        else {
+            return 0.0
+        }
+    }
+
+    func opacityScaling(_ item: Data.Element) -> Double {
+        guard activeIndex < data.count else {
+            return 1.0
+        }
+        let tempItem = item as! StageItem
+        // 현재 보고있는 스테이지가 아닌 스테이지는 블러처리
+        if activeIndex != tempItem.index {
+            return 0.3
+        }
+        else if userStageTestInstance.currentStage - 1 < tempItem.index {
+            return 0.6
+        }
+        else {
+            return 1.0
+        }
+    }
+
+    func buttonOpacity(_ item: Data.Element) -> Double {
+        guard activeIndex < data.count else {
+            return 1.0
+        }
+        let tempItem = item as! StageItem
+
+        if userStageTestInstance.currentStage - 1 < tempItem.index {
             return 1.0
         }
         else {
@@ -135,10 +204,10 @@ extension ACarouselViewModel {
         if activeIndex == tempItem.index {
             return 1
         } else if activeIndex < tempItem.index {
-            return 1.2
+            return 1.2 - 0.2 * indexScaling
         }
         else {
-            return 0.8
+            return 1.0 - 0.2 * indexScaling
         }
     }
 }
@@ -244,6 +313,7 @@ extension ACarouselViewModel {
         // 현재 드래그된 값을 dragOffset에 저장
         /// set drag offset
         dragOffset = offset
+        _indexScaling = 1.0 - value.location.x / UIScreen.main.bounds.width
     }
 
     private func dragEnded(_ value: DragGesture.Value) {
@@ -260,13 +330,14 @@ extension ACarouselViewModel {
         // 이전으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width > dragThreshold {
             activeIndex -= 1
-//            _sidesScaling = 1.2
+            UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
         }
         // 다음 방향으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width < -dragThreshold {
             activeIndex += 1
-//            _sidesScaling = 0.8
+            UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
         }
+//        _indexScaling = 1.0
         // activeIndex가 음수가 되는 것 방지, activeIndex가 최댓값을 넘어가는 것 방지
         self.activeIndex = max(0, min(activeIndex, data.count - 1))
     }
