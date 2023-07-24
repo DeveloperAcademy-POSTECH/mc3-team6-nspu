@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct LoginView: View {
-    
+struct LoginView: View {    
     @EnvironmentObject var firebaseManager: FirebaseManager
     @State private var showCreateNameView = false
     
@@ -34,9 +33,11 @@ struct LoginView: View {
             }
             
             loginButton(logoTitle: "ImgLogoGoogle", text: "Google로 로그인", buttonColor: Color.white, fontColor: Color.black){
+
                 Task {
                     try await firebaseManager.singInGoogle()
                 }
+
             }
             .padding(.bottom, 35)
         }

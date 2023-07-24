@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var firebaseManager: FirebaseManager
     @AppStorage("userId") var userId: String?
-    
+
     var body: some View {
         VStack{
             switch firebaseManager.signUpState {
