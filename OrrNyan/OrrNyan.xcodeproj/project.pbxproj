@@ -62,6 +62,8 @@
 		69AA2B2C2A658F1C0076DC58 /* UserBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2B2A658F1C0076DC58 /* UserBadge.swift */; };
 		69AA2B2E2A658F2A0076DC58 /* AppPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2D2A658F2A0076DC58 /* AppPush.swift */; };
 		69AA2B302A658F350076DC58 /* StageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2F2A658F350076DC58 /* StageInfo.swift */; };
+		833F29072A68D25900EE06CB /* SettingPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29062A68D25900EE06CB /* SettingPopupView.swift */; };
+		833F29092A692FE200EE06CB /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29082A692FE200EE06CB /* AudioManager.swift */; };
 		83C38BE62A6625530027D281 /* CreateNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C38BE52A6625530027D281 /* CreateNameView.swift */; };
 		83C38BE82A6625710027D281 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C38BE72A6625710027D281 /* LottieView.swift */; };
 		83C38BEB2A6626F00027D281 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 83C38BEA2A6626F00027D281 /* Lottie */; };
@@ -150,6 +152,8 @@
 		69AA2B2B2A658F1C0076DC58 /* UserBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBadge.swift; sourceTree = "<group>"; };
 		69AA2B2D2A658F2A0076DC58 /* AppPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPush.swift; sourceTree = "<group>"; };
 		69AA2B2F2A658F350076DC58 /* StageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageInfo.swift; sourceTree = "<group>"; };
+		833F29062A68D25900EE06CB /* SettingPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPopupView.swift; sourceTree = "<group>"; };
+		833F29082A692FE200EE06CB /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		83C38BE52A6625530027D281 /* CreateNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNameView.swift; sourceTree = "<group>"; };
 		83C38BE72A6625710027D281 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		83C38BEE2A66278E0027D281 /* CatButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatButtonStyle.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				83C38BE52A6625530027D281 /* CreateNameView.swift */,
 				1DB82A2F2A67BF2C006FDD4E /* LoginView_malty.swift */,
 				695C44362A6638F1003A2D24 /* LoginView.swift */,
+				833F29062A68D25900EE06CB /* SettingPopupView.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -213,6 +218,7 @@
 				1B3FDC142A5E53A70081CCBB /* HeaderView.swift */,
 				83C38BE72A6625710027D281 /* LottieView.swift */,
 				83C38BEE2A66278E0027D281 /* CatButtonStyle.swift */,
+				833F29082A692FE200EE06CB /* AudioManager.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -559,6 +565,7 @@
 			files = (
 				1BAF6CDA2A6638B0003238FA /* AppLifeCycleModifier.swift in Sources */,
 				1BAF6CD92A6638B0003238FA /* ACarouselViewModel.swift in Sources */,
+				833F29072A68D25900EE06CB /* SettingPopupView.swift in Sources */,
 				69AA2B302A658F350076DC58 /* StageInfo.swift in Sources */,
 				1B3FDC152A5E53A70081CCBB /* HeaderView.swift in Sources */,
 				1DB82A332A67C115006FDD4E /* ColorManager.swift in Sources */,
@@ -576,6 +583,7 @@
 				1BAF6CE02A67E19D003238FA /* TestTransitionView.swift in Sources */,
 				69AA2B2C2A658F1C0076DC58 /* UserBadge.swift in Sources */,
 				DE30A0972A66A769004D94E4 /* MainBottomView.swift in Sources */,
+				833F29092A692FE200EE06CB /* AudioManager.swift in Sources */,
 				DE30A09B2A66A7A1004D94E4 /* MainTopView.swift in Sources */,
 				1BAF6CD82A6638B0003238FA /* ACarousel.swift in Sources */,
 				83C38BE82A6625710027D281 /* LottieView.swift in Sources */,
