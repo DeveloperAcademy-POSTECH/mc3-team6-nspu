@@ -12,12 +12,16 @@ import GoogleSignIn
 @main
 struct OrrNyanApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-
+    @StateObject var firebaseManager = FirebaseManager()
+    @StateObject var stageViewModel = StageViewModel()
+    
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-            StageView()
-                .environmentObject(StageViewModel())
+            ContentView()
+                .environmentObject(firebaseManager)
+                .environmentObject(stageViewModel)
+//            StageView()
+//                .environmentObject(StageViewModel())
         }
     }
 }

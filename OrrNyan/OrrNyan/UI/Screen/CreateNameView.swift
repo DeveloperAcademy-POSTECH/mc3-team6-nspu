@@ -17,6 +17,8 @@ enum catNameStatus: String {
 }
 
 struct CreateNameView: View {
+    
+    @EnvironmentObject var firebaseManager: FirebaseManager
     @State var catName = ""
     @State var isShowAlert = false
     @State var isInput = false
@@ -73,6 +75,9 @@ struct CreateNameView: View {
                 // alert pop up
                 .alert("이름 확정인거냥?", isPresented: $isShowAlert) {
                     Button(action: {
+                        Task {
+                            try await firebaseManager.createUser(catName)
+                        }
                     }) {
                         Text("확인")
                     }

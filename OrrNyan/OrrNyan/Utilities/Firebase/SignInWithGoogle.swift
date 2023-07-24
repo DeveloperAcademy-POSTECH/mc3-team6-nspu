@@ -10,29 +10,32 @@ import Firebase
 import FirebaseAuth
 import GoogleSignIn
 
-class SignInWithGoogle: ObservableObject {
-     @Published var isLoginSuccessed = false
+struct GoogleSignInResultModel {
+    let idToken: String
+    let accessToken: String
+    let name: String?
+    let email: String?
+}
+
+class SignInWithGoogle {
     
     @MainActor
-    func signInWithGoogle() async throws {
-        guard let clientID = FirebaseApp.app()?.options.clientID else {return}
+    func signInWithGoogle() async throws -> GoogleSignInResultModel {
+        guard let clientID = FirebaseApp.app()?.options.clientID else {throw URLError(.cannotFindHost)}
         
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         
-        
         let googleSignInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: ApplicationUtility.rootViewController)
         
         let user = googleSignInResult.user
-        guard let idToken = user.idToken else {return}
-        let acessToken = user.accessToken
-        
-        let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString , accessToken: acessToken.tokenString)
-        
+        guard let idToken = user.idToken?.tokenString else {throw URLError(.badServerResponse)}
+        let acessToken = user.accessToken.tokenString
         let name = user.profile?.name ?? ""
-        
-        FirebaseManager.instance.signInToFirebase(credential: credential, userName: name)
-        isLoginSuccessed = true
+        let email  = user.profile?.email
+    
+        let tokens = GoogleSignInResultModel(idToken: idToken, accessToken: acessToken, name: name, email: email)
+        return tokens
     }
 }
 

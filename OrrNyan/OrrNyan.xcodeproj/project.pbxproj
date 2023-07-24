@@ -20,7 +20,7 @@
 		1BAF6CDE2A676954003238FA /* StageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CDD2A676954003238FA /* StageItem.swift */; };
 		1BAF6CE02A67E19D003238FA /* TestTransitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CDF2A67E19D003238FA /* TestTransitionView.swift */; };
 		1DA8BFC12A66AAE900AA8C66 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA8BFC02A66AAE900AA8C66 /* FontManager.swift */; };
-		1DB82A302A67BF2C006FDD4E /* LoginView_malty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB82A2F2A67BF2C006FDD4E /* LoginView_malty.swift */; };
+		1DB82A302A67BF2C006FDD4E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB82A2F2A67BF2C006FDD4E /* LoginView.swift */; };
 		1DB82A332A67C115006FDD4E /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB82A322A67C115006FDD4E /* ColorManager.swift */; };
 		1DBC0F5A2A6D1003003F0CEB /* LottieLoginView.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F542A6D1002003F0CEB /* LottieLoginView.json */; };
 		1DBC0F5B2A6D1003003F0CEB /* LottieMainViewSit.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F552A6D1002003F0CEB /* LottieMainViewSit.json */; };
@@ -52,7 +52,6 @@
 		695B693B2A5E442900129A17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 695B693A2A5E442900129A17 /* Assets.xcassets */; };
 		695B693E2A5E442900129A17 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 695B693D2A5E442900129A17 /* Preview Assets.xcassets */; };
 		695B69492A5E465E00129A17 /* StairTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695B69482A5E465E00129A17 /* StairTest.swift */; };
-		695C44372A6638F1003A2D24 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695C44362A6638F1003A2D24 /* LoginView.swift */; };
 		695C443F2A663952003A2D24 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695C443C2A663952003A2D24 /* SignInWithApple.swift */; };
 		695C44402A663952003A2D24 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695C443D2A663952003A2D24 /* FirebaseManager.swift */; };
 		695C44412A663952003A2D24 /* SignInWithGoogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695C443E2A663952003A2D24 /* SignInWithGoogle.swift */; };
@@ -112,7 +111,7 @@
 		1BAF6CDD2A676954003238FA /* StageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageItem.swift; sourceTree = "<group>"; };
 		1BAF6CDF2A67E19D003238FA /* TestTransitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTransitionView.swift; sourceTree = "<group>"; };
 		1DA8BFC02A66AAE900AA8C66 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
-		1DB82A2F2A67BF2C006FDD4E /* LoginView_malty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView_malty.swift; sourceTree = "<group>"; };
+		1DB82A2F2A67BF2C006FDD4E /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1DB82A322A67C115006FDD4E /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		1DBC0F542A6D1002003F0CEB /* LottieLoginView.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieLoginView.json; sourceTree = "<group>"; };
 		1DBC0F552A6D1002003F0CEB /* LottieMainViewSit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieMainViewSit.json; sourceTree = "<group>"; };
@@ -143,7 +142,6 @@
 		695B693A2A5E442900129A17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		695B693D2A5E442900129A17 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		695B69482A5E465E00129A17 /* StairTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StairTest.swift; sourceTree = "<group>"; };
-		695C44362A6638F1003A2D24 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		695C443C2A663952003A2D24 /* SignInWithApple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInWithApple.swift; sourceTree = "<group>"; };
 		695C443D2A663952003A2D24 /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		695C443E2A663952003A2D24 /* SignInWithGoogle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInWithGoogle.swift; sourceTree = "<group>"; };
@@ -204,8 +202,7 @@
 				1B1A95212A60D40800EA1100 /* StageView.swift */,
 				1BAF6CDF2A67E19D003238FA /* TestTransitionView.swift */,
 				83C38BE52A6625530027D281 /* CreateNameView.swift */,
-				1DB82A2F2A67BF2C006FDD4E /* LoginView_malty.swift */,
-				695C44362A6638F1003A2D24 /* LoginView.swift */,
+				1DB82A2F2A67BF2C006FDD4E /* LoginView.swift */,
 				833F29062A68D25900EE06CB /* SettingPopupView.swift */,
 			);
 			path = Screen;
@@ -570,7 +567,6 @@
 				1B3FDC152A5E53A70081CCBB /* HeaderView.swift in Sources */,
 				1DB82A332A67C115006FDD4E /* ColorManager.swift in Sources */,
 				1B3FDC192A5E54660081CCBB /* Extension+Color.swift in Sources */,
-				695C44372A6638F1003A2D24 /* LoginView.swift in Sources */,
 				DEF039D02A67DA32002FEC51 /* UpCat.swift in Sources */,
 				695C44412A663952003A2D24 /* SignInWithGoogle.swift in Sources */,
 				83C38BE62A6625530027D281 /* CreateNameView.swift in Sources */,
@@ -595,7 +591,7 @@
 				695B69252A5E442800129A17 /* OrrNyanApp.swift in Sources */,
 				1B1A95222A60D40800EA1100 /* StageView.swift in Sources */,
 				1B34B2FB2A662DBC00012CFA /* DataLoad.swift in Sources */,
-				1DB82A302A67BF2C006FDD4E /* LoginView_malty.swift in Sources */,
+				1DB82A302A67BF2C006FDD4E /* LoginView.swift in Sources */,
 				695C44402A663952003A2D24 /* FirebaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
