@@ -8,18 +8,20 @@
 import SwiftUI
 
 class StageViewModel: ObservableObject {
-    @Published var selectedIndex: Int = 0
+    @Published var selectedIndex: Int = UserDefaults.standard.object(forKey: "selectedStage") as! Int
     @Published var isMainDisplayed: Bool = false
 }
 
 struct StageView: View {
+    
     // stageStructureImageTitle을 String 배열로 만들고,
     // UUID를 포함한 Items배열로 변환해 items 변수에 저장합니다.
     let stageStImageTitle = Stages().StageInfos.map { $0.stageStructureImageTitle }.map { StageItem(image: Image($0)) }
     let stageFloors = Stages().StageInfos.map { $0.stageFloors }
-    @State var selectedIndex: Int = 0
+    
     @EnvironmentObject var viewModel: StageViewModel
     @Namespace var nameSpace
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -33,6 +35,7 @@ struct StageView: View {
                                 .scaledToFill()
                                 .matchedGeometryEffect(id: "StageStImage0\(item.index + 1)", in: nameSpace)
                                 .onTapGesture {
+                                    UserDefaults.standard.set(item.index, forKey: "selectedStage")
                                     viewModel.selectedIndex = item.index
                                     withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
                                         viewModel.isMainDisplayed = true
@@ -52,5 +55,6 @@ struct StageView: View {
 struct StageView_Previews: PreviewProvider {
     static var previews: some View {
         StageView()
+            .environmentObject(StageViewModel())
     }
 }
