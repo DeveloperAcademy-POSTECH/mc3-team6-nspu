@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct LoginView_malty: View {
-    var body: some View {
+	@State private var showCreateNameView = false
+	var body: some View {
 		
-		
+		NavigationStack{
 		// MARK: - LoginView
 		VStack(spacing: 10){
 			LottieView(filename: "firstCat")
@@ -25,21 +26,24 @@ struct LoginView_malty: View {
 			
 			Spacer()
 			
-			loginButton(logoTitle: "ImgLogoApple", text: "Apple로 로그인", buttonColor: Color.black, fontColor : Color.white)
-			loginButton(logoTitle: "ImgLogoGoogle", text: "Google로 로그인", buttonColor: Color.white, fontColor : Color.black)
+			loginButton(logoTitle: "ImgLogoApple", text: "Apple로 로그인", buttonColor: Color.black, fontColor: Color.white)
+			
+			loginButton(logoTitle: "ImgLogoGoogle", text: "Google로 로그인", buttonColor: Color.white, fontColor: Color.black)
+
 				.padding(.bottom, 35)
 		}
 		.padding(.horizontal, 30)
 		.ignoresSafeArea()
-    }
+	}
+}
 	
 	
 	// MARK: - 로그인 버튼
 	///로그인 버튼
 	private func loginButton(logoTitle:String, text:String, buttonColor:Color, fontColor : Color) -> some View {
-		Button {
+		NavigationLink {
 			//제이 여기다가 로그인 함수 넣어주면 돼요
-			print("애플 로그인 버튼")
+			CreateNameView()
 		} label: {
 			HStack{
 				//Logo Image
@@ -57,6 +61,8 @@ struct LoginView_malty: View {
 					.padding(.vertical, 17.5)
 				
 				Spacer()
+//
+
 			}
 			.padding(.leading, 16)
 			.padding(.trailing, 40)

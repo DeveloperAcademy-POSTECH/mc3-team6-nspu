@@ -22,6 +22,12 @@
 		1DA8BFC12A66AAE900AA8C66 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA8BFC02A66AAE900AA8C66 /* FontManager.swift */; };
 		1DB82A302A67BF2C006FDD4E /* LoginView_malty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB82A2F2A67BF2C006FDD4E /* LoginView_malty.swift */; };
 		1DB82A332A67C115006FDD4E /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB82A322A67C115006FDD4E /* ColorManager.swift */; };
+		1DBC0F5A2A6D1003003F0CEB /* LottieLoginView.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F542A6D1002003F0CEB /* LottieLoginView.json */; };
+		1DBC0F5B2A6D1003003F0CEB /* LottieMainViewSit.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F552A6D1002003F0CEB /* LottieMainViewSit.json */; };
+		1DBC0F5C2A6D1003003F0CEB /* LottieCreateNameView.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F562A6D1003003F0CEB /* LottieCreateNameView.json */; };
+		1DBC0F5D2A6D1003003F0CEB /* LottieMypageViewawake.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F572A6D1003003F0CEB /* LottieMypageViewawake.json */; };
+		1DBC0F5E2A6D1003003F0CEB /* LottieMainViewWalk.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F582A6D1003003F0CEB /* LottieMainViewWalk.json */; };
+		1DBC0F5F2A6D1003003F0CEB /* LottieMypageViewSleep.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F592A6D1003003F0CEB /* LottieMypageViewSleep.json */; };
 		1DE9E0C62A66AE33004BC9EB /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0BD2A66AE32004BC9EB /* Pretendard-Bold.otf */; };
 		1DE9E0C72A66AE33004BC9EB /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0BE2A66AE32004BC9EB /* Pretendard-Thin.otf */; };
 		1DE9E0C82A66AE33004BC9EB /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0BF2A66AE32004BC9EB /* Pretendard-Black.otf */; };
@@ -31,7 +37,6 @@
 		1DE9E0CC2A66AE33004BC9EB /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0C32A66AE33004BC9EB /* Pretendard-SemiBold.otf */; };
 		1DE9E0CD2A66AE33004BC9EB /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0C42A66AE33004BC9EB /* Pretendard-Light.otf */; };
 		1DE9E0CE2A66AE33004BC9EB /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0C52A66AE33004BC9EB /* Pretendard-Regular.otf */; };
-		693D31C52A6633E3000EA859 /* firstCat.json in Resources */ = {isa = PBXBuildFile; fileRef = 693D31C42A6633E2000EA859 /* firstCat.json */; };
 		693D31C82A6635C3000EA859 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 693D31C72A6635C3000EA859 /* FirebaseAuth */; };
 		693D31CA2A6635C3000EA859 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 693D31C92A6635C3000EA859 /* FirebaseFirestore */; };
 		693D31CD2A6635EE000EA859 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 693D31CC2A6635EE000EA859 /* GoogleSignIn */; };
@@ -109,6 +114,12 @@
 		1DA8BFC02A66AAE900AA8C66 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		1DB82A2F2A67BF2C006FDD4E /* LoginView_malty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView_malty.swift; sourceTree = "<group>"; };
 		1DB82A322A67C115006FDD4E /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		1DBC0F542A6D1002003F0CEB /* LottieLoginView.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieLoginView.json; sourceTree = "<group>"; };
+		1DBC0F552A6D1002003F0CEB /* LottieMainViewSit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieMainViewSit.json; sourceTree = "<group>"; };
+		1DBC0F562A6D1003003F0CEB /* LottieCreateNameView.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieCreateNameView.json; sourceTree = "<group>"; };
+		1DBC0F572A6D1003003F0CEB /* LottieMypageViewawake.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieMypageViewawake.json; sourceTree = "<group>"; };
+		1DBC0F582A6D1003003F0CEB /* LottieMainViewWalk.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieMainViewWalk.json; sourceTree = "<group>"; };
+		1DBC0F592A6D1003003F0CEB /* LottieMypageViewSleep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieMypageViewSleep.json; sourceTree = "<group>"; };
 		1DE9E0BD2A66AE32004BC9EB /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		1DE9E0BE2A66AE32004BC9EB /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		1DE9E0BF2A66AE32004BC9EB /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
@@ -118,7 +129,6 @@
 		1DE9E0C32A66AE33004BC9EB /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		1DE9E0C42A66AE33004BC9EB /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		1DE9E0C52A66AE33004BC9EB /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
-		693D31C42A6633E2000EA859 /* firstCat.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = firstCat.json; sourceTree = "<group>"; };
 		693D31D02A66360A000EA859 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		693D31D22A663633000EA859 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		693D31D32A663673000EA859 /* OrrNyan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OrrNyan.entitlements; sourceTree = "<group>"; };
@@ -228,7 +238,7 @@
 			children = (
 				1DB82A312A67C107006FDD4E /* Colors */,
 				1DA8BFB62A66AAB900AA8C66 /* Fonts */,
-				693D31C42A6633E2000EA859 /* firstCat.json */,
+				1DBC0F532A6D0FCB003F0CEB /* Lottie */,
 				695B69282A5E442900129A17 /* Assets.xcassets */,
 				1B34B2F92A6629E200012CFA /* StageInfo.json */,
 			);
@@ -326,6 +336,19 @@
 				1DB82A322A67C115006FDD4E /* ColorManager.swift */,
 			);
 			path = Colors;
+			sourceTree = "<group>";
+		};
+		1DBC0F532A6D0FCB003F0CEB /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				1DBC0F562A6D1003003F0CEB /* LottieCreateNameView.json */,
+				1DBC0F542A6D1002003F0CEB /* LottieLoginView.json */,
+				1DBC0F552A6D1002003F0CEB /* LottieMainViewSit.json */,
+				1DBC0F582A6D1003003F0CEB /* LottieMainViewWalk.json */,
+				1DBC0F572A6D1003003F0CEB /* LottieMypageViewawake.json */,
+				1DBC0F592A6D1003003F0CEB /* LottieMypageViewSleep.json */,
+			);
+			path = Lottie;
 			sourceTree = "<group>";
 		};
 		695B69182A5E442800129A17 = {
@@ -503,19 +526,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DE9E0CD2A66AE33004BC9EB /* Pretendard-Light.otf in Resources */,
-				693D31C52A6633E3000EA859 /* firstCat.json in Resources */,
 				1DE9E0C62A66AE33004BC9EB /* Pretendard-Bold.otf in Resources */,
 				1DE9E0CA2A66AE33004BC9EB /* Pretendard-ExtraLight.otf in Resources */,
 				1DE9E0CC2A66AE33004BC9EB /* Pretendard-SemiBold.otf in Resources */,
 				1DE9E0C92A66AE33004BC9EB /* Pretendard-ExtraBold.otf in Resources */,
+				1DBC0F5F2A6D1003003F0CEB /* LottieMypageViewSleep.json in Resources */,
 				1DE9E0C72A66AE33004BC9EB /* Pretendard-Thin.otf in Resources */,
 				693D31D12A66360A000EA859 /* GoogleService-Info.plist in Resources */,
 				695B692C2A5E442900129A17 /* Preview Assets.xcassets in Resources */,
 				695B69292A5E442900129A17 /* Assets.xcassets in Resources */,
 				1DE9E0C82A66AE33004BC9EB /* Pretendard-Black.otf in Resources */,
+				1DBC0F5C2A6D1003003F0CEB /* LottieCreateNameView.json in Resources */,
+				1DBC0F5D2A6D1003003F0CEB /* LottieMypageViewawake.json in Resources */,
 				1DE9E0CE2A66AE33004BC9EB /* Pretendard-Regular.otf in Resources */,
+				1DBC0F5A2A6D1003003F0CEB /* LottieLoginView.json in Resources */,
 				1BAF6CCE2A66344F003238FA /* StageInfo.json in Resources */,
 				1DE9E0CB2A66AE33004BC9EB /* Pretendard-Medium.otf in Resources */,
+				1DBC0F5E2A6D1003003F0CEB /* LottieMainViewWalk.json in Resources */,
+				1DBC0F5B2A6D1003003F0CEB /* LottieMainViewSit.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,7 +803,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = RXP67AQN3R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OrrNyan/Info.plist;
@@ -810,7 +838,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan/Preview Content\"";
-				DEVELOPMENT_TEAM = Q6S8GWB6BP;
+				DEVELOPMENT_TEAM = RXP67AQN3R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OrrNyan/Info.plist;
