@@ -12,9 +12,9 @@ import Foundation
 import SwiftUI
 
 
-class SignInWithApple: NSObject, ASAuthorizationControllerDelegate {
+class SignInWithApple: NSObject, ASAuthorizationControllerDelegate, ObservableObject{
     
-    static let instance = SignInWithApple()
+    @Published var isLoginSuccessed = false
     
     // Unhashed nounce
     fileprivate var currentNonce: String?
@@ -79,7 +79,7 @@ class SignInWithApple: NSObject, ASAuthorizationControllerDelegate {
                 return
             }
             
-//            let email = appleIDCredential.email ?? ""
+            //            let email = appleIDCredential.email ?? ""
             var name = ""
             if let fullname = appleIDCredential.fullName {
                 let formatter = PersonNameComponentsFormatter()
@@ -92,7 +92,9 @@ class SignInWithApple: NSObject, ASAuthorizationControllerDelegate {
                                                            rawNonce: nonce,
                                                            fullName: appleIDCredential.fullName)
             
-//            print("Sign IN with Apple \(email),  \(name)")
+            //            print("Sign IN with Apple \(email),  \(name)")
+            isLoginSuccessed = true
+
             FirebaseManager.instance.signInToFirebase(credential: credential, userName: name)
         }
     }
