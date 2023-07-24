@@ -27,60 +27,62 @@ struct CreateNameView: View {
     //    }
     
     var body: some View {
-        VStack{
-            LottieView(filename: "LottieCreateNameView")
-                .frame(width: 330, height: 380)
-                .padding(.top, 50)
-            Text("내 이름은 뭐냥?")
-                .padding(.top, 20)
+            NavigationStack{
             VStack{
-                VStack(alignment: .center){
-                    HStack{
-                        // input field
-                        TextField("정해달라", text: $catName)
-                            .frame(width: 180, height: 0)
-                            .foregroundColor(hasInput(catNameStatus: isValid()) ? Color.Black300 : Color.Pink300)
-                        Text("냥")
-                            .bold()
+                LottieView(filename: "LottieCreateNameView")
+                    .frame(width: 330, height: 380)
+                    .padding(.top, 50)
+                Text("내 이름은 뭐냥?")
+                    .padding(.top, 20)
+                VStack{
+                    VStack(alignment: .center){
+                        HStack{
+                            // input field
+                            TextField("정해달라", text: $catName)
+                                .frame(width: 180, height: 0)
+                                .foregroundColor(hasInput(catNameStatus: isValid()) ? Color.Black300 : Color.Pink300)
+                            Text("냥")
+                                .bold()
+                        }
+                        .offset(y: 10)
+                        // underline
+                        Rectangle()
+                            .frame(width: 200, height: 2)
                     }
-                    .offset(y: 10)
-                    // underline
-                    Rectangle()
-                        .frame(width: 200, height: 2)
+                    .foregroundColor(hasInput(catNameStatus: isValid()) ? Color.Purple300 : Color.Pink300)
+
+                    // inform whether cat name is valid or not
+                    Text(isValid().rawValue)
+                        .foregroundColor(isValid() == catNameStatus.availableName ? Color.Black300 : Color.Pink300)
                 }
-                .foregroundColor(hasInput(catNameStatus: isValid()) ? Color.Purple300 : Color.Pink300)
-                
-                // inform whether cat name is valid or not
-                Text(isValid().rawValue)
-                    .foregroundColor(isValid() == catNameStatus.availableName ? Color.Black300 : Color.Pink300)
-            }
-            .frame(width: 330, alignment: .center)
-            
-            Spacer()
-            
-            // confirm cat name and complete sign up
-            Button(action: {
-                // alert pop up
-                isShowAlert = true
-            },label: {
-                Text("시작하기")
-                    .bold()
-            })
-            .disabled(isValid() == catNameStatus.availableName ? false : true)
-            .buttonStyle(CatButtonStyle())
-            .padding(.bottom, 50)
-            // alert pop up
-            .alert("이름 확정인거냥?", isPresented: $isShowAlert) {
+                .frame(width: 330, alignment: .center)
+
+                Spacer()
+
+                // confirm cat name and complete sign up
                 Button(action: {
-                }) {
-                    Text("확인")
+                    // alert pop up
+                    isShowAlert = true
+                },label: {
+                    Text("시작하기")
+                        .bold()
+                })
+                .disabled(isValid() == catNameStatus.availableName ? false : true)
+                .buttonStyle(CatButtonStyle())
+                .padding(.bottom, 50)
+                // alert pop up
+                .alert("이름 확정인거냥?", isPresented: $isShowAlert) {
+                    Button(action: {
+                    }) {
+                        Text("확인")
+                    }
+
+                    Button("취소"){
+                        isShowAlert = false
+                    }
+                } message: {
+                    Text("한 번 정하면 바꿀 수 없다냥.")
                 }
-                
-                Button("취소"){
-                    isShowAlert = false
-                }
-            } message: {
-                Text("한 번 정하면 바꿀 수 없다냥.")
             }
         }
         .padding(.horizontal, 35)
