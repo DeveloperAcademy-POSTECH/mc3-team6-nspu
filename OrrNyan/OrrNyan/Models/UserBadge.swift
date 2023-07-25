@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserBadge {
-    let id: UUID
+struct UserBadge: Identifiable {
+    let id: UUID = UUID()
     var stageCompleteArray: [Bool]
 }
