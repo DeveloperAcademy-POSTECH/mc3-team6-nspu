@@ -60,8 +60,10 @@
 		69AA2B2C2A658F1C0076DC58 /* UserBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2B2A658F1C0076DC58 /* UserBadge.swift */; };
 		69AA2B2E2A658F2A0076DC58 /* AppPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2D2A658F2A0076DC58 /* AppPush.swift */; };
 		69AA2B302A658F350076DC58 /* StageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2F2A658F350076DC58 /* StageInfo.swift */; };
+		8322F9E12A6E1EBB00A4DFDB /* TestMeow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */; };
 		833F29072A68D25900EE06CB /* SettingPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29062A68D25900EE06CB /* SettingPopupView.swift */; };
 		833F29092A692FE200EE06CB /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29082A692FE200EE06CB /* AudioManager.swift */; };
+		836E49E82A6E1EF000F57B78 /* TestBGM.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 836E49E72A6E1EF000F57B78 /* TestBGM.mp3 */; };
 		83C38BE62A6625530027D281 /* CreateNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C38BE52A6625530027D281 /* CreateNameView.swift */; };
 		83C38BE82A6625710027D281 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C38BE72A6625710027D281 /* LottieView.swift */; };
 		83C38BEB2A6626F00027D281 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 83C38BEA2A6626F00027D281 /* Lottie */; };
@@ -148,8 +150,10 @@
 		69AA2B2B2A658F1C0076DC58 /* UserBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBadge.swift; sourceTree = "<group>"; };
 		69AA2B2D2A658F2A0076DC58 /* AppPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPush.swift; sourceTree = "<group>"; };
 		69AA2B2F2A658F350076DC58 /* StageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageInfo.swift; sourceTree = "<group>"; };
+		8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMeow.wav; sourceTree = "<group>"; };
 		833F29062A68D25900EE06CB /* SettingPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPopupView.swift; sourceTree = "<group>"; };
 		833F29082A692FE200EE06CB /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		836E49E72A6E1EF000F57B78 /* TestBGM.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestBGM.mp3; sourceTree = "<group>"; };
 		83C38BE52A6625530027D281 /* CreateNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNameView.swift; sourceTree = "<group>"; };
 		83C38BE72A6625710027D281 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		83C38BEE2A66278E0027D281 /* CatButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatButtonStyle.swift; sourceTree = "<group>"; };
@@ -243,6 +247,8 @@
 				1DA8BFB62A66AAB900AA8C66 /* Fonts */,
 				1DBC0F532A6D0FCB003F0CEB /* Lottie */,
 				695B69282A5E442900129A17 /* Assets.xcassets */,
+				8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */,
+				836E49E72A6E1EF000F57B78 /* TestBGM.mp3 */,
 				1B34B2F92A6629E200012CFA /* StageInfo.json */,
 			);
 			path = Resources;
@@ -531,6 +537,7 @@
 				695B69292A5E442900129A17 /* Assets.xcassets in Resources */,
 				1DE9E0C82A66AE33004BC9EB /* Pretendard-Black.otf in Resources */,
 				1DBC0F5C2A6D1003003F0CEB /* LottieCreateNameView.json in Resources */,
+				836E49E82A6E1EF000F57B78 /* TestBGM.mp3 in Resources */,
 				1DBC0F5D2A6D1003003F0CEB /* LottieMypageViewawake.json in Resources */,
 				1DE9E0CE2A66AE33004BC9EB /* Pretendard-Regular.otf in Resources */,
 				1DBC0F5A2A6D1003003F0CEB /* LottieLoginView.json in Resources */,
@@ -538,6 +545,7 @@
 				1DE9E0CB2A66AE33004BC9EB /* Pretendard-Medium.otf in Resources */,
 				1DBC0F5E2A6D1003003F0CEB /* LottieMainViewWalk.json in Resources */,
 				1DBC0F5B2A6D1003003F0CEB /* LottieMainViewSit.json in Resources */,
+				8322F9E12A6E1EBB00A4DFDB /* TestMeow.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
