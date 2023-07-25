@@ -6,32 +6,34 @@
 //
 import SwiftUI
 
-
-
 struct SettingPopupView: View {
     @State var advertisement = false
     @State var alarmTime = Date()
     @State var isWheelShow = false
     @State var isAnimating = false
     
+    // Audio manage
     @StateObject var myAudio = AudioManager.instance
     
+    // Notification manage
+    @StateObject private var notiManager = UserPushNotification.instance
+
     var body: some View {
-        
         Form {
-            Toggle(isOn: $advertisement) {
-                Text("PUSH 알림")}
+            Toggle("PUSH 알림", isOn: $notiManager.isToggleOn)
+                .alert(isPresented: $notiManager.isShowAuthAlert){
+                    Alert(title: Text("알림 권한을 달라냥!"))
+                }
             
             HStack{
                 Text("알림시간")
                 Spacer()
                 Button(action: {
                     withAnimation(.easeIn){
-                        
                         self.isWheelShow.toggle()
                     }
                 },label: {
-                    Text(alarmTime, style: .time)
+                    Text(notiManager.notiTime, style: .time)
                         .bold()
                         .foregroundColor(Color.Purple200)
                         .padding(.horizontal, 11)
@@ -43,24 +45,16 @@ struct SettingPopupView: View {
             }
             
             if isWheelShow{
-                DatePicker(selection: $alarmTime, displayedComponents: .hourAndMinute, label: {})
+                DatePicker(selection: $notiManager.notiTime, displayedComponents: .hourAndMinute, label: {})
                     .labelsHidden()
                     .datePickerStyle(.wheel)
             }
             
             // turn on and off BGM
-            Toggle("배경음", isOn: myAudio.$isBGMEnabled)
-                .onChange(of: myAudio.isBGMEnabled) { isPlay in
-                    if isPlay {
-                        AudioManager.instance.playBGM()
-                    }
-                    else{
-                        AudioManager.instance.stopBGM()
-                    }
-                }
+            Toggle("배경음", isOn: $myAudio.isBGMEnabled)
             
             // turn on and off sound effects
-            Toggle("효과음", isOn: myAudio.$isSFXEnabled)
+            Toggle("효과음", isOn: $myAudio.isSFXEnabled)
             
             
             // test code =========================================
@@ -73,7 +67,6 @@ struct SettingPopupView: View {
         }
         .toggleStyle(SwitchToggleStyle(tint: Color.Purple200))
         .bold()
-        
     }
 }
 
