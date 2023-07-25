@@ -18,6 +18,10 @@
 		1BAF6CD82A6638B0003238FA /* ACarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CD22A6638B0003238FA /* ACarousel.swift */; };
 		1BAF6CD92A6638B0003238FA /* ACarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CD32A6638B0003238FA /* ACarouselViewModel.swift */; };
 		1BAF6CDE2A676954003238FA /* StageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAF6CDD2A676954003238FA /* StageItem.swift */; };
+		1D22D1482A6FB53E004A8697 /* StageStSvg01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22D1472A6FB53E004A8697 /* StageStSvg01.swift */; };
+		1D22D14A2A6FB5DA004A8697 /* SvgViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22D1492A6FB5DA004A8697 /* SvgViewExample.swift */; };
+		1D22D14C2A6FB649004A8697 /* StageStSvg02.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22D14B2A6FB649004A8697 /* StageStSvg02.swift */; };
+		1D22D14E2A6FB692004A8697 /* StageStSvg03.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22D14D2A6FB692004A8697 /* StageStSvg03.swift */; };
 		1DA8BFC12A66AAE900AA8C66 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA8BFC02A66AAE900AA8C66 /* FontManager.swift */; };
 		1DB82A302A67BF2C006FDD4E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB82A2F2A67BF2C006FDD4E /* LoginView.swift */; };
 		1DB82A332A67C115006FDD4E /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB82A322A67C115006FDD4E /* ColorManager.swift */; };
@@ -27,6 +31,7 @@
 		1DBC0F5D2A6D1003003F0CEB /* LottieMypageViewawake.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F572A6D1003003F0CEB /* LottieMypageViewawake.json */; };
 		1DBC0F5E2A6D1003003F0CEB /* LottieMainViewWalk.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F582A6D1003003F0CEB /* LottieMainViewWalk.json */; };
 		1DBC0F5F2A6D1003003F0CEB /* LottieMypageViewSleep.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DBC0F592A6D1003003F0CEB /* LottieMypageViewSleep.json */; };
+		1DE47ED62A6D3E65001A4804 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE47ED52A6D3E65001A4804 /* MyPageView.swift */; };
 		1DE9E0C62A66AE33004BC9EB /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0BD2A66AE32004BC9EB /* Pretendard-Bold.otf */; };
 		1DE9E0C72A66AE33004BC9EB /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0BE2A66AE32004BC9EB /* Pretendard-Thin.otf */; };
 		1DE9E0C82A66AE33004BC9EB /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0BF2A66AE32004BC9EB /* Pretendard-Black.otf */; };
@@ -111,6 +116,10 @@
 		1BAF6CD22A6638B0003238FA /* ACarousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarousel.swift; sourceTree = "<group>"; };
 		1BAF6CD32A6638B0003238FA /* ACarouselViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselViewModel.swift; sourceTree = "<group>"; };
 		1BAF6CDD2A676954003238FA /* StageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageItem.swift; sourceTree = "<group>"; };
+		1D22D1472A6FB53E004A8697 /* StageStSvg01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageStSvg01.swift; sourceTree = "<group>"; };
+		1D22D1492A6FB5DA004A8697 /* SvgViewExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgViewExample.swift; sourceTree = "<group>"; };
+		1D22D14B2A6FB649004A8697 /* StageStSvg02.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageStSvg02.swift; sourceTree = "<group>"; };
+		1D22D14D2A6FB692004A8697 /* StageStSvg03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageStSvg03.swift; sourceTree = "<group>"; };
 		1DA8BFC02A66AAE900AA8C66 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		1DB82A2F2A67BF2C006FDD4E /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1DB82A322A67C115006FDD4E /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
@@ -120,6 +129,7 @@
 		1DBC0F572A6D1003003F0CEB /* LottieMypageViewawake.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieMypageViewawake.json; sourceTree = "<group>"; };
 		1DBC0F582A6D1003003F0CEB /* LottieMainViewWalk.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieMainViewWalk.json; sourceTree = "<group>"; };
 		1DBC0F592A6D1003003F0CEB /* LottieMypageViewSleep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LottieMypageViewSleep.json; sourceTree = "<group>"; };
+		1DE47ED52A6D3E65001A4804 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		1DE9E0BD2A66AE32004BC9EB /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		1DE9E0BE2A66AE32004BC9EB /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		1DE9E0BF2A66AE32004BC9EB /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
@@ -214,6 +224,7 @@
 				695B69262A5E442800129A17 /* ContentView.swift */,
 				1B1A95212A60D40800EA1100 /* StageView.swift */,
 				83C38BE52A6625530027D281 /* CreateNameView.swift */,
+				1DE47ED52A6D3E65001A4804 /* MyPageView.swift */,
 				1DB82A2F2A67BF2C006FDD4E /* LoginView.swift */,
 				833F29062A68D25900EE06CB /* SettingPopupView.swift */,
 			);
@@ -246,6 +257,7 @@
 		1B3FDC092A5E50E00081CCBB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1D22D1462A6FB4A3004A8697 /* SvgOutline */,
 				1DB82A312A67C107006FDD4E /* Colors */,
 				1DA8BFB62A66AAB900AA8C66 /* Fonts */,
 				1DBC0F532A6D0FCB003F0CEB /* Lottie */,
@@ -313,6 +325,17 @@
 				DEF039CF2A67DA32002FEC51 /* UpCat.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		1D22D1462A6FB4A3004A8697 /* SvgOutline */ = {
+			isa = PBXGroup;
+			children = (
+				1D22D1492A6FB5DA004A8697 /* SvgViewExample.swift */,
+				1D22D1472A6FB53E004A8697 /* StageStSvg01.swift */,
+				1D22D14B2A6FB649004A8697 /* StageStSvg02.swift */,
+				1D22D14D2A6FB692004A8697 /* StageStSvg03.swift */,
+			);
+			path = SvgOutline;
 			sourceTree = "<group>";
 		};
 		1DA8BFB62A66AAB900AA8C66 /* Fonts */ = {
@@ -569,6 +592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BAF6CD92A6638B0003238FA /* ACarouselViewModel.swift in Sources */,
+				1DE47ED62A6D3E65001A4804 /* MyPageView.swift in Sources */,
 				833F29072A68D25900EE06CB /* SettingPopupView.swift in Sources */,
 				69AA2B302A658F350076DC58 /* StageInfo.swift in Sources */,
 				1B3FDC152A5E53A70081CCBB /* HeaderView.swift in Sources */,
@@ -590,8 +614,10 @@
 				DE30A09B2A66A7A1004D94E4 /* MainTopView.swift in Sources */,
 				1BAF6CD82A6638B0003238FA /* ACarousel.swift in Sources */,
 				1B3C68E12A6E0E8800FEF920 /* StageViewModel.swift in Sources */,
+				1D22D14C2A6FB649004A8697 /* StageStSvg02.swift in Sources */,
 				83C38BE82A6625710027D281 /* LottieView.swift in Sources */,
 				69AA2B282A658F090076DC58 /* UserFloor.swift in Sources */,
+				1D22D14A2A6FB5DA004A8697 /* SvgViewExample.swift in Sources */,
 				DE30A0992A66A788004D94E4 /* MainParallaxView.swift in Sources */,
 				69AA2B2A2A658F110076DC58 /* UserStage.swift in Sources */,
 				1B3FDC172A5E540C0081CCBB /* User.swift in Sources */,
@@ -600,7 +626,9 @@
 				1B1A95222A60D40800EA1100 /* StageView.swift in Sources */,
 				1B34B2FB2A662DBC00012CFA /* DataLoad.swift in Sources */,
 				1DB82A302A67BF2C006FDD4E /* LoginView.swift in Sources */,
+				1D22D14E2A6FB692004A8697 /* StageStSvg03.swift in Sources */,
 				695C44402A663952003A2D24 /* FirebaseManager.swift in Sources */,
+				1D22D1482A6FB53E004A8697 /* StageStSvg01.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
