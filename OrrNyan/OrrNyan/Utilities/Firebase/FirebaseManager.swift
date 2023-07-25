@@ -18,18 +18,20 @@ class FirebaseManager {
     
     /// 구글, 애플 로그인 할 때 불리는 함수입니다.
     /// Parameter credential: 각 로그인 함수에서의 AuthCredential
-    func signInToFirebase(credential: AuthCredential, userName: String) async throws {
-        let signInResult = try await Auth.auth().signIn(with: credential)
-        let resultUser = signInResult.user
-        if self.user == nil {
-            self.user = User(id: resultUser.uid, name: userName, email: resultUser.email ?? "", nickName: "")
+    func signInToFirebase(credential: AuthCredential, userName: String) {
+        
+        Auth.auth().signIn(with: credential) { result, error in
+            guard let resultUser = result?.user else {return}
+            if self.user == nil {
+                self.user = User(id: resultUser.uid, name: userName, email: resultUser.email ?? "", nickName: "")
+            }
         }
+        
     }
     
     /// Firebase의 firestore DB에 유저를 등록시킵니다.
     /// Parameter result: signInToFirebase 함수의 result
     func createUser(_ nickName: String) async throws {
-        print("New User Create")
         
         if let userId = user?.id {
             try await db.collection("User").document(userId).setData([
@@ -40,9 +42,11 @@ class FirebaseManager {
                 "lastVisitDate": Date(),
                 "createdAt": Date()
             ])
-            
+
             UserDefaults.standard.set(userId, forKey: "userId")
             UserDefaults.standard.set(user?.lastVisitDate, forKey: "lastVisitDate")
+            print("New User Create")
+            
         }
     }
     

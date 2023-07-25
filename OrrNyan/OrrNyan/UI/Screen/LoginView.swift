@@ -8,22 +8,32 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject var vm = SignInWithGoogle()
+    @StateObject var signInWithApple = SignInWithApple()
+    @StateObject var signInWithGoogle = SignInWithGoogle()
+    @State var isLoginSuccessed = false
     
     var body: some View {
         VStack{
             Button {
                 Task {
-                    try await vm.signInWithGoogle()
+                    try await signInWithGoogle.signInWithGoogle()
+                    isLoginSuccessed = signInWithGoogle.isLoginSuccessed
                 }
             } label: {
                 Text("구글 로그인")
             }
             
             Button {
-                SignInWithApple.instance.startSignInWithAppleFlow()
+                DispatchQueue.main.async {
+                    signInWithApple.startSignInWithAppleFlow()
+                    
+                }
+                isLoginSuccessed = signInWithApple.isLoginSuccessed
             } label: {
                 Text("애플 로그인")
+                    .onChange(of: signInWithApple.isLoginSuccessed) { newValue in
+                        isLoginSuccessed = newValue
+                    }
             }
             
             Button {
@@ -69,6 +79,12 @@ struct LoginView: View {
                 FirebaseManager.instance.logOut()
             } label: {
                 Text("logout").padding()
+            }
+            
+            if isLoginSuccessed {
+                Text("로그인 버튼눌리고, 성공했다")
+            }else {
+                Text("실패했다. 안눌리거나")
             }
         }
     }
