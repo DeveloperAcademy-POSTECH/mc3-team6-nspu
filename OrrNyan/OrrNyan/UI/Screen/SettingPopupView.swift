@@ -16,8 +16,7 @@ struct SettingPopupView: View {
     @State var isWheelShow = false
     @State var isAnimating = false
     
-    // audio manage
-    @StateObject var audioManager = AudioManager()
+    @StateObject var myAudio = AudioManager.instance
     
     var body: some View {
         
@@ -52,14 +51,31 @@ struct SettingPopupView: View {
             }
             
             // turn on and off BGM
-            Toggle("배경음", isOn: $audioManager.isBGMEnabled)
+            Toggle("배경음", isOn: myAudio.$isBGMEnabled)
+                .onChange(of: myAudio.isBGMEnabled) { isPlay in
+                    if isPlay {
+                        AudioManager.instance.playBGM()
+                    }
+                    else{
+                        AudioManager.instance.stopBGM()
+                    }
+                }
             
             // turn on and off sound effects
-            Toggle("효과음", isOn: $audioManager.isSFXEnabled)
+            Toggle("효과음", isOn: myAudio.$isSFXEnabled)
             
+            
+            // test code =========================================
+            
+            Button("Test Button"){
+                AudioManager.instance.playSFX(fileName: "TestMeow", fileType: "wav")
+            }
+            
+            // test code =========================================
         }
         .toggleStyle(SwitchToggleStyle(tint: Color.Purple200))
         .bold()
+        
     }
 }
 

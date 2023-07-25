@@ -16,9 +16,9 @@ struct OrrNyanApp: App {
     var body: some Scene {
         WindowGroup {
 //            ContentView()
-//            SettingPopupView()
-            StageView()
-                .environmentObject(StageViewModel())
+            SettingPopupView()
+//            StageView()
+//                .environmentObject(StageViewModel())
         }
     }
 }
