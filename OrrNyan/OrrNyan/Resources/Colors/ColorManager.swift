@@ -21,7 +21,7 @@ extension Color {
 	
 
 	// MARK: - Gray
-	///Hex : #E1E1EB
+	///Hex : #9F9FA9
 	static let Gray100 = Color("Gray100")
 	
 	///Hex : #767680
