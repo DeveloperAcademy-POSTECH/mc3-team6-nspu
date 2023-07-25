@@ -10,46 +10,19 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
-class FirebaseManager {
-    
-    static let instance = FirebaseManager()
+enum SignUpState {
+    case beforeSignUp
+    case duringSignUp
+    case afterSignUp
+}
+
+class FirebaseManager: ObservableObject {
+
     private var db = Firestore.firestore()
     private var user: User?
+    @Published var signUpState = SignUpState.beforeSignUp
     
-    /// 구글, 애플 로그인 할 때 불리는 함수입니다.
-    /// Parameter credential: 각 로그인 함수에서의 AuthCredential
-    func signInToFirebase(credential: AuthCredential, userName: String) {
-        
-        Auth.auth().signIn(with: credential) { result, error in
-            guard let resultUser = result?.user else {return}
-            if self.user == nil {
-                self.user = User(id: resultUser.uid, name: userName, email: resultUser.email ?? "", nickName: "")
-            }
-        }
-        
-    }
-    
-    /// Firebase의 firestore DB에 유저를 등록시킵니다.
-    /// Parameter result: signInToFirebase 함수의 result
-    func createUser(_ nickName: String) async throws {
-        
-        if let userId = user?.id {
-            try await db.collection("User").document(userId).setData([
-                "id": userId,
-                "name": user?.name ?? "error",
-                "email": user?.email ?? "error",
-                "nickName": nickName,
-                "lastVisitDate": Date(),
-                "createdAt": Date()
-            ])
-
-            UserDefaults.standard.set(userId, forKey: "userId")
-            UserDefaults.standard.set(user?.lastVisitDate, forKey: "lastVisitDate")
-            print("New User Create")
-            
-        }
-    }
-    
+    // TODO: 현재 사용하지 않음 - 삭제 예정?
     /// 유저 데이터를 불러옵니다.
     func readUserData() async throws {
         guard let userId = getCurrentUserId() else {return}
@@ -57,7 +30,6 @@ class FirebaseManager {
         let documentSnapshot = try await db.collection("User").document(userId).getDocument()
         
         let user = try documentSnapshot.data(as: User.self)
-        print("이거지이 \(user)")
     }
     
     /// 현재 유저의 uid를 가져옵니다.
@@ -70,13 +42,14 @@ class FirebaseManager {
         do {
             try Auth.auth().signOut()
             self.user = nil
+            self.signUpState = .beforeSignUp
             UserDefaults.standard.removeObject(forKey: "userId")
+            
         } catch {
             print(error)
         }
     }
 }
-
 
 // MARK: - Floor data 계산 CRUD
 extension FirebaseManager {
@@ -118,5 +91,85 @@ extension FirebaseManager {
             "totalFloors" : 1,
             "date" : Date()
         ])
+    }
+}
+
+
+// MARK: - LogIn
+extension FirebaseManager {
+    
+    /// 애플 로그인을 실행합니다.
+    func signInApple() async throws {
+        let helper = SignInWithApple()
+        let tokens = try await helper.startSignInWithAppleFlow()
+        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokens.token, rawNonce: tokens.nonce)
+        try await self.signIn(credential: credential)
+    }
+    
+    /// 구글 로그인을 실행합니다.
+    func singInGoogle() async throws {
+        let helper = SignInWithGoogle()
+        let tokens = try await helper.signInWithGoogle()
+        let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
+        try await self.signIn(credential: credential)
+    }
+    
+    /// 구글, 애플 로그인 인증서(credential)를 바탕으로 Firebase에 SignIn합니다.
+    /// Parameter credential: 각 로그인 함수에서의 AuthCredential
+    @MainActor
+    func signIn(credential: AuthCredential) async throws {
+        let authDataResult = try await Auth.auth().signIn(with: credential)
+        // authResultUser : SignIn Result User
+        let authResultUser = authDataResult.user
+        // DbUser : DB에 저장되어있는 유저
+        let DbUser = try await getUser(userId: authResultUser.uid)
+        if DbUser == nil {
+            self.user = User(id: authResultUser.uid, name: authResultUser.displayName ?? "", email: authResultUser.email ?? "", nickName: "")
+            self.signUpState = .duringSignUp
+        }
+        else {
+            UserDefaults.standard.set(authResultUser.uid, forKey: "userId")
+            UserDefaults.standard.set(Date(), forKey: "lastVisitDate")
+            self.signUpState = .afterSignUp
+        }
+    }
+    
+    /// Firebase의 firestore DB에 유저를 등록시킵니다. (닉네임 입력후 회원가입 완료할 때 사용)
+    /// Parameter result: signInToFirebase 함수의 result
+    @MainActor
+    func createUser(_ nickName: String) async throws {
+        
+        if let userId = user?.id {
+            try await db.collection("User").document(userId).setData([
+                "id": userId,
+                "name": user?.name ?? "error",
+                "email": user?.email ?? "error",
+                "nickName": nickName,
+                "lastVisitDate": Date(),
+                "createdAt": Date()
+            ])
+
+            UserDefaults.standard.set(userId, forKey: "userId")
+            UserDefaults.standard.set(user?.lastVisitDate, forKey: "lastVisitDate")
+            self.signUpState = .afterSignUp
+            print("New User Create")
+        }
+    }
+    
+    /// DB에 저장되어 있는 userId를 가진 유저 데이터를 반환합니다. ( 이미 회원가입을 한 유저인지 판별하기 위해 사용)
+    func getUser(userId: String) async throws -> User? {
+        let userCollection = db.collection("User")
+        let docRef = userCollection.document(userId)
+    
+        var result: User? = nil
+        
+        do {
+            let document = try await docRef.getDocument(as: User.self)
+            result = document
+        } catch {
+            result = nil
+        }
+        
+        return result
     }
 }
