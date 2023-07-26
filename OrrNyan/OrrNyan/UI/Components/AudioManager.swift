@@ -26,7 +26,7 @@ class AudioManager: ObservableObject {
                 UserDefaults.standard.set(true, forKey: "BGM")
                 playBGM()
             } else {
-                UserDefaults.standard.set(false, forKey: "SFX")
+                UserDefaults.standard.set(false, forKey: "BGM")
                 stopBGM()
             }
         }

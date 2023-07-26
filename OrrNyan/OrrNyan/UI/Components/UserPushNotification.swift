@@ -15,7 +15,7 @@ class UserPushNotification: ObservableObject {
     private init() {}
     
     var isAlertEnabled: Bool = false
-    var setTime: Date? = nil
+    var lastSetTime: Date? = nil
     
     // user sets notification authorization
     @Published var isToggleOn: Bool = UserDefaults.standard.bool(forKey: "agreedNoti"){
@@ -29,7 +29,6 @@ class UserPushNotification: ObservableObject {
             else {
                 UserDefaults.standard.set(false, forKey: "agreedNoti")
                 isAlertEnabled = false
-                UserDefaults.standard.set(nil, forKey: "AlertTime")
                 cancelNotification()
             }
         }
