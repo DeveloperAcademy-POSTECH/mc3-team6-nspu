@@ -48,7 +48,7 @@ struct FrameInAnimation: View {
             Image("StageEm01_03")
                 .resizable()
                 .scaledToFit()
-                .frame(width: (UIScreen.width)*2, height: (UIScreen.height)*2)
+                .frame(width: (UIScreen.main.bounds.width)*2, height: (UIScreen.main.bounds.height)*2)
                 .offset(x: rightImageOffset, y: 0)
                 .animation(.easeInOut(duration: 1.5))
         }
