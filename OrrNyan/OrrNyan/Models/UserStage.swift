@@ -13,4 +13,4 @@ struct UserStage {
     var currentStageFloors: Int
 }
 
-let userStageTestInstance: UserStage = UserStage(id: UUID(), currentStage: 2, currentStageFloors: 4)
+let userStageTestInstance: UserStage = UserStage(id: UUID(), currentStage: 1, currentStageFloors: 4)
