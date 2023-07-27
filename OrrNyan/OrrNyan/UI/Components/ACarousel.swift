@@ -19,9 +19,9 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
     private let content: (Data.Element) -> Content
 //    let stageStSvgs: [AnyView] = [AnyView(Circle()), AnyView(Rectangle()), AnyView(Text("global"))]
     var stageStSvgs: [AnyView] = [AnyView(StageStSvg01()), AnyView(StageStSvg02()), AnyView(StageStSvg03())]
-    let lottieOffset: [(CGFloat, CGFloat)] = [(0.13, 0.07), (-0.1, -0.05), (0.3, 0.3)]
-    let pawOffset: [(CGFloat, CGFloat)] = [(-0.08, 0.15), (-0.05, 0.08), (0.3, 0.3)]
-    let catRotationDegree: [Double] = [270, 270, 0]
+    let lottieOffset: [(CGFloat, CGFloat)] = [(0.13, 0.07), (-0.1, -0.05), (-0.1, -0.08)]
+    let pawOffset: [(CGFloat, CGFloat)] = [(-0.08, 0.15), (-0.05, 0.08), (-0.05, -0.01)]
+    let catRotationDegree: [Double] = [270, 270, 271]
     let cat3DRotationDegree: [Double] = [180, 0, 0]
     var nameSpace: Namespace.ID
 
