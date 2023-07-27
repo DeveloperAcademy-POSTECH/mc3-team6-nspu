@@ -17,7 +17,8 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
 
     // ACarousel에 들어갈 Content(View)를 content에 저장합니다.
     private let content: (Data.Element) -> Content
-    let stageStSvgs: [AnyView] = [AnyView(StageStSvg01()), AnyView(StageStSvg02()), AnyView(StageStSvg03())]
+    let stageStSvgs: [AnyView] = [AnyView(Circle()), AnyView(Rectangle()), AnyView(Text("global"))]
+//     var stageStSvgs: [AnyView] = [AnyView(StageStSvg01()), AnyView(StageStSvg02()), AnyView(StageStSvg03())]
     let lottieOffset: [(CGFloat, CGFloat)] = [(0.13, 0.07), (-0.1, -0.05), (0.3, 0.3)]
     let pawOffset: [(CGFloat, CGFloat)] = [(-0.08, 0.15), (-0.05, 0.08), (0.3, 0.3)]
     var nameSpace: Namespace.ID
@@ -43,8 +44,13 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .blur(radius: viewModel.blur(element))
                                     .opacity(viewModel.opacityScaling(element))
                                     .matchedGeometryEffect(id: "StageStImage0\(tempElement.index + 1)", in: nameSpace)
+                                    .onAppear {
+//                                        print("theindex \(tempElement.index)")
+                                        print("arrCount \(tempElement.index)")
+                                        print(tempElement)
+                                    }
                                     .overlay {
-                                        stageStSvgs[tempElement.index]
+                                        stageStSvgs[min(max(0, tempElement.index), 2)]
                                             .foregroundColor(.blue.opacity(0.01))
                                             .onTapGesture {
                                                 if UserDefaults.standard.object(forKey: "stageActiveIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
