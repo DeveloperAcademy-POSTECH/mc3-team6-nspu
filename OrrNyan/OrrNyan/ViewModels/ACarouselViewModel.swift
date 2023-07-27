@@ -44,8 +44,6 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
             activeIndex = index.wrappedValue + 1
             UserDefaults.standard.set(index.wrappedValue + 1, forKey: "stageActiveIndex")
         } else {
-//            activeIndex = index.wrappedValue
-//            UserDefaults.standard.set(0, forKey: "stageActiveIndex")
             activeIndex = UserDefaults.standard.object(forKey: "selectedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "selectedStageIndex") as! Int
         }
 
@@ -77,13 +75,13 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
 
     /// reduce active index by 1
     func reduceActiveIndex() {
-        activeIndex -= 1
+        activeIndex = max(0, activeIndex - 1)
         setUserDefaultsActiveIndex(index: activeIndex)
     }
 
     /// increase active index by 1
     func increaseActiveIndex() {
-        activeIndex += 1
+        activeIndex = min(activeIndex + 1, data.count - 1)
         setUserDefaultsActiveIndex(index: activeIndex)
     }
     
@@ -333,17 +331,14 @@ extension ACarouselViewModel {
         var activeIndex = self.activeIndex
         // 이전으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width > dragThreshold {
-            activeIndex -= 1
-            setUserDefaultsActiveIndex(index: activeIndex)
+            reduceActiveIndex()
         }
         // 다음 방향으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width < -dragThreshold {
-            activeIndex += 1
-            setUserDefaultsActiveIndex(index: activeIndex)
+            increaseActiveIndex()
         }
-//        _indexScaling = 1.0
         // activeIndex가 음수가 되는 것 방지, activeIndex가 최댓값을 넘어가는 것 방지
-        self.activeIndex = max(0, min(activeIndex, data.count - 1))
+//        self.activeIndex = max(0, min(activeIndex, data.count - 1))
     }
 }
 
