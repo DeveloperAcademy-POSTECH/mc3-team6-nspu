@@ -17,10 +17,12 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
 
     // ACarousel에 들어갈 Content(View)를 content에 저장합니다.
     private let content: (Data.Element) -> Content
-    let stageStSvgs: [AnyView] = [AnyView(Circle()), AnyView(Rectangle()), AnyView(Text("global"))]
-//     var stageStSvgs: [AnyView] = [AnyView(StageStSvg01()), AnyView(StageStSvg02()), AnyView(StageStSvg03())]
-    let lottieOffset: [(CGFloat, CGFloat)] = [(0.13, 0.07), (-0.1, -0.05), (0.3, 0.3)]
-    let pawOffset: [(CGFloat, CGFloat)] = [(-0.08, 0.15), (-0.05, 0.08), (0.3, 0.3)]
+//    let stageStSvgs: [AnyView] = [AnyView(Circle()), AnyView(Rectangle()), AnyView(Text("global"))]
+    var stageStSvgs: [AnyView] = [AnyView(StageStSvg01()), AnyView(StageStSvg02()), AnyView(StageStSvg03())]
+    let lottieOffset: [(CGFloat, CGFloat)] = [(0.13, 0.07), (-0.1, -0.05), (-0.1, -0.08)]
+    let pawOffset: [(CGFloat, CGFloat)] = [(-0.08, 0.15), (-0.05, 0.08), (-0.05, -0.01)]
+    let catRotationDegree: [Double] = [270, 270, 271]
+    let cat3DRotationDegree: [Double] = [180, 0, 0]
     var nameSpace: Namespace.ID
 
     public var body: some View {
@@ -50,7 +52,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                         print(tempElement)
                                     }
                                     .overlay {
-                                        stageStSvgs[min(max(0, tempElement.index), 2)]
+                                        stageStSvgs[tempElement.index]
                                             .foregroundColor(.blue.opacity(0.01))
                                             .onTapGesture {
                                                 if UserDefaults.standard.object(forKey: "stageActiveIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
@@ -70,8 +72,8 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .opacity(viewModel.buttonOpacity(element))
                                 if tempElement.index == userStageTestInstance.currentStage - 1 {
                                     LottieView(filename: "LottieMainViewSit")
-                                        .rotationEffect(Angle(degrees: -90))
-                                        .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                                        .rotationEffect(Angle(degrees: catRotationDegree[tempElement.index]))
+                                        .rotation3DEffect(.degrees(cat3DRotationDegree[tempElement.index]), axis: (x: 0, y: 1, z: 0))
                                         .frame(width: UIScreen.width * 0.1, height: UIScreen.width * 0.1)
                                         .offset(x: UIScreen.width * lottieOffset[tempElement.index].0, y: UIScreen.height * lottieOffset[tempElement.index].1)
                                         .opacity(tempElement.index == viewModel.activeIndex ? 1 : 0)
