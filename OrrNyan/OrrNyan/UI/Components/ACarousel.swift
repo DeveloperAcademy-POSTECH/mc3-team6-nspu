@@ -18,87 +18,101 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
     // ACarousel에 들어갈 Content(View)를 content에 저장합니다.
     private let content: (Data.Element) -> Content
     let stageStSvgs: [AnyView] = [AnyView(StageStSvg01()), AnyView(StageStSvg02()), AnyView(StageStSvg03())]
+    let lottieOffset: [(CGFloat, CGFloat)] = [(0.13, 0.07), (-0.1, -0.05), (0.3, 0.3)]
+    let pawOffset: [(CGFloat, CGFloat)] = [(-0.08, 0.15), (-0.05, 0.08), (0.3, 0.3)]
     var nameSpace: Namespace.ID
 
     public var body: some View {
         GeometryReader { proxy in
             ZStack {
-//                withAnimation(viewModel.offsetAnimation){
-                    HStack(spacing: viewModel.spacing) {
-                        // MARK: - Carousel에 들어갈 컨텐츠들을 배치합니다.
-                        
-                        ForEach(viewModel.data, id: viewModel.dataId) { element in
-                            let tempElement = element as! StageItem
-                            
-                            VStack(spacing: 0) {
-                                // MARK: - Carousel에 배치될 이미지와 잠금 표시를 렌더링합니다.
-                                
-                                ZStack {
-                                    tempElement.image
-                                        .resizable()
-                                        .scaledToFill()
-                                        .scaleEffect(x: 1, y: viewModel.itemScaling(element), anchor: .bottom)
-                                        .grayscale(viewModel.grayScaling(element))
-                                        .blur(radius: viewModel.blur(element))
-                                        .opacity(viewModel.opacityScaling(element))
-                                        .matchedGeometryEffect(id: "StageStImage0\(tempElement.index + 1)", in: nameSpace)
-                                        .overlay{
-                                            stageStSvgs[tempElement.index]
-                                                .foregroundColor(.blue.opacity(0.01))
-                                                .onTapGesture {
-                                                    if UserDefaults.standard.object(forKey: "stageActiveIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
-                                                        UserDefaults.standard.set(tempElement.index, forKey: "selectedStageIndex")
-                                                        stageViewModel.selectedIndex = tempElement.index
-                                                        withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
-                                                            stageViewModel.isMainDisplayed = true
-                                                        }
+                HStack(spacing: viewModel.spacing) {
+                    // MARK: - Carousel에 들어갈 컨텐츠들을 배치합니다.
+
+                    ForEach(viewModel.data, id: viewModel.dataId) { element in
+                        let tempElement = element as! StageItem
+
+                        VStack(spacing: 0) {
+                            // MARK: - Carousel에 배치될 이미지와 잠금 표시를 렌더링합니다.
+
+                            ZStack {
+                                tempElement.image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .scaleEffect(x: 1, y: viewModel.itemScaling(element), anchor: .bottom)
+                                    .grayscale(viewModel.grayScaling(element))
+                                    .blur(radius: viewModel.blur(element))
+                                    .opacity(viewModel.opacityScaling(element))
+                                    .matchedGeometryEffect(id: "StageStImage0\(tempElement.index + 1)", in: nameSpace)
+                                    .overlay {
+                                        stageStSvgs[tempElement.index]
+                                            .foregroundColor(.blue.opacity(0.01))
+                                            .onTapGesture {
+                                                if UserDefaults.standard.object(forKey: "stageActiveIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
+                                                    UserDefaults.standard.set(tempElement.index, forKey: "selectedStageIndex")
+                                                    stageViewModel.selectedIndex = tempElement.index
+                                                    withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
+                                                        stageViewModel.isMainDisplayed = true
                                                     }
                                                 }
-                                        }
-                                        .frame(width: viewModel.itemWidth)
-//                                        .overlay{
-//                                            Rectangle().opacity(0.5)
-////                                            stageStSvgs[tempElement.index]
-//                                        }
-                                    Image(systemName: "lock.fill")
-                                        .foregroundColor(.White300)
-                                        .font(.system(size: 30))
-                                        .shadow(radius: 7)
-                                        .opacity(viewModel.buttonOpacity(element))
-                                }
-                                .padding(.top, UIScreen.height * 0.1)
-                                
-                                // MARK: - Stage Info Text 들어가는 HStack
-                                
-                                HStack {
-                                    Spacer()
-                                    VStack(alignment: .trailing, spacing: 0) {
-                                        Image("TextDivider")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: UIScreen.width * 0.13)
-                                        Text(tempElement.name)
-                                            .font(.pretendard(size: UIScreen.width * 0.057, .bold))
-                                            .foregroundColor(.Black100)
-                                            .padding(.top, 10)
-                                        Text("\(tempElement.floors)층")
-                                            .font(.pretendard(size: UIScreen.width * 0.05, .semiBold))
-                                            .foregroundColor(.Purple200)
-                                            .padding(.top, 3)
+                                            }
                                     }
+                                    .frame(width: viewModel.itemWidth)
+                                Image(systemName: "lock.fill")
+                                    .foregroundColor(.White300)
+                                    .font(.system(size: 30))
+                                    .shadow(radius: 7)
+                                    .opacity(viewModel.buttonOpacity(element))
+                                if tempElement.index == userStageTestInstance.currentStage - 1 {
+                                    LottieView(filename: "LottieMainViewSit")
+                                        .rotationEffect(Angle(degrees: -90))
+                                        .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                                        .frame(width: UIScreen.width * 0.1, height: UIScreen.width * 0.1)
+                                        .offset(x: UIScreen.width * lottieOffset[tempElement.index].0, y: UIScreen.height * lottieOffset[tempElement.index].1)
+                                        .opacity(tempElement.index == viewModel.activeIndex ? 1 : 0)
+
+                                    VStack(spacing: 2) {
+                                        Image(systemName: "pawprint.fill")
+                                            .padding(.leading, 20)
+                                        Image(systemName: "pawprint.fill")
+                                    }
+                                    .font(.system(size: 11))
+                                    .offset(x: UIScreen.width * pawOffset[tempElement.index].0, y: UIScreen.height * pawOffset[tempElement.index].1)
+                                    .opacity(tempElement.index == viewModel.activeIndex ? 1 : 0)
                                 }
-                                .padding(.top, 20)
-                                .frame(width: viewModel.itemWidth)
-                                .offset(x: 30)
-                                .opacity(viewModel.activeIndex == tempElement.index ? 1 : 0)
                             }
+                            .padding(.top, UIScreen.height * 0.1)
+
+                            // MARK: - Stage Info Text 들어가는 HStack
+
+                            HStack {
+                                Spacer()
+                                VStack(alignment: .trailing, spacing: 0) {
+                                    Image("TextDivider")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: UIScreen.width * 0.13)
+                                    Text(tempElement.name)
+                                        .font(.pretendard(size: UIScreen.width * 0.057, .bold))
+                                        .foregroundColor(.Black100)
+                                        .padding(.top, 10)
+                                    Text("\(tempElement.floors)층")
+                                        .font(.pretendard(size: UIScreen.width * 0.05, .semiBold))
+                                        .foregroundColor(.Purple200)
+                                        .padding(.top, 3)
+                                }
+                            }
+                            .padding(.top, 20)
+                            .frame(width: viewModel.itemWidth)
+                            .offset(x: 30)
+                            .opacity(viewModel.activeIndex == tempElement.index ? 1 : 0)
                         }
                     }
-                    .frame(width: proxy.size.width, alignment: .leading)
-                    .offset(x: viewModel.offset)
-                    .gesture(viewModel.dragGesture)
-                    .animation(viewModel.offsetAnimation)
-//                }
+                }
+                .frame(width: proxy.size.width, alignment: .leading)
+                .offset(x: viewModel.offset)
+                .gesture(viewModel.dragGesture)
+                .animation(viewModel.offsetAnimation)
+
                 // MARK: - forward, backward button
 
                 HStack {
