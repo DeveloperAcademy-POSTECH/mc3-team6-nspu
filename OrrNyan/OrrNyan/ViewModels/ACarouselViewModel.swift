@@ -206,12 +206,12 @@ extension ACarouselViewModel {
         }
         let tempItem = item as! StageItem
         if activeIndex == tempItem.index {
-            return 1.15
+            return 1
         } else if activeIndex < tempItem.index {
-            return 1.35 - 0.2 * indexScaling
+            return 1.2 - 0.2 * indexScaling
         }
         else {
-            return 1.15 - 0.2 * indexScaling
+            return 1 - 0.2 * indexScaling
         }
     }
 }

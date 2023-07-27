@@ -18,24 +18,25 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
     // ACarousel에 들어갈 Content(View)를 content에 저장합니다.
     private let content: (Data.Element) -> Content
 
-//    @Namespace var nameSpace
     var nameSpace: Namespace.ID
+
     public var body: some View {
         GeometryReader { proxy in
-//            viewModel.viewSize = proxy.size
-//            return AnyView(generateContent(proxy: proxy, nameSpace: nameSpace))
             ZStack {
                 HStack(spacing: viewModel.spacing) {
+                    // MARK: - Carousel에 들어갈 컨텐츠들을 배치합니다.
+
                     ForEach(viewModel.data, id: viewModel.dataId) { element in
                         let tempElement = element as! StageItem
 
-                        // Carousel로 사용할 컨텐츠들을 배치합니다.
                         VStack(spacing: 0) {
+                            // MARK: - Carousel에 배치될 이미지와 잠금 표시를 렌더링합니다.
+
                             ZStack {
                                 tempElement.image
                                     .resizable()
                                     .scaledToFill()
-//                                    .scaleEffect(x: 1.15, y: viewModel.itemScaling(element), anchor: .bottom)
+                                    .scaleEffect(x: 1, y: viewModel.itemScaling(element), anchor: .bottom)
                                     .grayscale(viewModel.grayScaling(element))
                                     .blur(radius: viewModel.blur(element))
                                     .opacity(viewModel.opacityScaling(element))
@@ -50,23 +51,31 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                             }
                                         }
                                     }
-//                                    .overlay(Rectangle().fill(.red).opacity(0.3))
                                 Image(systemName: "lock.fill")
                                     .foregroundColor(.White300)
                                     .font(.system(size: 30))
                                     .shadow(radius: 7)
                                     .opacity(viewModel.buttonOpacity(element))
                             }
-                            .overlay(Rectangle().opacity(0.5))
+                            .padding(.top, UIScreen.main.bounds.height * 0.1)
+
+                            // MARK: - Stage Info Text 들어가는 HStack
+
                             HStack {
                                 Spacer()
-                                VStack(alignment: .trailing) {
+                                VStack(alignment: .trailing, spacing: 0) {
                                     Image("TextDivider")
                                         .resizable()
-                                        .frame(width: 50, height: 20)
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: UIScreen.main.bounds.width * 0.13)
                                     Text(tempElement.name)
-                                        .font(.pretendard(size: 24, .bold))
+                                        .font(.pretendard(size: UIScreen.main.bounds.width * 0.057, .bold))
+                                        .foregroundColor(.Black100)
+                                        .padding(.top, 10)
                                     Text("\(tempElement.floors)층")
+                                        .font(.pretendard(size: UIScreen.main.bounds.width * 0.05, .semiBold))
+                                        .foregroundColor(.Purple200)
+                                        .padding(.top, 3)
                                 }
                             }
                             .padding(.top, 20)
@@ -81,7 +90,8 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                 .gesture(viewModel.dragGesture)
                 .animation(viewModel.offsetAnimation)
 
-                // forward, backward button
+                // MARK: - forward, backward button
+
                 HStack {
                     Button {
                         viewModel.reduceActiveIndex()
@@ -225,18 +235,3 @@ public extension ACarousel where ID == Data.Element.ID, Data.Element: Identifiab
         self.content = content
     }
 }
-
-// @available(iOS 14.0, OSX 11.0, *)
-// struct ACarousel_LibraryContent: LibraryContentProvider {
-//    let Datas = Array(repeating: _Item(color: .red), count: 3)
-//    @LibraryContentBuilder
-//    var views: [LibraryItem] {
-//        LibraryItem(ACarousel(Datas) { _ in }, title: "ACarousel", category: .control)
-//        LibraryItem(ACarousel(Datas, index: .constant(0), spacing: 10, headspace: 10, sidesScaling: 0.8, isWrap: false) { _ in }, title: "ACarousel full parameters", category: .control)
-//    }
-//
-//    struct _Item: Identifiable {
-//        let id = UUID()
-//        let color: Color
-//    }
-// }

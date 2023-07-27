@@ -56,7 +56,11 @@ struct MainTopView: View {
                 .padding(.vertical, 10)
                 .background(.white)
                 .cornerRadius(16)
-                .shadow(color: .black.opacity(0.25), radius: 10, y: 4)
+                .shadow(color: .black.opacity(0.1), radius: 2, y: 4)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(LinearGradient(colors: [.White200, .White200.opacity(0)], startPoint: .leading, endPoint: .topTrailing), lineWidth: 1.5)
+                }
             }
         }
         .padding(.top, 65)
@@ -93,13 +97,18 @@ struct StairCase: View {
     @State var showingPopup = false
     @EnvironmentObject var stageViewModel: StageViewModel
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             Text("총 오른 층계")
-                .font(.pretendard(size: 18, .semiBold))
+//                .font(.pretendard(size: 18, .semiBold))
+                .font(.pretendard(size: UIScreen.main.bounds.width * 0.045, .semiBold))
                 .foregroundColor(stageViewModel.isMainDisplayed ? .White200 : .Black100)
+            
             Text("\(userFloorTestInstance.totalFloors)층")
-                .font(.pretendard(size: 40, .semiBold))
+//                .font(.pretendard(size: 40, .semiBold))
+
+                .font(.pretendard(size: UIScreen.main.bounds.width * 0.1, .semiBold))
                 .foregroundColor(.Purple300)
+                .padding(.top, 6)
         }
         .rotation3DEffect(Angle(degrees: degree), axis: (x: 1, y: 0, z: 0))
     }
@@ -112,10 +121,14 @@ struct Stair: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("총 오른 계단")
-                .font(.pretendard(size: 18, .semiBold))
+//                .font(.pretendard(size: 18, .semiBold))
+
+                .font(.pretendard(size: UIScreen.main.bounds.width * 0.045, .semiBold))
                 .foregroundColor(stageViewModel.isMainDisplayed ? .White200 : .Black100)
             Text("\(userFloorTestInstance.totalFloors * 16)계단")
-                .font(.pretendard(size: 40, .semiBold))
+//                .font(.pretendard(size: 40, .semiBold))
+
+                .font(.pretendard(size: UIScreen.main.bounds.width * 0.1, .semiBold))
                 .foregroundColor(.Purple300)
         }
         .rotation3DEffect(Angle(degrees: degree), axis: (x: 1, y: 0, z: 0))

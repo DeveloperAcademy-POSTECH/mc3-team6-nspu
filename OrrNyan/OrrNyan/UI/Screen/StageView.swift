@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct StageView: View {
     // stageStructureImageTitle을 String 배열로 만들고,
     // UUID를 포함한 Items배열로 변환해 items 변수에 저장합니다.
@@ -17,24 +16,29 @@ struct StageView: View {
 
     @EnvironmentObject var viewModel: StageViewModel
     @Namespace var nameSpace
-    
 
     var body: some View {
         NavigationView {
             VStack {
                 ZStack {
+                    Color.White200
                     if !viewModel.isMainDisplayed {
                         ZStack {
                             VStack {
                                 MainTopView()
                                     .zIndex(.infinity)
+//                                    .border(.blue)
                                 Spacer()
-                                    .overlay(Rectangle())
-                                ACarousel(stageStImageTitle, headspace: 80, nameSpace: nameSpace){ item in
-                                    
-                                }
-                         StageBottomView()
+                                StageBottomView()
+//                                    .border(.blue)
                             }
+
+                            ACarousel(stageStImageTitle, headspace: 80, nameSpace: nameSpace) { _ in
+                            }
+                            .frame(height: UIScreen.main.bounds.height * 0.75)
+                            .offset(y: UIScreen.main.bounds.height * 0.01)
+//                            .padding(.top, UIScreen.main.bounds.height * 0.05)
+//                            .border(.red)
                         }
                     }
                     else {
