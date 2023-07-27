@@ -1,17 +1,14 @@
 //
-//  UserModel.swift
+//  User.swift
 //  OrrNyan
 //
-//  Created by 박상원 on 2023/07/12.
+//  Created by Jay on 2023/07/27.
 //
 
 import Foundation
 
-struct User: Codable {
-    let id: String
-    let name: String
-    let email: String
-    var nickName: String
-    var lastVisitDate: Date?
-    var createdAt: Date?
+/// User 관련한 객체들을 하나로 통합해서 관리할 싱글톤 입니다.
+struct User {
+    static let instance = User()
+    
 }
