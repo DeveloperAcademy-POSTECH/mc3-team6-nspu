@@ -18,9 +18,10 @@ struct UpCat: View {
                 moveImageUp()
             }
             Spacer()
-            Image("upCat")
-                .resizable()
-                .frame(width:30, height:45)
+            LottieView(filename: "LottieMainViewWalk")
+                .frame(width:100, height:100)
+                .rotationEffect(Angle(degrees: -90))
+                .frame(width: UIScreen.main.bounds.width*0.17, height: UIScreen.main.bounds.height*0.17)
                 .offset(y: imagePositionY)
         }
     }
