@@ -73,18 +73,22 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     @Published var dragOffset: CGFloat = .zero
 
     /// size of GeometryProxy
-    var viewSize: CGSize = .zero
+    var viewSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
 
     /// reduce active index by 1
     func reduceActiveIndex() {
         activeIndex -= 1
-        UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+        setUserDefaultsActiveIndex(index: activeIndex)
     }
 
     /// increase active index by 1
     func increaseActiveIndex() {
         activeIndex += 1
-        UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+        setUserDefaultsActiveIndex(index: activeIndex)
+    }
+    
+    func setUserDefaultsActiveIndex(index: Int){
+        UserDefaults.standard.set(index, forKey: "stageActiveIndex")
     }
 }
 
@@ -202,12 +206,12 @@ extension ACarouselViewModel {
         }
         let tempItem = item as! StageItem
         if activeIndex == tempItem.index {
-            return 1
+            return 1.15
         } else if activeIndex < tempItem.index {
-            return 1.2 - 0.2 * indexScaling
+            return 1.35 - 0.2 * indexScaling
         }
         else {
-            return 1.0 - 0.2 * indexScaling
+            return 1.15 - 0.2 * indexScaling
         }
     }
 }
@@ -330,12 +334,12 @@ extension ACarouselViewModel {
         // 이전으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width > dragThreshold {
             activeIndex -= 1
-            UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+            setUserDefaultsActiveIndex(index: activeIndex)
         }
         // 다음 방향으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width < -dragThreshold {
             activeIndex += 1
-            UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+            setUserDefaultsActiveIndex(index: activeIndex)
         }
 //        _indexScaling = 1.0
         // activeIndex가 음수가 되는 것 방지, activeIndex가 최댓값을 넘어가는 것 방지

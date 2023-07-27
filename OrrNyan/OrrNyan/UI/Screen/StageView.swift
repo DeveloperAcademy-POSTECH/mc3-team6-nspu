@@ -7,14 +7,17 @@
 
 import SwiftUI
 
+
 struct StageView: View {
     // stageStructureImageTitle을 String 배열로 만들고,
     // UUID를 포함한 Items배열로 변환해 items 변수에 저장합니다.
-    let stageStImageTitle = Stages().StageInfos.map { $0.stageStructureImageTitle }.map { StageItem(image: Image($0)) }
+    let stageStImageTitle = Stages().StageInfos.map { ($0.stageStructureImageTitle, $0.stageName, $0.stageFloors) }.map { StageItem(image: Image($0), name: String($1), floors: Int($2)) }
     let stageFloors = Stages().StageInfos.map { $0.stageFloors }
+    let stageNames = Stages().StageInfos.map { $0.stageName }
 
     @EnvironmentObject var viewModel: StageViewModel
     @Namespace var nameSpace
+    
 
     var body: some View {
         NavigationView {
@@ -26,27 +29,11 @@ struct StageView: View {
                                 MainTopView()
                                     .zIndex(.infinity)
                                 Spacer()
-                                ACarousel(stageStImageTitle, headspace: 80) { item in
-                                    ZStack {
-                                        item.image
-                                            .resizable()
-                                            .scaledToFill()
-                                            .matchedGeometryEffect(id: "StageStImage0\(item.index + 1)", in: nameSpace)
-                                            .onTapGesture {
-                                                if UserDefaults.standard.object(forKey: "stageActiveIndex") as! Int == item.index && userStageTestInstance.currentStage > item.index {
-                                                    UserDefaults.standard.set(item.index, forKey: "selectedStageIndex")
-                                                    viewModel.selectedIndex = item.index
-                                                    withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
-                                                        viewModel.isMainDisplayed = true
-                                                    }
-                                                }
-                                            }
-                                    }
+                                    .overlay(Rectangle())
+                                ACarousel(stageStImageTitle, headspace: 80, nameSpace: nameSpace){ item in
+                                    
                                 }
-                                VStack {
-                                    Image("TextDivider")
-                                }
-                                MainBottomView()
+                         StageBottomView()
                             }
                         }
                     }
