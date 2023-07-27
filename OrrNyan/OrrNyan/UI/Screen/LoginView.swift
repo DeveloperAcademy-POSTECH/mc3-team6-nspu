@@ -14,7 +14,7 @@ struct LoginView: View {
     var body: some View {
         // MARK: - LoginView
         VStack(spacing: 10){
-            LottieView(filename: "firstCat")
+            LottieView(filename: "LottieLoginView")
                 .frame(maxWidth: .infinity)
                 .frame(height:330)
                 .padding(.top, 130)
