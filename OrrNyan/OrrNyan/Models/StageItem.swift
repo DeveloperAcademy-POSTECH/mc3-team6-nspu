@@ -13,9 +13,13 @@ struct StageItem: Identifiable {
     let id = UUID()
     let index: Int
     let image: Image
-    init(image: Image) {
+    let name: String
+    let floors: Int
+    init(image: Image, name: String, floors: Int) {
         self.index = Self.indexCounter
         Self.indexCounter += 1
         self.image = image
+        self.name = name
+        self.floors = floors
     }
 }

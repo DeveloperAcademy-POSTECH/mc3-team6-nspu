@@ -44,8 +44,6 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
             activeIndex = index.wrappedValue + 1
             UserDefaults.standard.set(index.wrappedValue + 1, forKey: "stageActiveIndex")
         } else {
-//            activeIndex = index.wrappedValue
-//            UserDefaults.standard.set(0, forKey: "stageActiveIndex")
             activeIndex = UserDefaults.standard.object(forKey: "selectedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "selectedStageIndex") as! Int
         }
 
@@ -73,18 +71,22 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     @Published var dragOffset: CGFloat = .zero
 
     /// size of GeometryProxy
-    var viewSize: CGSize = .zero
+    var viewSize: CGSize = CGSize(width: UIScreen.width, height: UIScreen.height)
 
     /// reduce active index by 1
     func reduceActiveIndex() {
-        activeIndex -= 1
-        UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+        activeIndex = max(0, activeIndex - 1)
+        setUserDefaultsActiveIndex(index: activeIndex)
     }
 
     /// increase active index by 1
     func increaseActiveIndex() {
-        activeIndex += 1
-        UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+        activeIndex = min(activeIndex + 1, data.count - 1)
+        setUserDefaultsActiveIndex(index: activeIndex)
+    }
+    
+    func setUserDefaultsActiveIndex(index: Int){
+        UserDefaults.standard.set(index, forKey: "stageActiveIndex")
     }
 }
 
@@ -207,7 +209,7 @@ extension ACarouselViewModel {
             return 1.2 - 0.2 * indexScaling
         }
         else {
-            return 1.0 - 0.2 * indexScaling
+            return 1 - 0.2 * indexScaling
         }
     }
 }
@@ -313,7 +315,7 @@ extension ACarouselViewModel {
         // 현재 드래그된 값을 dragOffset에 저장
         /// set drag offset
         dragOffset = offset
-        _indexScaling = 1.0 - value.location.x / UIScreen.main.bounds.width
+        _indexScaling = 1.0 - value.location.x / UIScreen.width
     }
 
     private func dragEnded(_ value: DragGesture.Value) {
@@ -329,17 +331,14 @@ extension ACarouselViewModel {
         var activeIndex = self.activeIndex
         // 이전으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width > dragThreshold {
-            activeIndex -= 1
-            UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+            reduceActiveIndex()
         }
         // 다음 방향으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width < -dragThreshold {
-            activeIndex += 1
-            UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+            increaseActiveIndex()
         }
-//        _indexScaling = 1.0
         // activeIndex가 음수가 되는 것 방지, activeIndex가 최댓값을 넘어가는 것 방지
-        self.activeIndex = max(0, min(activeIndex, data.count - 1))
+//        self.activeIndex = max(0, min(activeIndex, data.count - 1))
     }
 }
 
