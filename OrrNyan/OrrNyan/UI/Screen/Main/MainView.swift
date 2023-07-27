@@ -12,6 +12,7 @@ struct MainView: View {
     var nameSpace: Namespace.ID
     var body: some View {
         ZStack {
+            Image("StageBg01").ignoresSafeArea()
             MainParallaxView(nameSpace: nameSpace)
             VStack {
                 MainTopView()
@@ -24,8 +25,6 @@ struct MainView: View {
             UpCat()
                 .frame(width: UIScreen.main.bounds.width)
         }
-        .background(Image("StageBg01").resizable())
-        .ignoresSafeArea()
         // 이거 없으면 옆으로 옮겨짐->밀리지 말고 뷰 안에서 작용하도록 함
         .frame(height: UIScreen.main.bounds.height)
     }

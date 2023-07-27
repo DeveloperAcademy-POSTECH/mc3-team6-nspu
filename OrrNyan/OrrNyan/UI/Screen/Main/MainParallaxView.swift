@@ -9,20 +9,25 @@ import SwiftUI
 
 struct MainParallaxView: View {
     @EnvironmentObject var stageViewModel: StageViewModel
+    var arr = ["1", "2", "3"]
     var nameSpace: Namespace.ID
     var body: some View {
         ZStack{
+            Image("StageBg01").ignoresSafeArea()
+            ForEach(arr, id: \.self){ item in
+                Image(item)
+            }
             FrameInAnimation()
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_01")
 //                Image("StageEm0\(stageViewModel.selectedIndex + 1)_02")
 //                Image("StageEm0\(stageViewModel.selectedIndex + 1)_03")
-                Image("StageEm0\(stageViewModel.selectedIndex + 1)_04")
-                Image("StageSt0\(stageViewModel.selectedIndex + 1)")
-                    .resizable()
-                    .matchedGeometryEffect(id: "StageStImage0\(stageViewModel.selectedIndex + 1)", in: nameSpace)
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: UIScreen.main.bounds.width*1.27)
-                    .shadow(radius: 5)
+            Image("StageEm0\(stageViewModel.selectedIndex + 1)_04")
+            Image("StageSt0\(stageViewModel.selectedIndex + 1)")
+                .resizable()
+                .matchedGeometryEffect(id: "StageStImage0\(stageViewModel.selectedIndex + 1)", in: nameSpace)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: UIScreen.main.bounds.width*0.75)
+                .shadow(radius: 5)
 
         }
     }
@@ -36,7 +41,6 @@ struct FrameInAnimation: View {
 
     var body: some View {
         ZStack {
-            Image("StageBg01").ignoresSafeArea()
             //왼쪽에서 들어오는 이미지
             Image("StageEm01_02")
                 .resizable()
