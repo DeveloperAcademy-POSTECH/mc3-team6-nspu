@@ -27,18 +27,14 @@ struct StageView: View {
                             VStack {
                                 MainTopView()
                                     .zIndex(.infinity)
-//                                    .border(.blue)
                                 Spacer()
                                 StageBottomView()
-//                                    .border(.blue)
                             }
 
                             ACarousel(stageStImageTitle, headspace: 80, nameSpace: nameSpace) { _ in
                             }
-                            .frame(height: UIScreen.main.bounds.height * 0.75)
-                            .offset(y: UIScreen.main.bounds.height * 0.01)
-//                            .padding(.top, UIScreen.main.bounds.height * 0.05)
-//                            .border(.red)
+                            .frame(height: UIScreen.height * 0.75)
+                            .offset(y: UIScreen.height * 0.01)
                         }
                     }
                     else {

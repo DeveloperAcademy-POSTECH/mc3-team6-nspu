@@ -65,7 +65,7 @@ struct MainTopView: View {
         }
         .padding(.top, 65)
         .padding(.horizontal, 26)
-        .frame(width: UIScreen.main.bounds.width)
+        .frame(width: UIScreen.width)
     }
 
     // MARK: - Flip Function
@@ -99,14 +99,11 @@ struct StairCase: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("총 오른 층계")
-//                .font(.pretendard(size: 18, .semiBold))
-                .font(.pretendard(size: UIScreen.main.bounds.width * 0.045, .semiBold))
+                .font(.pretendard(size: UIScreen.width * 0.045, .semiBold))
                 .foregroundColor(stageViewModel.isMainDisplayed ? .White200 : .Black100)
             
             Text("\(userFloorTestInstance.totalFloors)층")
-//                .font(.pretendard(size: 40, .semiBold))
-
-                .font(.pretendard(size: UIScreen.main.bounds.width * 0.1, .semiBold))
+                .font(.pretendard(size: UIScreen.width * 0.1, .semiBold))
                 .foregroundColor(.Purple300)
                 .padding(.top, 6)
         }
@@ -121,14 +118,10 @@ struct Stair: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("총 오른 계단")
-//                .font(.pretendard(size: 18, .semiBold))
-
-                .font(.pretendard(size: UIScreen.main.bounds.width * 0.045, .semiBold))
+                .font(.pretendard(size: UIScreen.width * 0.045, .semiBold))
                 .foregroundColor(stageViewModel.isMainDisplayed ? .White200 : .Black100)
             Text("\(userFloorTestInstance.totalFloors * 16)계단")
-//                .font(.pretendard(size: 40, .semiBold))
-
-                .font(.pretendard(size: UIScreen.main.bounds.width * 0.1, .semiBold))
+                .font(.pretendard(size: UIScreen.width * 0.1, .semiBold))
                 .foregroundColor(.Purple300)
         }
         .rotation3DEffect(Angle(degrees: degree), axis: (x: 1, y: 0, z: 0))

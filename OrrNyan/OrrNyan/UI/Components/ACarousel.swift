@@ -57,7 +57,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .shadow(radius: 7)
                                     .opacity(viewModel.buttonOpacity(element))
                             }
-                            .padding(.top, UIScreen.main.bounds.height * 0.1)
+                            .padding(.top, UIScreen.height * 0.1)
 
                             // MARK: - Stage Info Text 들어가는 HStack
 
@@ -67,13 +67,13 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     Image("TextDivider")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: UIScreen.main.bounds.width * 0.13)
+                                        .frame(width: UIScreen.width * 0.13)
                                     Text(tempElement.name)
-                                        .font(.pretendard(size: UIScreen.main.bounds.width * 0.057, .bold))
+                                        .font(.pretendard(size: UIScreen.width * 0.057, .bold))
                                         .foregroundColor(.Black100)
                                         .padding(.top, 10)
                                     Text("\(tempElement.floors)층")
-                                        .font(.pretendard(size: UIScreen.main.bounds.width * 0.05, .semiBold))
+                                        .font(.pretendard(size: UIScreen.width * 0.05, .semiBold))
                                         .foregroundColor(.Purple200)
                                         .padding(.top, 3)
                                 }

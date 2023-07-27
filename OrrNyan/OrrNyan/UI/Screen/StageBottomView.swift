@@ -29,7 +29,7 @@ struct StageBottomView: View {
         .padding(.leading, 21)
         .padding(.top, 20)
         .padding(.bottom, 34)
-        .frame(width: UIScreen.main.bounds.width)
+        .frame(width: UIScreen.width)
     }
 }
 

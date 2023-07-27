@@ -73,7 +73,7 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     @Published var dragOffset: CGFloat = .zero
 
     /// size of GeometryProxy
-    var viewSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+    var viewSize: CGSize = CGSize(width: UIScreen.width, height: UIScreen.height)
 
     /// reduce active index by 1
     func reduceActiveIndex() {
@@ -317,7 +317,7 @@ extension ACarouselViewModel {
         // 현재 드래그된 값을 dragOffset에 저장
         /// set drag offset
         dragOffset = offset
-        _indexScaling = 1.0 - value.location.x / UIScreen.main.bounds.width
+        _indexScaling = 1.0 - value.location.x / UIScreen.width
     }
 
     private func dragEnded(_ value: DragGesture.Value) {
