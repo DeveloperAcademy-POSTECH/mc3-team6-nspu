@@ -3,7 +3,7 @@
         "stageName" : "석가탑" ,
         "stageStructureImageTitle" : "StageSt01" ,
         "stageBgImageTitle" : "StageBg01" ,
-        "stageBgElementArray" : ["StageEm01_01", "StageEm01_02", "StageEm01_03", "StageEm01_04"] ,
+        "stageBgElementArray" : ["StageEm01_01", "StageEm01_02", "StageEm01_03", "StageEm01_04","StageEm01_05","StageEm01_06"] ,
         "stageLocation" : "Korea" ,
         "stageFloors" : 3 ,
         "stageHeight" : 11
@@ -12,7 +12,7 @@
         "stageName" : "그리스도상" ,
         "stageStructureImageTitle" : "StageSt02" ,
         "stageBgImageTitle" : "StageBg02" ,
-        "stageBgElementArray" : ["StageEm02_01", "StageEm02_02", "StageEm02_03"] ,
+        "stageBgElementArray" : ["StageEm02_01", "StageEm02_02", "StageEm02_03","StageEm02_04","StageEm01_05"] ,
         "stageLocation" : "Brazil" ,
         "stageFloors" : 8 ,
         "stageHeight" : 30
@@ -21,7 +21,7 @@
         "stageName" : "피사의 사탑" ,
         "stageStructureImageTitle" : "StageSt03" ,
         "stageBgImageTitle" : "StageBg03" ,
-        "stageBgElementArray" : ["StageEm03_01", "StageEm03_02", "StageEm03_03"] ,
+        "stageBgElementArray" : ["StageEm03_01", "StageEm03_02", "StageEm03_03","StageEm03_04"] ,
         "stageLocation" : "Italy" ,
         "stageFloors" : 14 ,
         "stageHeight" : 56
