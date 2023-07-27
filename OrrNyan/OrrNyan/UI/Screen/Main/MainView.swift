@@ -12,16 +12,16 @@ struct MainView: View {
     var nameSpace: Namespace.ID
     var body: some View {
         ZStack {
-            Image("StageBg01").ignoresSafeArea()
             MainParallaxView(nameSpace: nameSpace)
             VStack {
                 MainTopView()
                 Spacer()
-                    MainBottomView()
-                        .onTapGesture {
-                            stageViewModel.isMainDisplayed = false
-                    }
+                MainBottomView()
+                    .onTapGesture {
+                        stageViewModel.isMainDisplayed = false
+                }
             }
+            .frame(height: UIScreen.height)
             UpCat()
                 .frame(width: UIScreen.width)
         }
