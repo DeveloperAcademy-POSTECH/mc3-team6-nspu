@@ -73,18 +73,22 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     @Published var dragOffset: CGFloat = .zero
 
     /// size of GeometryProxy
-    var viewSize: CGSize = .zero
+    var viewSize: CGSize = CGSize(width: UIScreen.width, height: UIScreen.height)
 
     /// reduce active index by 1
     func reduceActiveIndex() {
         activeIndex -= 1
-        UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+        setUserDefaultsActiveIndex(index: activeIndex)
     }
 
     /// increase active index by 1
     func increaseActiveIndex() {
         activeIndex += 1
-        UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+        setUserDefaultsActiveIndex(index: activeIndex)
+    }
+    
+    func setUserDefaultsActiveIndex(index: Int){
+        UserDefaults.standard.set(index, forKey: "stageActiveIndex")
     }
 }
 
@@ -207,7 +211,7 @@ extension ACarouselViewModel {
             return 1.2 - 0.2 * indexScaling
         }
         else {
-            return 1.0 - 0.2 * indexScaling
+            return 1 - 0.2 * indexScaling
         }
     }
 }
@@ -313,7 +317,7 @@ extension ACarouselViewModel {
         // 현재 드래그된 값을 dragOffset에 저장
         /// set drag offset
         dragOffset = offset
-        _indexScaling = 1.0 - value.location.x / UIScreen.main.bounds.width
+        _indexScaling = 1.0 - value.location.x / UIScreen.width
     }
 
     private func dragEnded(_ value: DragGesture.Value) {
@@ -330,12 +334,12 @@ extension ACarouselViewModel {
         // 이전으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width > dragThreshold {
             activeIndex -= 1
-            UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+            setUserDefaultsActiveIndex(index: activeIndex)
         }
         // 다음 방향으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width < -dragThreshold {
             activeIndex += 1
-            UserDefaults.standard.set(activeIndex, forKey: "stageActiveIndex")
+            setUserDefaultsActiveIndex(index: activeIndex)
         }
 //        _indexScaling = 1.0
         // activeIndex가 음수가 되는 것 방지, activeIndex가 최댓값을 넘어가는 것 방지

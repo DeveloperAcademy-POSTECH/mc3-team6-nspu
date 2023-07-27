@@ -29,10 +29,54 @@ struct MainParallaxView: View {
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.8)
                 .shadow(radius: 5)
                 .border(.red)
+            FrameInAnimation()
+            Image("StageEm0\(stageViewModel.selectedIndex + 1)_01")
+//                Image("StageEm0\(stageViewModel.selectedIndex + 1)_02")
+//                Image("StageEm0\(stageViewModel.selectedIndex + 1)_03")
+                Image("StageEm0\(stageViewModel.selectedIndex + 1)_04")
+                Image("StageSt0\(stageViewModel.selectedIndex + 1)")
+                    .resizable()
+                    .matchedGeometryEffect(id: "StageStImage0\(stageViewModel.selectedIndex + 1)", in: nameSpace)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: UIScreen.width*1.27)
+                    .shadow(radius: 5)
 
         }
     }
 }
+struct FrameInAnimation: View {
+    @EnvironmentObject var stageViewModel: StageViewModel
+    //맨 처음에 화면 양 옆에 숨어있도록 뷰 위치 설정
+    @State private var leftImageOffset: CGFloat = -300
+    @State private var rightImageOffset: CGFloat = UIScreen.main.bounds.width + 300
+
+    var body: some View {
+        ZStack {
+            //왼쪽에서 들어오는 이미지
+            Image("StageEm0\(stageViewModel.selectedIndex + 1)_02")
+                .resizable()
+                .scaledToFill()
+                .frame(width: (UIScreen.main.bounds.width)*1.0, height: (UIScreen.main.bounds.height) * 1.0)
+                .offset(x: leftImageOffset, y: 0 )
+            //오른쪽에서 들어오는 이미지
+            Image("StageEm0\(stageViewModel.selectedIndex + 1)_03")
+                .resizable()
+                .scaledToFit()
+                .frame(width: (UIScreen.main.bounds.width)*2, height: (UIScreen.main.bounds.height)*2)
+                .offset(x: rightImageOffset, y: 0)
+        }
+        .onAppear{
+            withAnimation(Animation.easeInOut(duration: 1.5)){
+                // 이동 후 고정되는 위치 값
+                leftImageOffset = -10
+                rightImageOffset = 10
+                
+            }
+            
+        }
+    }
+}
+
 
 struct FrameUpAnimation: View {
     @EnvironmentObject var stageViewModel: StageViewModel
@@ -54,7 +98,7 @@ struct FrameSideInAnimation: View {
     @EnvironmentObject var stageViewModel: StageViewModel
     //맨 처음에 화면 양 옆에 숨어있도록 뷰 위치 설정
     @State private var leftImageOffset: CGFloat = -300
-    @State private var rightImageOffset: CGFloat = UIScreen.main.bounds.width + 300
+    @State private var rightImageOffset: CGFloat = UIScreen.width + 300
 
     var body: some View {
         ZStack {
@@ -62,13 +106,13 @@ struct FrameSideInAnimation: View {
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_02")
                 .resizable()
                 .scaledToFill()
-                .frame(width: (UIScreen.main.bounds.width)*1.0, height: (UIScreen.main.bounds.height) * 1.0)
+                .frame(width: (UIScreen.width)*1.0, height: (UIScreen.height) * 1.0)
                 .offset(x: leftImageOffset, y: 0 )
             //오른쪽에서 들어오는 이미지
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_03")
                 .resizable()
                 .scaledToFit()
-                .frame(width: (UIScreen.main.bounds.width)*2, height: (UIScreen.main.bounds.height)*2)
+                .frame(width: (UIScreen.width)*2, height: (UIScreen.height)*2)
                 .offset(x: rightImageOffset, y: 0)
         }
         .onAppear{
