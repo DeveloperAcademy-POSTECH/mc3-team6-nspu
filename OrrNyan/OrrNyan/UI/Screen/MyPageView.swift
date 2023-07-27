@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MyPageView: View {
-	@State var user : User? = nil
+	@State var user : UserInfo? = nil
 	@State var userFloor : UserFloor? = nil
 	@State var popupIndex : Int = 1
 	@State var isShowingPopup : Bool = false
