@@ -1,95 +1,85 @@
 //
-//  LoginView.swift
+//  LoginView_malty.swift
 //  OrrNyan
 //
-//  Created by Jay on 2023/07/16.
+//  Created by YouiHyon Kim on 2023/07/19.
 //
 
 import SwiftUI
 
-struct LoginView: View {
-    @StateObject var signInWithApple = SignInWithApple()
-    @StateObject var signInWithGoogle = SignInWithGoogle()
-    @State var isLoginSuccessed = false
-
+struct LoginView: View {    
+    @EnvironmentObject var firebaseManager: FirebaseManager
+    @State private var showCreateNameView = false
+    
     var body: some View {
-        VStack {
-            Button {
+        // MARK: - LoginView
+        VStack(spacing: 10){
+            LottieView(filename: "firstCat")
+                .frame(maxWidth: .infinity)
+                .frame(height:330)
+                .padding(.top, 130)
+            
+            
+            Text("귀여운 고양이와 함께\n계단을 올라보자냥!")
+                .font(.pretendard(size:18, .bold))
+                .multilineTextAlignment(.center)
+            
+            Spacer()
+            
+            loginButton(logoTitle: "ImgLogoApple", text: "Apple로 로그인", buttonColor: Color.black, fontColor: Color.white){
                 Task {
-                    try await signInWithGoogle.signInWithGoogle()
-                    isLoginSuccessed = signInWithGoogle.isLoginSuccessed
+                    try await firebaseManager.signInApple()
                 }
-            } label: {
-                Text("구글 로그인")
             }
+            
+            loginButton(logoTitle: "ImgLogoGoogle", text: "Google로 로그인", buttonColor: Color.white, fontColor: Color.black){
 
-            Button {
-                DispatchQueue.main.async {
-                    signInWithApple.startSignInWithAppleFlow()
-                }
-                isLoginSuccessed = signInWithApple.isLoginSuccessed
-            } label: {
-                Text("애플 로그인")
-                    .onChange(of: signInWithApple.isLoginSuccessed) { newValue in
-                        isLoginSuccessed = newValue
-                    }
-            }
-
-            Button {
                 Task {
-                    try await FirebaseManager.instance.createUser("말티")
+                    try await firebaseManager.singInGoogle()
                 }
-            } label: {
-                Text("유저 저장")
-                    .padding()
-            }
 
-            Button {
-                Task {
-                    try await FirebaseManager.instance.readUserData()
-                }
-            } label: {
-                Text("유저 데이터 가져오기")
             }
-
-            Button {
-                FirebaseManager.instance.createUserFloor(userFloor: UserFloor(dailyFloors: 0, totalFloors: 0, date: Date()))
-            } label: {
-                Text("UserFloor 추가")
-            }
-
-            Button {
-                Task {
-                    try await FirebaseManager.instance.readUserFloor()
-                }
-            } label: {
-                Text("UserFloor 읽기")
-            }
-
-            Button {
-                Task {
-                    try await FirebaseManager.instance.updateUserFloor()
-                }
-            } label: {
-                Text("UserFloor 업데이트")
-            }
-
-            Button {
-                FirebaseManager.instance.logOut()
-            } label: {
-                Text("logout").padding()
-            }
-
-            if isLoginSuccessed {
-                Text("로그인 버튼눌리고, 성공했다")
-            } else {
-                Text("실패했다. 안눌리거나")
-            }
+            .padding(.bottom, 35)
         }
+        .padding(.horizontal, 30)
+        .ignoresSafeArea()
+    }
+    
+    
+    // MARK: - 로그인 버튼
+    ///로그인 버튼
+    private func loginButton(logoTitle:String, text:String, buttonColor:Color, fontColor : Color, action: @escaping () -> Void) -> some View {
+        Button(action: action){
+            HStack{
+                //Logo Image
+                Image(logoTitle)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 24, height: 24)
+                
+                Spacer()
+                
+                //Text Area
+                Text(text)
+                    .font(.pretendard(size:17, .bold))
+                    .foregroundColor(fontColor)
+                    .padding(.vertical, 17.5)
+                
+                Spacer()
+                //
+                
+            }
+            .padding(.leading, 16)
+            .padding(.trailing, 40)
+        }
+        .frame(maxWidth:.infinity)
+        .background(buttonColor)
+        .cornerRadius(16)
+        .shadow(color: .black.opacity(0.15), radius: 3.5, x: 0, y: 0)
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
+struct LoginView_malty_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
     }
