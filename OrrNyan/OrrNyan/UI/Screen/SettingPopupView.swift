@@ -18,14 +18,14 @@ struct SettingPopupView: View {
     // Notification manage
     @StateObject private var notiManager = UserPushNotification.instance
     
+    // test code
     @State var test = false
     
-    @State var isConfirmationRequired = false
-    
     @Environment(\.scenePhase) private var scenePhase
-    
-    @State var isToggleOn: Bool = false
-    
+
+    // is confirmation dialog required == not authorized notification
+    @State var isConfirmationRequired = false
+
     var body: some View {
         NavigationStack{
             Form {
@@ -40,30 +40,37 @@ struct SettingPopupView: View {
                     })
                 // Test Code =================================
                 
-                Toggle("PUSH 알림", isOn: $isToggleOn)
+                Toggle("PUSH 알림", isOn: $notiManager.isToggleOn)
                     .onAppear{
                         notiManager.checkAuthorization()
-                        self.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
+                        
+                        // if noti is not authroized, set isToggleOn OFF
+                        if notiManager.isNotiAuthorized == false {
+                            UserDefaults.standard.set(false, forKey: "isToggleOn")
+                        }
+                        notiManager.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
                     }
-                    .onChange(of: isToggleOn) { isOn in
+                    .onChange(of: notiManager.isToggleOn) { isOn in
+                        notiManager.checkAuthorization()
+                        
                         if isOn {
-                            UserDefaults.standard.set(true, forKey: "isToggleOn")
                             notiManager.isToggleOn = true
-                            isConfirmationRequired = UserDefaults.standard.bool(forKey: "askAuth")
+                            
+                            if UserDefaults.standard.bool(forKey: "launchedBefore") {
+                                isConfirmationRequired = !UserDefaults.standard.bool(forKey: "isNotificationAuthorized")
+                            }
                         } else {
                             notiManager.isToggleOn = false
-                            UserDefaults.standard.set(false, forKey: "isToggleOn")
                         }
                     }
                     .onChange(of: scenePhase) { phase in
-                        notiManager.checkAuthorization()
                         switch phase {
-                        case .active:
-                            if isToggleOn {
-                                UserDefaults.standard.set(true, forKey: "isToggleOn")
-                                self.isToggleOn = UserDefaults.standard.bool(forKey: "isNotiAuthorized")
+                        case .active, .background:
+                            notiManager.checkAuthorization()
+                            if notiManager.isNotiAuthorized {
+                                notiManager.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
                             } else {
-                                self.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
+                                notiManager.isToggleOn = UserDefaults.standard.bool(forKey: "isNotificationAuthorized")
                             }
                         default : break
                         }
@@ -72,9 +79,7 @@ struct SettingPopupView: View {
                                         actions: {
                         Button("알림 설정냥") {notiManager.openDeviceSetting()}
                         Button("취소냥", role:.cancel) {
-                            self.isToggleOn = false
-                            UserDefaults.standard.set(false, forKey: "isToggleOn")
-                            UserDefaults.standard.set(true, forKey: "askAuth")
+                            notiManager.isToggleOn = false
                         }}, message: {
                             Text("알림 권한이 필요하다냥!")
                         })
