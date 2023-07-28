@@ -16,7 +16,7 @@ struct MyPageView: View {
 	@Namespace var namespace
 	
 	//테스트성 코드입니다.
-	var userBadges =  UserBadge(stageCompleteArray: [true, true, false])
+	var userBadges =  UserBadge(stageCompleteArray: [true, true, false, false, false, false, false, false, false,false,false,false ])
 	
 	//3xn 그리드 템플릿
 	let columns: [GridItem] = [
@@ -114,7 +114,7 @@ struct MyPageView: View {
 						.foregroundColor(Color.Purple300)
 					
 					HStack(spacing:2){
-						Text("\(Image(systemName: "pawprint.fill"))")
+						Image.pawprintFill
 							.foregroundColor(Color.Purple100)
 							.font(.system(size:12))
 						
@@ -167,7 +167,7 @@ struct MyPageView: View {
 							}
 						}
 				} else {
-					Image("Badge0\(userBadge + 1)_Disabled")
+					Image("Badge\(userBadge + 1)_Disabled")
 						.resizable()
 						.aspectRatio(contentMode: .fit)
 						.frame(width: 80, height: 80)
