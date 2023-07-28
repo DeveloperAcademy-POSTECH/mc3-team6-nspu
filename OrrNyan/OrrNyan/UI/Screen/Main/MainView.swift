@@ -16,18 +16,17 @@ struct MainView: View {
             VStack {
                 MainTopView()
                 Spacer()
-                    MainBottomView()
-                        .onTapGesture {
-                            stageViewModel.isMainDisplayed = false
-                    }
+                MainBottomView()
+                    .onTapGesture {
+                        stageViewModel.isMainDisplayed = false
+                }
             }
+            .frame(height: UIScreen.height)
             UpCat()
-                .frame(width: UIScreen.main.bounds.width)
+                .frame(width: UIScreen.width)
         }
-        .background(Image("StageBg01").resizable())
-        .ignoresSafeArea()
         // 이거 없으면 옆으로 옮겨짐->밀리지 말고 뷰 안에서 작용하도록 함
-        .frame(height: UIScreen.main.bounds.height)
+        .frame(height: UIScreen.height)
     }
 }
 

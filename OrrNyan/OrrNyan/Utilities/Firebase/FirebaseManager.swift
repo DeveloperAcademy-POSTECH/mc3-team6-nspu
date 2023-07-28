@@ -19,17 +19,18 @@ enum SignUpState {
 class FirebaseManager: ObservableObject {
 
     private var db = Firestore.firestore()
-    private var user: User?
+    private var user: UserInfo?
     @Published var signUpState = SignUpState.beforeSignUp
+    private lazy var refUserInfo = db.collection("UserInfo")
     
     // TODO: 현재 사용하지 않음 - 삭제 예정?
     /// 유저 데이터를 불러옵니다.
     func readUserData() async throws {
         guard let userId = getCurrentUserId() else {return}
         
-        let documentSnapshot = try await db.collection("User").document(userId).getDocument()
+        let documentSnapshot = try await refUserInfo.document(userId).getDocument()
         
-        let user = try documentSnapshot.data(as: User.self)
+        let user = try documentSnapshot.data(as: UserInfo.self)
     }
     
     /// 현재 유저의 uid를 가져옵니다.
@@ -58,7 +59,7 @@ extension FirebaseManager {
     func createUserFloor(userFloor: UserFloor) {
         if let userId = self.getCurrentUserId(){
             do {
-                try db.collection("User").document(userId).collection("UserFloor").document().setData(from: userFloor)
+                try refUserInfo.document(userId).collection("UserFloor").document().setData(from: userFloor)
             }
             catch {
                 print(error)
@@ -71,7 +72,7 @@ extension FirebaseManager {
     func readUserFloor() async throws -> UserFloor? {
         guard let userId = self.getCurrentUserId() else {return nil}
         
-        let te = try await db.collection("User").document(userId).collection("UserFloor").order(by: "date", descending: true).limit(to:5).getDocuments()
+        let te = try await refUserInfo.document(userId).collection("UserFloor").order(by: "date", descending: true).limit(to:5).getDocuments()
         let userFloor = try te.documents[0].data(as: UserFloor.self)
         
         print("최근 유저층수 문서id: \(userFloor.id ?? "")")
@@ -86,7 +87,7 @@ extension FirebaseManager {
         let userFloor = try await self.readUserFloor()
         guard let userFloorId = userFloor?.id else {return}
         
-        try await self.db.collection("User").document(userId).collection("UserFloor").document(userFloorId).updateData([
+        try await self.refUserInfo.document(userId).collection("UserFloor").document(userFloorId).updateData([
             "dailyFloors" : 1,
             "totalFloors" : 1,
             "date" : Date()
@@ -124,7 +125,7 @@ extension FirebaseManager {
         // DbUser : DB에 저장되어있는 유저
         let DbUser = try await getUser(userId: authResultUser.uid)
         if DbUser == nil {
-            self.user = User(id: authResultUser.uid, name: authResultUser.displayName ?? "", email: authResultUser.email ?? "", nickName: "")
+            self.user = UserInfo(id: authResultUser.uid, name: authResultUser.displayName ?? "", email: authResultUser.email ?? "", nickName: "")
             self.signUpState = .duringSignUp
         }
         else {
@@ -140,7 +141,7 @@ extension FirebaseManager {
     func createUser(_ nickName: String) async throws {
         
         if let userId = user?.id {
-            try await db.collection("User").document(userId).setData([
+            try await refUserInfo.document(userId).setData([
                 "id": userId,
                 "name": user?.name ?? "error",
                 "email": user?.email ?? "error",
@@ -157,14 +158,14 @@ extension FirebaseManager {
     }
     
     /// DB에 저장되어 있는 userId를 가진 유저 데이터를 반환합니다. ( 이미 회원가입을 한 유저인지 판별하기 위해 사용)
-    func getUser(userId: String) async throws -> User? {
-        let userCollection = db.collection("User")
-        let docRef = userCollection.document(userId)
+    func getUser(userId: String) async throws -> UserInfo? {
+//        let userCollection = db.collection("User")
+        let docRef = refUserInfo.document(userId)
     
-        var result: User? = nil
+        var result: UserInfo? = nil
         
         do {
-            let document = try await docRef.getDocument(as: User.self)
+            let document = try await docRef.getDocument(as: UserInfo.self)
             result = document
         } catch {
             result = nil
