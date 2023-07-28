@@ -29,7 +29,7 @@ class UserPushNotification: ObservableObject {
     // user notification center
     let userNotificationCenter = UNUserNotificationCenter.current()
     let notificationAuthOptions = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
-
+    
     // current setting value
     @Published var isNotiAuthorized: Bool = UserDefaults.standard.bool(forKey: "isNotificationAuthorized")
 
@@ -145,17 +145,20 @@ class UserPushNotification: ObservableObject {
     func checkAuthorization() {
         userNotificationCenter.getNotificationSettings { settings in
             if settings.authorizationStatus == .authorized {
-
                 UserDefaults.standard.set(true, forKey: "isNotificationAuthorized")
             }
             
-            else if settings.authorizationStatus == .denied {
+            else {
                 UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
+                UserDefaults.standard.set(false, forKey: "isToggleOn")
             }
             
             // set values
             DispatchQueue.main.async {
+                
+                print("Noti 상태! \(UserDefaults.standard.bool(forKey: "isNotificationAuthorized"))")
                 self.isNotiAuthorized = UserDefaults.standard.bool(forKey: "isNotificationAuthorized")
+                self.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
             }
         }
     }

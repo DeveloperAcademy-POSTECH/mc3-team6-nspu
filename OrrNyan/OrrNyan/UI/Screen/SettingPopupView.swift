@@ -22,10 +22,12 @@ struct SettingPopupView: View {
     @State var test = false
     
     @Environment(\.scenePhase) private var scenePhase
-
+    
     // is confirmation dialog required == not authorized notification
     @State var isConfirmationRequired = false
-
+    
+    let testKey: String = "test"
+    
     var body: some View {
         NavigationStack{
             Form {
@@ -38,43 +40,55 @@ struct SettingPopupView: View {
                     }, message: {
                         Text("알림 권한이 필요하다냥!")
                     })
+            
                 // Test Code =================================
+                
+                
                 
                 Toggle("PUSH 알림", isOn: $notiManager.isToggleOn)
                     .onAppear{
+                        
+                        print("나타났다! \(notiManager.isToggleOn)")
                         notiManager.checkAuthorization()
                         
-                        // if noti is not authroized, set isToggleOn OFF
                         if notiManager.isNotiAuthorized == false {
-                            UserDefaults.standard.set(false, forKey: "isToggleOn")
+                            notiManager.isToggleOn = false
+                            print("나타났다! if문")
                         }
-                        notiManager.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
+                        else {
+                            print("나타났다! else문")
+                            notiManager.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
+                        }
                     }
                     .onChange(of: notiManager.isToggleOn) { isOn in
-                        notiManager.checkAuthorization()
-                        
                         if isOn {
                             notiManager.isToggleOn = true
                             
                             if UserDefaults.standard.bool(forKey: "launchedBefore") {
-                                isConfirmationRequired = !UserDefaults.standard.bool(forKey: "isNotificationAuthorized")
+                                isConfirmationRequired = !UserDefaults.standard.bool(forKey: "isNotificationAuthorized")}
+                            else {
+                                notiManager.isToggleOn = false
                             }
-                        } else {
-                            notiManager.isToggleOn = false
-                        }
-                    }
+                        }}
                     .onChange(of: scenePhase) { phase in
+                        notiManager.checkAuthorization()
                         switch phase {
-                        case .active, .background:
-                            notiManager.checkAuthorization()
+                        case .active:
+                            print("활성!")
                             if notiManager.isNotiAuthorized {
-                                notiManager.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
+                                print("활성! 토글 온!")
+                                notiManager.isToggleOn = true
                             } else {
-                                notiManager.isToggleOn = UserDefaults.standard.bool(forKey: "isNotificationAuthorized")
+                                print("활성! 토글 오프!")
+                                notiManager.isToggleOn = false
                             }
-                        default : break
-                        }
-                    }
+                            print("신 변화! \(phase)")
+                        case .background :
+                            print("백그라운드! ")
+                        case .inactive :
+                            print("비활성!")
+                        default: break
+                        }}
                     .confirmationDialog("이거보라냥!",isPresented: $isConfirmationRequired, titleVisibility: .visible,
                                         actions: {
                         Button("알림 설정냥") {notiManager.openDeviceSetting()}
