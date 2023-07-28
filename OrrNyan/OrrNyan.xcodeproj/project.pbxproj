@@ -69,6 +69,7 @@
 		69AA2B2C2A658F1C0076DC58 /* UserBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2B2A658F1C0076DC58 /* UserBadge.swift */; };
 		69AA2B2E2A658F2A0076DC58 /* AppPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2D2A658F2A0076DC58 /* AppPush.swift */; };
 		69AA2B302A658F350076DC58 /* StageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2F2A658F350076DC58 /* StageInfo.swift */; };
+		831A131C2A727B550051C422 /* SantaTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A131B2A727B550051C422 /* SantaTestView.swift */; };
 		8322F9E12A6E1EBB00A4DFDB /* TestMeow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */; };
 		833F29072A68D25900EE06CB /* SettingPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29062A68D25900EE06CB /* SettingPopupView.swift */; };
 		833F29092A692FE200EE06CB /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29082A692FE200EE06CB /* AudioManager.swift */; };
@@ -170,6 +171,7 @@
 		69AA2B2B2A658F1C0076DC58 /* UserBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBadge.swift; sourceTree = "<group>"; };
 		69AA2B2D2A658F2A0076DC58 /* AppPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPush.swift; sourceTree = "<group>"; };
 		69AA2B2F2A658F350076DC58 /* StageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageInfo.swift; sourceTree = "<group>"; };
+		831A131B2A727B550051C422 /* SantaTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SantaTestView.swift; sourceTree = "<group>"; };
 		8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMeow.wav; sourceTree = "<group>"; };
 		833F29062A68D25900EE06CB /* SettingPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPopupView.swift; sourceTree = "<group>"; };
 		833F29082A692FE200EE06CB /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				1DEA2D112A720EF000090A05 /* BadgePopupView.swift */,
 				1DB82A2F2A67BF2C006FDD4E /* LoginView.swift */,
 				833F29062A68D25900EE06CB /* SettingPopupView.swift */,
+				831A131B2A727B550051C422 /* SantaTestView.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -621,6 +624,7 @@
 				695B69272A5E442800129A17 /* ContentView.swift in Sources */,
 				DEFE7D022A73646C00FDAC81 /* MainPopUpView.swift in Sources */,
 				695C443F2A663952003A2D24 /* SignInWithApple.swift in Sources */,
+				831A131C2A727B550051C422 /* SantaTestView.swift in Sources */,
 				69AA2B2E2A658F2A0076DC58 /* AppPush.swift in Sources */,
 				699EE13E2A726E3E000D7CF3 /* HealthKitManager.swift in Sources */,
 				1B3FDC132A5E52770081CCBB /* MainView.swift in Sources */,
@@ -790,19 +794,20 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan Watch App/Preview Content\"";
+
 				DEVELOPMENT_TEAM = GPA5CUM32W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = OrrNyan;
 				INFOPLIST_KEY_NSMotionUsageDescription = "계단 오른 충수 반영을 위함입니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.jay.OrrNyan;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.santa.OrrNyan;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jay.OrrNyan.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.santa.OrrNyan.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -821,19 +826,20 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan Watch App/Preview Content\"";
+
 				DEVELOPMENT_TEAM = GPA5CUM32W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = OrrNyan;
 				INFOPLIST_KEY_NSMotionUsageDescription = "계단 오른 충수 반영을 위함입니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.jay.OrrNyan;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.santa.OrrNyan;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jay.OrrNyan.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.santa.OrrNyan.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -855,6 +861,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan/Preview Content\"";
+
 				DEVELOPMENT_TEAM = GPA5CUM32W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -873,7 +880,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jay.OrrNyan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.santa.OrrNyan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -892,6 +899,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan/Preview Content\"";
+
 				DEVELOPMENT_TEAM = GPA5CUM32W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -910,7 +918,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jay.OrrNyan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.santa.OrrNyan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
