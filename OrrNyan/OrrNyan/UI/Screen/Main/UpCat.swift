@@ -10,21 +10,22 @@ import SwiftUI
 struct UpCat: View {
     @State private var imagePositionY: CGFloat = 300
     @State private var isMovingUp = false
+    //고양이가 멈추는 위치 잡기 위한 position
     @State private var stopPosition: CGFloat = UIScreen.height*0.9
 
     var body: some View {
         HStack {
-            Button("올라가셈") {
+            Button("UP") {
                 isMovingUp = true
                 moveImageUp()
             }
             Spacer()
-//            LottieView(filename: "LottieMainViewWalk")
-            LottieView(filename: (isMovingUp ? "LottieMainViewWalk" : "LottieMainViewSit") )
+            LottieView(filename: "LottieMainViewWalk")
                 .frame(width:50, height:50)
                 .rotationEffect(Angle(degrees: -90))
-                .frame(width: UIScreen.main.bounds.width*0.079, height: UIScreen.main.bounds.height*0.079)
+                .frame(width: UIScreen.width*0.079, height: UIScreen.height*0.079)
                 .offset(y: imagePositionY)
+                .animation(.easeInOut(duration: 1.0))
         }
     }
 
