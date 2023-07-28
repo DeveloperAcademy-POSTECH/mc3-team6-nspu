@@ -83,7 +83,7 @@
 		DE30A0992A66A788004D94E4 /* MainParallaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE30A0982A66A788004D94E4 /* MainParallaxView.swift */; };
 		DE30A09B2A66A7A1004D94E4 /* MainTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE30A09A2A66A7A1004D94E4 /* MainTopView.swift */; };
 		DEF039D02A67DA32002FEC51 /* UpCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF039CF2A67DA32002FEC51 /* UpCat.swift */; };
-		DEF15DBC2A726CDD00D07582 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF15DBB2A726CDD00D07582 /* test.swift */; };
+		DEFE7D022A73646C00FDAC81 /* MainPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE7D012A73646C00FDAC81 /* MainPopUpView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,7 +184,7 @@
 		DE30A0982A66A788004D94E4 /* MainParallaxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainParallaxView.swift; sourceTree = "<group>"; };
 		DE30A09A2A66A7A1004D94E4 /* MainTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTopView.swift; sourceTree = "<group>"; };
 		DEF039CF2A67DA32002FEC51 /* UpCat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpCat.swift; sourceTree = "<group>"; };
-		DEF15DBB2A726CDD00D07582 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		DEFE7D012A73646C00FDAC81 /* MainPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPopUpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -336,9 +336,9 @@
 			isa = PBXGroup;
 			children = (
 				1B3FDC122A5E52770081CCBB /* MainView.swift */,
-				DEF15DBB2A726CDD00D07582 /* test.swift */,
 				DE30A0962A66A769004D94E4 /* MainBottomView.swift */,
 				DE30A0982A66A788004D94E4 /* MainParallaxView.swift */,
+				DEFE7D012A73646C00FDAC81 /* MainPopUpView.swift */,
 				DE30A09A2A66A7A1004D94E4 /* MainTopView.swift */,
 				DEF039CF2A67DA32002FEC51 /* UpCat.swift */,
 			);
@@ -622,7 +622,7 @@
 				83C38BE62A6625530027D281 /* CreateNameView.swift in Sources */,
 				1DA8BFC12A66AAE900AA8C66 /* FontManager.swift in Sources */,
 				695B69272A5E442800129A17 /* ContentView.swift in Sources */,
-				DEF15DBC2A726CDD00D07582 /* test.swift in Sources */,
+				DEFE7D022A73646C00FDAC81 /* MainPopUpView.swift in Sources */,
 				695C443F2A663952003A2D24 /* SignInWithApple.swift in Sources */,
 				831A131C2A727B550051C422 /* SantaTestView.swift in Sources */,
 				69AA2B2E2A658F2A0076DC58 /* AppPush.swift in Sources */,
@@ -794,7 +794,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 7UK5M23JTU;
+
+				DEVELOPMENT_TEAM = GPA5CUM32W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = OrrNyan;
@@ -825,7 +826,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 7UK5M23JTU;
+
+				DEVELOPMENT_TEAM = GPA5CUM32W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = OrrNyan;
@@ -859,7 +861,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan/Preview Content\"";
-				DEVELOPMENT_TEAM = 7UK5M23JTU;
+
+				DEVELOPMENT_TEAM = GPA5CUM32W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OrrNyan/Info.plist;
@@ -896,7 +899,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan/Preview Content\"";
-				DEVELOPMENT_TEAM = 7UK5M23JTU;
+
+				DEVELOPMENT_TEAM = GPA5CUM32W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OrrNyan/Info.plist;
