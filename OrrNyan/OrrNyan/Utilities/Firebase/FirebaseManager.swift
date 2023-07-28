@@ -17,20 +17,23 @@ enum SignUpState {
 }
 
 class FirebaseManager: ObservableObject {
-
+    
     private var db = Firestore.firestore()
-    private var user: UserInfo?
+    //    private var user: UserInfo?
     @Published var signUpState = SignUpState.beforeSignUp
     private lazy var refUserInfo = db.collection("UserInfo")
     
     // TODO: 현재 사용하지 않음 - 삭제 예정?
     /// 유저 데이터를 불러옵니다.
-    func readUserData() async throws {
-        guard let userId = getCurrentUserId() else {return}
+    func fetchUserInfo() async throws {
+        guard let userId = getCurrentUserId() else {
+            print("fetchUserInfo: 유저 없다")
+            return
+        }
         
         let documentSnapshot = try await refUserInfo.document(userId).getDocument()
         
-        let user = try documentSnapshot.data(as: UserInfo.self)
+        User.instance.userInfo = try documentSnapshot.data(as: UserInfo.self)
     }
     
     /// 현재 유저의 uid를 가져옵니다.
@@ -42,7 +45,8 @@ class FirebaseManager: ObservableObject {
     func logOut(){
         do {
             try Auth.auth().signOut()
-            self.user = nil
+            //            self.user = nil
+            User.instance.userInfo = nil
             self.signUpState = .beforeSignUp
             UserDefaults.standard.removeObject(forKey: "userId")
             
@@ -125,7 +129,8 @@ extension FirebaseManager {
         // DbUser : DB에 저장되어있는 유저
         let DbUser = try await getUser(userId: authResultUser.uid)
         if DbUser == nil {
-            self.user = UserInfo(id: authResultUser.uid, name: authResultUser.displayName ?? "", email: authResultUser.email ?? "", nickName: "")
+            //            self.user = UserInfo(id: authResultUser.uid, name: authResultUser.displayName ?? "", email: authResultUser.email ?? "", nickName: "")
+            User.instance.userInfo = UserInfo(id: authResultUser.uid, name: authResultUser.displayName ?? "", email: authResultUser.email ?? "", nickName: "")
             self.signUpState = .duringSignUp
         }
         else {
@@ -139,19 +144,24 @@ extension FirebaseManager {
     /// Parameter result: signInToFirebase 함수의 result
     @MainActor
     func createUser(_ nickName: String) async throws {
-        
-        if let userId = user?.id {
+
+        if let userId = User.instance.userInfo?.id {
+            let now = Date()
+            User.instance.userInfo?.nickName = nickName
+            User.instance.userInfo?.createdAt = now
+            User.instance.userInfo?.lastVisitDate = now
             try await refUserInfo.document(userId).setData([
                 "id": userId,
-                "name": user?.name ?? "error",
-                "email": user?.email ?? "error",
+                "name": User.instance.userInfo?.name ?? "error",
+                "email": User.instance.userInfo?.email ?? "error",
                 "nickName": nickName,
-                "lastVisitDate": Date(),
-                "createdAt": Date()
+                "lastVisitDate": now,
+                "createdAt": now
             ])
-
+            
             UserDefaults.standard.set(userId, forKey: "userId")
-            UserDefaults.standard.set(user?.lastVisitDate, forKey: "lastVisitDate")
+            //            UserDefaults.standard.set(user?.lastVisitDate, forKey: "lastVisitDate")
+            UserDefaults.standard.set(User.instance.userInfo?.lastVisitDate, forKey: "lastVisitDate")
             self.signUpState = .afterSignUp
             print("New User Create")
         }
@@ -159,9 +169,9 @@ extension FirebaseManager {
     
     /// DB에 저장되어 있는 userId를 가진 유저 데이터를 반환합니다. ( 이미 회원가입을 한 유저인지 판별하기 위해 사용)
     func getUser(userId: String) async throws -> UserInfo? {
-//        let userCollection = db.collection("User")
+        //        let userCollection = db.collection("User")
         let docRef = refUserInfo.document(userId)
-    
+        
         var result: UserInfo? = nil
         
         do {

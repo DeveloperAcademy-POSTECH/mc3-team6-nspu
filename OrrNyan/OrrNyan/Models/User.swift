@@ -9,6 +9,11 @@ import Foundation
 
 /// User 관련한 객체들을 하나로 통합해서 관리할 싱글톤 입니다.
 struct User {
-    static let instance = User()
+    static var instance = User()
+    
+    private init(){}
+    
+    var userInfo: UserInfo?
+    var userFloor: UserFloor?
     
 }
