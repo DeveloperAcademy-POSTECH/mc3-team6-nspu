@@ -16,4 +16,5 @@ struct User {
     var userInfo: UserInfo?
     var userFloor: UserFloor?
     
+    
 }

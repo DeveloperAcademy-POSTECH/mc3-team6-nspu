@@ -18,7 +18,6 @@ struct MainParallaxView: View {
             //            }
             BackOpacityAnimation()
             FrameSideInAnimation()
-            FrameDownAnimation()
             FrameUpAnimation()
             //랜드마크 이미지
             Image("StageSt0\(stageViewModel.selectedIndex + 1)")
@@ -26,49 +25,27 @@ struct MainParallaxView: View {
                 .matchedGeometryEffect(id: "StageStImage0\(stageViewModel.selectedIndex + 1)", in: nameSpace)
                 .aspectRatio(contentMode: .fit)
                 .padding(.top,80)
-                .frame(width: UIScreen.width*0.9, height: UIScreen.height*2.0)
+                .frame(width: UIScreen.width*0.91, height: UIScreen.height*0.75)
                 .shadow(radius: 5)
-//            VStack{
-//                MainTopView()
-//                    .border(.red)
-//                Spacer()
-//                MainBottomView()
-//                    .border(.red)
-//            }.frame(height: UIScreen.height)
         }
     }
 }
 
 struct FrameUpAnimation: View {
     @EnvironmentObject var stageViewModel: StageViewModel
-    @State private var bottomImageOffset: CGFloat = UIScreen.height
-
-    var body: some View {
-        Image("StageEm0\(stageViewModel.selectedIndex + 1)_01")
-            .scaledToFit()
-            .offset( y: bottomImageOffset)
-            .onAppear {
-                withAnimation(Animation.easeInOut(duration: 1.0)) {
-                    bottomImageOffset = 0
-                }
-            }
-    }
-}
-
-struct FrameDownAnimation: View {
-    @EnvironmentObject var stageViewModel: StageViewModel
-    @State private var topImageOffset: CGFloat = -UIScreen.height
+    @State private var topImageOffset: CGFloat = UIScreen.height
 
     var body: some View {
         ZStack{
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_04")
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_05")
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_06")
+            Image("StageEm0\(stageViewModel.selectedIndex + 1)_01")
         }
         .scaledToFit()
         .offset( y: topImageOffset)
         .onAppear {
-            withAnimation(Animation.easeInOut(duration: 1.0)) {
+            withAnimation(Animation.spring(response: 1.0, dampingFraction: 0.83)) {
                 topImageOffset = 0
             }
         }
@@ -86,21 +63,19 @@ struct FrameSideInAnimation: View {
             //왼쪽에서 들어오는 이미지
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_02")
                 .resizable()
-                .scaledToFill()
-                .frame(width: (UIScreen.width) * 1.0, height: (UIScreen.height) * 1.0)
+                .frame(height:UIScreen.height)
                 .offset(x: leftImageOffset, y: 0 )
             //오른쪽에서 들어오는 이미지
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_03")
                 .resizable()
-                .scaledToFit()
-                .frame(width: (UIScreen.main.bounds.width)*2, height: (UIScreen.main.bounds.height)*2)
+                .frame(height:UIScreen.height)
                 .offset(x: rightImageOffset, y: 0)
         }
         .onAppear{
-            withAnimation(Animation.easeInOut(duration: 1.5)){
+            withAnimation(Animation.spring(response:1.8, dampingFraction: 0.85)){
                 // 이동 후 고정되는 위치 값
-                leftImageOffset = -10
-                rightImageOffset = 10
+                leftImageOffset = 0
+                rightImageOffset = 0
             }
         }
     }
@@ -115,7 +90,7 @@ struct BackOpacityAnimation:View{
                 .ignoresSafeArea()
                 .opacity(opacity)
                 .onAppear{
-                    withAnimation(Animation.easeInOut(duration: 1.5).delay(1.3)){
+                    withAnimation(Animation.spring(response:1.5, dampingFraction: 0.85)){
                         opacity = 1.0
                     }
                 }
