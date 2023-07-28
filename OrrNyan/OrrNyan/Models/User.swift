@@ -11,4 +11,5 @@ import Foundation
 struct User {
     static let instance = User()
     
+    
 }

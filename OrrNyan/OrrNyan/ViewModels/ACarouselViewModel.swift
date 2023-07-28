@@ -117,7 +117,7 @@ extension ACarouselViewModel {
             return .spring()
         }
         return isAnimatedOffset ? .spring() : .none
-    }
+    }  
 
     var itemWidth: CGFloat {
         viewSize.width - defaultPadding * 2
