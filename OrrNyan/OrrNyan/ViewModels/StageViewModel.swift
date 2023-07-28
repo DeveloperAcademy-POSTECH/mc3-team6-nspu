@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 class StageViewModel: ObservableObject {
-    @Published var selectedIndex: Int = UserDefaults.standard.object(forKey: "selectedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "selectedStageIndex") as! Int
+    @Published var selectedIndex: Int = UserDefaults.standard.object(forKey: "focusedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int
     @Published var isMainDisplayed: Bool = false
+    
+    let stageCarouselInfo = Stages().StageInfos.map { ($0.stageStructureImageTitle, $0.stageName, $0.stageFloors) }.map { StageItem(image: Image($0), name: String($1), floors: Int($2)) }
 }

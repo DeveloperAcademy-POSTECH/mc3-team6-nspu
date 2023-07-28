@@ -10,9 +10,6 @@ import SwiftUI
 struct StageView: View {
     // stageStructureImageTitle을 String 배열로 만들고,
     // UUID를 포함한 Items배열로 변환해 items 변수에 저장합니다.
-    let stageStImageTitle = Stages().StageInfos.map { ($0.stageStructureImageTitle, $0.stageName, $0.stageFloors) }.map { StageItem(image: Image($0), name: String($1), floors: Int($2)) }
-    let stageFloors = Stages().StageInfos.map { $0.stageFloors }
-    let stageNames = Stages().StageInfos.map { $0.stageName }
 
     @EnvironmentObject var viewModel: StageViewModel
     @Namespace var nameSpace
@@ -31,7 +28,7 @@ struct StageView: View {
                                 StageBottomView()
                             }
 
-                            ACarousel(stageStImageTitle, headspace: 80, nameSpace: nameSpace) { _ in
+                            ACarousel(viewModel.stageCarouselInfo, headspace: 80, nameSpace: nameSpace) { _ in
                             }
                             .frame(height: UIScreen.height * 0.75)
                             .offset(y: UIScreen.height * 0.01)

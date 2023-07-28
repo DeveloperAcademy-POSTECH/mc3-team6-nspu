@@ -40,18 +40,12 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
         _opacityScaling = opacityScaling
         _indexScaling = indexScaling
 
-        if data.count > 1 && isWrap {
-            activeIndex = index.wrappedValue + 1
-            UserDefaults.standard.set(index.wrappedValue + 1, forKey: "stageActiveIndex")
-        } else {
-            activeIndex = UserDefaults.standard.object(forKey: "selectedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "selectedStageIndex") as! Int
-        }
-
+        focusedIndex = UserDefaults.standard.object(forKey: "focusedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int
         _index = index
     }
 
     /// The index of the currently active subview.
-    @Published var activeIndex: Int = 0 {
+    @Published var focusedIndex: Int = 0 {
         willSet {
             if isWrap {
                 if newValue > _data.count || newValue == 0 {
@@ -71,22 +65,22 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     @Published var dragOffset: CGFloat = .zero
 
     /// size of GeometryProxy
-    var viewSize: CGSize = CGSize(width: UIScreen.width, height: UIScreen.height)
+    var viewSize: CGSize = .init(width: UIScreen.width, height: UIScreen.height)
 
     /// reduce active index by 1
     func reduceActiveIndex() {
-        activeIndex = max(0, activeIndex - 1)
-        setUserDefaultsActiveIndex(index: activeIndex)
+        focusedIndex = max(0, focusedIndex - 1)
+        setUserDefaultsFocusedIndex(index: focusedIndex)
     }
 
     /// increase active index by 1
     func increaseActiveIndex() {
-        activeIndex = min(activeIndex + 1, data.count - 1)
-        setUserDefaultsActiveIndex(index: activeIndex)
+        focusedIndex = min(focusedIndex + 1, data.count - 1)
+        setUserDefaultsFocusedIndex(index: focusedIndex)
     }
-    
-    func setUserDefaultsActiveIndex(index: Int){
-        UserDefaults.standard.set(index, forKey: "stageActiveIndex")
+
+    func setUserDefaultsFocusedIndex(index: Int) {
+        UserDefaults.standard.set(index, forKey: "focusedStageIndex")
     }
 }
 
@@ -123,7 +117,7 @@ extension ACarouselViewModel {
             return .spring()
         }
         return isAnimatedOffset ? .spring() : .none
-    }
+    }  
 
     var itemWidth: CGFloat {
         viewSize.width - defaultPadding * 2
@@ -134,7 +128,7 @@ extension ACarouselViewModel {
     }
 
     func grayScaling(_ item: Data.Element) -> Double {
-        guard activeIndex < data.count else {
+        guard focusedIndex < data.count else {
             return 0.0
         }
         let tempItem = item as! StageItem
@@ -147,27 +141,27 @@ extension ACarouselViewModel {
         }
     }
 
+    /// 현재 포커싱된 스테이지가 아닌 스테이지의 블러 조절
     func blur(_ item: Data.Element) -> Double {
-        guard activeIndex < data.count else {
+        guard focusedIndex < data.count else {
             return 0.0
         }
         let tempItem = item as! StageItem
-        // 현재 보고있는 스테이지가 아닌 스테이지는 블러처리
-        if activeIndex != tempItem.index {
-            return 5.0
+        if focusedIndex != tempItem.index {
+            return indexScaling * 5.0
         }
         else {
-            return 0.0
+            return 5.0 * (1 - indexScaling)
         }
     }
 
+    /// 현재 포커싱된 스테이지가 아닌 스테이지의 투명도 조절
     func opacityScaling(_ item: Data.Element) -> Double {
-        guard activeIndex < data.count else {
+        guard focusedIndex < data.count else {
             return 1.0
         }
         let tempItem = item as! StageItem
-        // 현재 보고있는 스테이지가 아닌 스테이지는 블러처리
-        if activeIndex != tempItem.index {
+        if focusedIndex != tempItem.index {
             return 0.3
         }
         else if userStageTestInstance.currentStage - 1 < tempItem.index {
@@ -178,8 +172,9 @@ extension ACarouselViewModel {
         }
     }
 
+    /// 처음과 마지막 스테이지에서 나타나는 화살표 투명도 조절
     func buttonOpacity(_ item: Data.Element) -> Double {
-        guard activeIndex < data.count else {
+        guard focusedIndex < data.count else {
             return 1.0
         }
         let tempItem = item as! StageItem
@@ -192,24 +187,35 @@ extension ACarouselViewModel {
         }
     }
 
-    // 스테이지의 스케일을 조정하는 함수입니다.
+    // 스와이프 시 나타나는 스테이지의 스케일을 조절
     // StageView에서 인터랙션이 일어날 때마다 실행됩니다.
-    // activeIndex 양 옆의 스케일을 다르게 줍니다.
+    // focusedIndex 양 옆의 스케일을 다르게 줍니다.
     /// Defines the scaling based on whether the item is currently active or not.
     /// - Parameter item: The incoming item
     /// - Returns: scaling
     func itemScaling(_ item: Data.Element) -> CGFloat {
-        guard activeIndex < data.count else {
+        guard focusedIndex < data.count else {
             return 0
         }
         let tempItem = item as! StageItem
-        if activeIndex == tempItem.index {
+        if focusedIndex == tempItem.index {
             return 1
-        } else if activeIndex < tempItem.index {
+        } else if focusedIndex < tempItem.index {
             return 1.2 - 0.2 * indexScaling
         }
         else {
             return 1 - 0.2 * indexScaling
+        }
+    }
+
+    /// 스와이프 시 고양이의 투명도 조절
+    func catOpacityScaling(_ item: Data.Element) -> CGFloat {
+        let tempItem = item as! StageItem
+        if focusedIndex == tempItem.index {
+            return indexScaling
+        }
+        else {
+            return 0
         }
     }
 }
@@ -249,7 +255,7 @@ extension ACarouselViewModel {
 extension ACarouselViewModel {
     /// current offset value
     var offset: CGFloat {
-        let activeOffset = CGFloat(activeIndex) * itemActualWidth
+        let activeOffset = CGFloat(focusedIndex) * itemActualWidth
         return defaultPadding - activeOffset + dragOffset
     }
 
@@ -265,12 +271,12 @@ extension ACarouselViewModel {
 
         if offset == minimumOffset {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.activeIndex = self.data.count - 2
+                self.focusedIndex = self.data.count - 2
                 self.isAnimatedOffset = false
             }
         } else if offset == maxinumOffset {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.activeIndex = 1
+                self.focusedIndex = 1
                 self.isAnimatedOffset = false
             }
         }
@@ -316,6 +322,7 @@ extension ACarouselViewModel {
         /// set drag offset
         dragOffset = offset
         _indexScaling = 1.0 - value.location.x / UIScreen.width
+        print(_indexScaling)
     }
 
     private func dragEnded(_ value: DragGesture.Value) {
@@ -328,7 +335,6 @@ extension ACarouselViewModel {
         /// default is one third of subview
         let dragThreshold: CGFloat = itemWidth / 3
 
-        var activeIndex = self.activeIndex
         // 이전으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width > dragThreshold {
             reduceActiveIndex()
@@ -337,8 +343,9 @@ extension ACarouselViewModel {
         if value.translation.width < -dragThreshold {
             increaseActiveIndex()
         }
+        _indexScaling = 1
         // activeIndex가 음수가 되는 것 방지, activeIndex가 최댓값을 넘어가는 것 방지
-//        self.activeIndex = max(0, min(activeIndex, data.count - 1))
+//        self.focusedIndex = max(0, min(focusedIndex, data.count - 1))
     }
 }
 

@@ -24,59 +24,31 @@ struct MainParallaxView: View {
                 .resizable()
                 .matchedGeometryEffect(id: "StageStImage0\(stageViewModel.selectedIndex + 1)", in: nameSpace)
                 .aspectRatio(contentMode: .fit)
-                .padding(.top,20)
-                .frame(width: UIScreen.width, height: UIScreen.height*0.8)
+                .padding(.top,80)
+                .frame(width: UIScreen.width*0.91, height: UIScreen.height*0.75)
                 .shadow(radius: 5)
-//                .border(.red)
         }
     }
 }
-struct FrameInAnimation: View {
-    @EnvironmentObject var stageViewModel: StageViewModel
-    //맨 처음에 화면 양 옆에 숨어있도록 뷰 위치 설정
-    @State private var leftImageOffset: CGFloat = -300
-    @State private var rightImageOffset: CGFloat = UIScreen.width + 300
-
-    var body: some View {
-        ZStack {
-            //왼쪽에서 들어오는 이미지
-            Image("StageEm0\(stageViewModel.selectedIndex + 1)_02")
-                .resizable()
-                .scaledToFill()
-                .frame(width: (UIScreen.width)*1.0, height: (UIScreen.height) * 1.0)
-                .offset(x: leftImageOffset, y: 0 )
-            //오른쪽에서 들어오는 이미지
-            Image("StageEm0\(stageViewModel.selectedIndex + 1)_03")
-                .resizable()
-                .scaledToFit()
-                .frame(width: (UIScreen.width)*2, height: (UIScreen.height)*2)
-                .offset(x: rightImageOffset, y: 0)
-        }
-        .onAppear{
-            withAnimation(Animation.easeInOut(duration: 1.5)){
-                // 이동 후 고정되는 위치 값
-                leftImageOffset = -10
-                rightImageOffset = 10
-                
-            }
-        }
-    }
-}
-
 
 struct FrameUpAnimation: View {
     @EnvironmentObject var stageViewModel: StageViewModel
-    @State private var bottomImageOffset: CGFloat = UIScreen.main.bounds.height
+    @State private var topImageOffset: CGFloat = UIScreen.height
 
     var body: some View {
-        Image("StageEm0\(stageViewModel.selectedIndex + 1 )_01") // 새로운 이미지 파일의 이름으로 변경하세요
-            .scaledToFit()
-            .offset( y: bottomImageOffset)
-            .onAppear {
-                withAnimation(Animation.easeInOut(duration: 1.5)) {
-                    bottomImageOffset = 0
-                }
+        ZStack{
+            Image("StageEm0\(stageViewModel.selectedIndex + 1)_04")
+            Image("StageEm0\(stageViewModel.selectedIndex + 1)_05")
+            Image("StageEm0\(stageViewModel.selectedIndex + 1)_06")
+            Image("StageEm0\(stageViewModel.selectedIndex + 1)_01")
+        }
+        .scaledToFit()
+        .offset( y: topImageOffset)
+        .onAppear {
+            withAnimation(Animation.spring(response: 1.0, dampingFraction: 0.83)) {
+                topImageOffset = 0
             }
+        }
     }
 }
 
@@ -91,39 +63,35 @@ struct FrameSideInAnimation: View {
             //왼쪽에서 들어오는 이미지
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_02")
                 .resizable()
-                .scaledToFill()
-                .frame(width: (UIScreen.width)*1.0, height: (UIScreen.height) * 1.0)
+                .frame(height:UIScreen.height)
                 .offset(x: leftImageOffset, y: 0 )
             //오른쪽에서 들어오는 이미지
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_03")
                 .resizable()
-                .scaledToFit()
-                .frame(width: (UIScreen.main.bounds.width)*2, height: (UIScreen.main.bounds.height)*2)
+                .frame(height:UIScreen.height)
                 .offset(x: rightImageOffset, y: 0)
         }
         .onAppear{
-            withAnimation(Animation.easeInOut(duration: 1.5)){
+            withAnimation(Animation.spring(response:1.8, dampingFraction: 0.85)){
                 // 이동 후 고정되는 위치 값
-                leftImageOffset = -10
-                rightImageOffset = 10
+                leftImageOffset = 0
+                rightImageOffset = 0
             }
         }
     }
 }
 
 struct BackOpacityAnimation:View{
-    @State private var blurAmount: CGFloat = 400
+    @State private var opacity: Double = 0.0
     @EnvironmentObject var stageViewModel: StageViewModel
     var body: some View{
         ZStack{
-            Image("StageBg0\(stageViewModel.selectedIndex + 1)").ignoresSafeArea()
-            Image("StageEm0\(stageViewModel.selectedIndex + 1)_04")
-            Image("StageEm0\(stageViewModel.selectedIndex + 1)_05")
-            Image("StageEm0\(stageViewModel.selectedIndex + 1)_06")
-                .blur(radius: blurAmount)
+            Image("StageBg0\(stageViewModel.selectedIndex + 1)")
+                .ignoresSafeArea()
+                .opacity(opacity)
                 .onAppear{
-                    withAnimation(Animation.easeInOut(duration: 1.5)){
-                        blurAmount = 0
+                    withAnimation(Animation.spring(response:1.5, dampingFraction: 0.85)){
+                        opacity = 1.0
                     }
                 }
         }

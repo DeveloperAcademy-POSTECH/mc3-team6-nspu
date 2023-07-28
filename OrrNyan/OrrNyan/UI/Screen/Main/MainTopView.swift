@@ -17,7 +17,7 @@ struct MainTopView: View {
     let durationAndDelay: CGFloat = 0.1
 
     // MARK: - View
-
+    
     var body: some View {
         HStack {
             ZStack(alignment: .leading) {
@@ -90,7 +90,7 @@ struct MainTopView: View {
     }
 }
 
-// MARK: - 층계
+// MARK: - StairCase & Stair
 
 struct StairCase: View {
     @Binding var degree: Double
@@ -127,6 +127,8 @@ struct Stair: View {
         .rotation3DEffect(Angle(degrees: degree), axis: (x: 1, y: 0, z: 0))
     }
 }
+
+//MARK: - Preview
 
 struct MainTopView_Previews: PreviewProvider {
     static var previews: some View {

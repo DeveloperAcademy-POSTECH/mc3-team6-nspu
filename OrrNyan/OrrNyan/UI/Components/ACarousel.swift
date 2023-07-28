@@ -17,9 +17,12 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
 
     // ACarousel에 들어갈 Content(View)를 content에 저장합니다.
     private let content: (Data.Element) -> Content
-    let stageStSvgs: [AnyView] = [AnyView(StageStSvg01()), AnyView(StageStSvg02()), AnyView(StageStSvg03())]
-    let lottieOffset: [(CGFloat, CGFloat)] = [(0.13, 0.07), (-0.1, -0.05), (0.3, 0.3)]
-    let pawOffset: [(CGFloat, CGFloat)] = [(-0.08, 0.15), (-0.05, 0.08), (0.3, 0.3)]
+//    let stageStSvgs: [AnyView] = [AnyView(Circle()), AnyView(Rectangle()), AnyView(Text("global"))]
+    var stageStSvgs: [AnyView] = [AnyView(StageStSvg01()), AnyView(StageStSvg02()), AnyView(StageStSvg03())]
+    let lottieOffset: [(CGFloat, CGFloat)] = [(0.13, 0.07), (-0.1, -0.05), (-0.1, -0.08)]
+    let pawOffset: [(CGFloat, CGFloat)] = [(-0.08, 0.15), (-0.05, 0.08), (-0.05, -0.01)]
+    let catRotationDegree: [Double] = [270, 270, 271]
+    let cat3DRotationDegree: [Double] = [180, 0, 0]
     var nameSpace: Namespace.ID
 
     public var body: some View {
@@ -43,12 +46,15 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .blur(radius: viewModel.blur(element))
                                     .opacity(viewModel.opacityScaling(element))
                                     .matchedGeometryEffect(id: "StageStImage0\(tempElement.index + 1)", in: nameSpace)
+                                    .onAppear {
+                                        print("arrCount \(tempElement.index)")
+                                        print(tempElement)
+                                    }
                                     .overlay {
                                         stageStSvgs[tempElement.index]
                                             .foregroundColor(.blue.opacity(0.01))
                                             .onTapGesture {
-                                                if UserDefaults.standard.object(forKey: "stageActiveIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
-                                                    UserDefaults.standard.set(tempElement.index, forKey: "selectedStageIndex")
+                                                if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
                                                     stageViewModel.selectedIndex = tempElement.index
                                                     withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
                                                         stageViewModel.isMainDisplayed = true
@@ -64,11 +70,12 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .opacity(viewModel.buttonOpacity(element))
                                 if tempElement.index == userStageTestInstance.currentStage - 1 {
                                     LottieView(filename: "LottieMainViewSit")
-                                        .rotationEffect(Angle(degrees: -90))
-                                        .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                                        .rotationEffect(Angle(degrees: catRotationDegree[tempElement.index]))
+                                        .rotation3DEffect(.degrees(cat3DRotationDegree[tempElement.index]), axis: (x: 0, y: 1, z: 0))
                                         .frame(width: UIScreen.width * 0.1, height: UIScreen.width * 0.1)
                                         .offset(x: UIScreen.width * lottieOffset[tempElement.index].0, y: UIScreen.height * lottieOffset[tempElement.index].1)
-                                        .opacity(tempElement.index == viewModel.activeIndex ? 1 : 0)
+                                        .opacity(viewModel.catOpacityScaling(element))
+                                        .blur(radius: viewModel.blur(element))
 
                                     VStack(spacing: 2) {
                                         Image(systemName: "pawprint.fill")
@@ -77,7 +84,9 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     }
                                     .font(.system(size: 11))
                                     .offset(x: UIScreen.width * pawOffset[tempElement.index].0, y: UIScreen.height * pawOffset[tempElement.index].1)
-                                    .opacity(tempElement.index == viewModel.activeIndex ? 1 : 0)
+                                    .opacity(viewModel.catOpacityScaling(element))
+                                    .blur(radius: viewModel.blur(element))
+
                                 }
                             }
                             .padding(.top, UIScreen.height * 0.1)
@@ -104,7 +113,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                             .padding(.top, 20)
                             .frame(width: viewModel.itemWidth)
                             .offset(x: 30)
-                            .opacity(viewModel.activeIndex == tempElement.index ? 1 : 0)
+                            .opacity(viewModel.focusedIndex == tempElement.index ? 1 : 0)
                         }
                     }
                 }
@@ -121,14 +130,14 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                     } label: {
                         Image(systemName: "chevron.left")
                     }
-                    .opacity(viewModel.activeIndex == 0 ? 0 : 1)
+                    .opacity(viewModel.focusedIndex == 0 ? 0 : 1)
                     Spacer()
                     Button {
                         viewModel.increaseActiveIndex()
                     } label: {
                         Image(systemName: "chevron.right")
                     }
-                    .opacity(viewModel.activeIndex == viewModel.data.count - 1 ? 0 : 1)
+                    .opacity(viewModel.focusedIndex == viewModel.data.count - 1 ? 0 : 1)
                 }
                 .font(.system(size: 24, weight: .medium))
                 .padding(.horizontal, 20)
