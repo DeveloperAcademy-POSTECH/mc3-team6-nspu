@@ -17,7 +17,6 @@ struct OrrNyanApp: App {
     
     var body: some Scene {
         WindowGroup {
-
                         SantaTestView()
             //
             //            			StageView()

@@ -81,7 +81,6 @@ struct CreateNameView: View {
                     }) {
                         Text("확인")
                     }
-
                     Button("취소") {
                         isShowAlert = false
                     }

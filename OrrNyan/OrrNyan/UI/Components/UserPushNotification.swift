@@ -8,20 +8,11 @@
 import SwiftUI
 import UserNotifications
 
-enum notiAuthStatus {
-    case notAuthorized
-    case Authorized
-    case denied
-    
-}
-
-
 class UserPushNotification: ObservableObject {
     
     // singleton
     static let instance = UserPushNotification()
     private init() {}
-    
     
     //save last alert time
     var lastSetTime: Date? = nil
@@ -32,12 +23,11 @@ class UserPushNotification: ObservableObject {
     
     // current setting value
     @Published var isNotiAuthorized: Bool = UserDefaults.standard.bool(forKey: "isNotificationAuthorized")
-
+    
     // user sets notification authorization
     @Published var isToggleOn: Bool = UserDefaults.standard.bool(forKey: "isToggleOn"){
         didSet{
             if isToggleOn {
-                print("toggle on!\(isToggleOn) : \(UserDefaults.standard.bool(forKey: "isToggleOn"))")
                 UserDefaults.standard.set(true, forKey: "isToggleOn")
                 
                 // execute only once
@@ -48,7 +38,6 @@ class UserPushNotification: ObservableObject {
                 addNotification(with: notiTime)
             }
             else {
-                print("toggle off!\(isToggleOn) : \(UserDefaults.standard.bool(forKey: "isToggleOn"))")
                 UserDefaults.standard.set(false, forKey: "isToggleOn")
                 cancelNotification()
             }
@@ -62,7 +51,7 @@ class UserPushNotification: ObservableObject {
             cancelNotification()
             
             guard isToggleOn else { return }
-        
+            
             UserDefaults.standard.set(notiTime, forKey: "AlertTime")
             
             // set to new noti time
@@ -81,21 +70,25 @@ class UserPushNotification: ObservableObject {
                     }
                     // first auth granted
                     if granted {
-                        UserDefaults.standard.set(true, forKey: "isNotificationAuthorized")
                         UserDefaults.standard.set(true, forKey: "launchedBefore")
+                        UserDefaults.standard.set(true, forKey: "isNotificationAuthorized")
+                        UserDefaults.standard.set(true, forKey: "isToggleOn")
+                        DispatchQueue.main.async {
+                            self.isNotiAuthorized = true
+                            self.isToggleOn = true
+                        }
                     }
                     // first denied
                     else{
-                        UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
                         UserDefaults.standard.set(true, forKey: "launchedBefore")
+                        UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
+                        UserDefaults.standard.set(false, forKey: "isToggleOn")
+                        DispatchQueue.main.async {
+                            self.isNotiAuthorized = false
+                            self.isToggleOn = false
+                        }
                     }
                 }
-            }
-
-            // if auth set to deny at first
-            if settings.authorizationStatus == .denied {
-                UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
-                UserDefaults.standard.set(true, forKey: "launchedBefore")
             }
         }
     }
@@ -145,20 +138,20 @@ class UserPushNotification: ObservableObject {
     func checkAuthorization() {
         userNotificationCenter.getNotificationSettings { settings in
             if settings.authorizationStatus == .authorized {
+                print("설정 권한 있엉")
                 UserDefaults.standard.set(true, forKey: "isNotificationAuthorized")
             }
             
             else {
+                print("설정 권한 없엉")
                 UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
                 UserDefaults.standard.set(false, forKey: "isToggleOn")
             }
             
             // set values
             DispatchQueue.main.async {
-                
-                print("Noti 상태! \(UserDefaults.standard.bool(forKey: "isNotificationAuthorized"))")
+                print("설정!")
                 self.isNotiAuthorized = UserDefaults.standard.bool(forKey: "isNotificationAuthorized")
-                self.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
             }
         }
     }
