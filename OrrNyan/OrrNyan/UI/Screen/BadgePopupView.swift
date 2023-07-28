@@ -13,6 +13,7 @@ struct BadgePopupView: View {
 	@Binding var showingPopupIndex : Int
 	@Binding var isSowingPopup : Bool
 	@Binding var degree : Double
+	@GestureState private var dragDegree: CGFloat = 0
 	
 	var body: some View {
 		
@@ -37,7 +38,35 @@ struct BadgePopupView: View {
 				.shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 4)
 				.padding(.horizontal, 50)
 				.padding(.top, 12)
-				.rotation3DEffect(.degrees(degree), axis: (x:0, y:1, z:0))
+				.rotation3DEffect(.degrees(degree + dragDegree), axis: (x:0, y:1, z:0))
+				.gesture(
+					  DragGesture()
+						  .updating($dragDegree) { value, state, _ in
+							  state = value.translation.width
+						  }
+						  .onEnded { value in
+							  // 가속도를 측정
+							  let velocity = value.predictedEndTranslation.width
+							  
+							  // 측정한 가속도 값에 따른 Degree값을 도출
+							  let finalDegree = degree + Double(dragDegree) + Double(velocity)
+							  
+							  // 위에서 구한 값들에 애니메이션 효과를 줌
+							  // 가속도 값이 120보다 낮을 경우, degree에 가장 가까운 180 배수 숫자를 구해냄
+							  withAnimation(.interpolatingSpring(stiffness: 50, damping: 50)) {
+								  if abs(velocity) > 120  {
+									  // 가장 가까운 180의 배수로 보정
+									  let adjustedDegree = 180 * round(finalDegree / 180)
+									  degree = adjustedDegree
+								  }
+							  }
+							  if abs(velocity) < 120  {
+								  
+								  degree = finalDegree
+							  }
+						  }
+				  )
+
 			
 			Text("대한민국")
 				.font(.pretendard(size: 16, .bold))
