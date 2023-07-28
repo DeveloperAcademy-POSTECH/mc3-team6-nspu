@@ -72,6 +72,9 @@ struct FrameSideInAnimation: View {
                 .offset(x: leftImageOffset, y: 0 )
             //오른쪽에서 들어오는 이미지
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_03")
+                .resizable()
+                .scaledToFit()
+                .frame(width: (UIScreen.main.bounds.width)*2, height: (UIScreen.main.bounds.height)*2)
                 .offset(x: rightImageOffset, y: 0)
         }
 //        .resizable()
