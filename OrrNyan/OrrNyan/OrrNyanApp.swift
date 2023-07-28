@@ -14,16 +14,16 @@ struct OrrNyanApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var firebaseManager = FirebaseManager()
     @StateObject var stageViewModel = StageViewModel()
-    
+
     var body: some Scene {
         WindowGroup {
 //            SettingPopupView()
             //			StageView()
-            //                        ContentView()
-            //                            .environmentObject(firebaseManager)
-            //                            .environmentObject(stageViewModel)
-                        StageView()
-                            .environmentObject(StageViewModel())
+            ContentView()
+                .environmentObject(firebaseManager)
+                .environmentObject(stageViewModel)
+//                        StageView()
+//                            .environmentObject(StageViewModel())
         }
     }
 }
@@ -34,13 +34,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool
     {
         FirebaseApp.configure()
-        
+
         return true
     }
-    
+
     // Google Login 설정
     func application(_: UIApplication, open url: URL, options _:
-                     [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
+        [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
     {
         return GIDSignIn.sharedInstance.handle(url)
     }
