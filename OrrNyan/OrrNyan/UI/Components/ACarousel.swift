@@ -47,7 +47,6 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .opacity(viewModel.opacityScaling(element))
                                     .matchedGeometryEffect(id: "StageStImage0\(tempElement.index + 1)", in: nameSpace)
                                     .onAppear {
-//                                        print("theindex \(tempElement.index)")
                                         print("arrCount \(tempElement.index)")
                                         print(tempElement)
                                     }
@@ -55,8 +54,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                         stageStSvgs[tempElement.index]
                                             .foregroundColor(.blue.opacity(0.01))
                                             .onTapGesture {
-                                                if UserDefaults.standard.object(forKey: "stageActiveIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
-                                                    UserDefaults.standard.set(tempElement.index, forKey: "selectedStageIndex")
+                                                if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
                                                     stageViewModel.selectedIndex = tempElement.index
                                                     withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
                                                         stageViewModel.isMainDisplayed = true
@@ -76,7 +74,8 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                         .rotation3DEffect(.degrees(cat3DRotationDegree[tempElement.index]), axis: (x: 0, y: 1, z: 0))
                                         .frame(width: UIScreen.width * 0.1, height: UIScreen.width * 0.1)
                                         .offset(x: UIScreen.width * lottieOffset[tempElement.index].0, y: UIScreen.height * lottieOffset[tempElement.index].1)
-                                        .opacity(tempElement.index == viewModel.activeIndex ? 1 : 0)
+                                        .opacity(viewModel.catOpacityScaling(element))
+                                        .blur(radius: viewModel.blur(element))
 
                                     VStack(spacing: 2) {
                                         Image(systemName: "pawprint.fill")
@@ -85,7 +84,9 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     }
                                     .font(.system(size: 11))
                                     .offset(x: UIScreen.width * pawOffset[tempElement.index].0, y: UIScreen.height * pawOffset[tempElement.index].1)
-                                    .opacity(tempElement.index == viewModel.activeIndex ? 1 : 0)
+                                    .opacity(viewModel.catOpacityScaling(element))
+                                    .blur(radius: viewModel.blur(element))
+
                                 }
                             }
                             .padding(.top, UIScreen.height * 0.1)
@@ -112,7 +113,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                             .padding(.top, 20)
                             .frame(width: viewModel.itemWidth)
                             .offset(x: 30)
-                            .opacity(viewModel.activeIndex == tempElement.index ? 1 : 0)
+                            .opacity(viewModel.focusedIndex == tempElement.index ? 1 : 0)
                         }
                     }
                 }
@@ -129,14 +130,14 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                     } label: {
                         Image(systemName: "chevron.left")
                     }
-                    .opacity(viewModel.activeIndex == 0 ? 0 : 1)
+                    .opacity(viewModel.focusedIndex == 0 ? 0 : 1)
                     Spacer()
                     Button {
                         viewModel.increaseActiveIndex()
                     } label: {
                         Image(systemName: "chevron.right")
                     }
-                    .opacity(viewModel.activeIndex == viewModel.data.count - 1 ? 0 : 1)
+                    .opacity(viewModel.focusedIndex == viewModel.data.count - 1 ? 0 : 1)
                 }
                 .font(.system(size: 24, weight: .medium))
                 .padding(.horizontal, 20)
