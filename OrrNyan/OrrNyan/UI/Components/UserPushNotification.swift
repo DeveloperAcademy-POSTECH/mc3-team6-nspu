@@ -8,20 +8,11 @@
 import SwiftUI
 import UserNotifications
 
-enum notiAuthStatus {
-    case notAuthorized
-    case Authorized
-    case denied
-    
-}
-
-
 class UserPushNotification: ObservableObject {
     
     // singleton
     static let instance = UserPushNotification()
     private init() {}
-    
     
     //save last alert time
     var lastSetTime: Date? = nil
@@ -31,24 +22,29 @@ class UserPushNotification: ObservableObject {
     let notificationAuthOptions = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
     
     // current setting value
-    @Published var isNotiAuthorized: Bool = UserDefaults.standard.bool(forKey: "isNotificationAuthorized")
-
+    @Published var isNotiAuthorized: Bool = UserDefaults.standard.bool(forKey: "isNotificationAuthorized"){
+        didSet{
+            if isNotiAuthorized {
+                UserDefaults.standard.set(true, forKey: "isNotificationAuthorized")
+            } else {
+                UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
+            }
+        }
+    }
+    
+    
+    
     // user sets notification authorization
     @Published var isToggleOn: Bool = UserDefaults.standard.bool(forKey: "isToggleOn"){
         didSet{
             if isToggleOn {
-                print("toggle on!\(isToggleOn) : \(UserDefaults.standard.bool(forKey: "isToggleOn"))")
                 UserDefaults.standard.set(true, forKey: "isToggleOn")
-                
                 // execute only once
                 if UserDefaults.standard.bool(forKey: "launchedBefore") == false {
                     requestNotificationAuthorization()
                 }
-                
                 addNotification(with: notiTime)
-            }
-            else {
-                print("toggle off!\(isToggleOn) : \(UserDefaults.standard.bool(forKey: "isToggleOn"))")
+            } else {
                 UserDefaults.standard.set(false, forKey: "isToggleOn")
                 cancelNotification()
             }
@@ -56,15 +52,13 @@ class UserPushNotification: ObservableObject {
     }
     
     // notification time
-    @Published var notiTime: Date = UserDefaults.standard.object(forKey: "AlertTime") as? Date ?? Date() {
+    @Published var notiTime: Date = UserDefaults.standard.object(forKey: "AlertTime") as? Date ?? Date(){
         didSet{
             // remove old noti time
             cancelNotification()
-            
             guard isToggleOn else { return }
-        
-            UserDefaults.standard.set(notiTime, forKey: "AlertTime")
             
+            UserDefaults.standard.set(notiTime, forKey: "AlertTime")
             // set to new noti time
             addNotification(with: notiTime)
         }
@@ -81,21 +75,25 @@ class UserPushNotification: ObservableObject {
                     }
                     // first auth granted
                     if granted {
-                        UserDefaults.standard.set(true, forKey: "isNotificationAuthorized")
                         UserDefaults.standard.set(true, forKey: "launchedBefore")
+                        UserDefaults.standard.set(true, forKey: "isNotificationAuthorized")
+                        UserDefaults.standard.set(true, forKey: "isToggleOn")
+                        DispatchQueue.main.async {
+                            self.isNotiAuthorized = true
+                            self.isToggleOn = true
+                        }
                     }
                     // first denied
                     else{
-                        UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
                         UserDefaults.standard.set(true, forKey: "launchedBefore")
+                        UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
+                        UserDefaults.standard.set(false, forKey: "isToggleOn")
+                        DispatchQueue.main.async {
+                            self.isNotiAuthorized = false
+                            self.isToggleOn = false
+                        }
                     }
                 }
-            }
-
-            // if auth set to deny at first
-            if settings.authorizationStatus == .denied {
-                UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
-                UserDefaults.standard.set(true, forKey: "launchedBefore")
             }
         }
     }
@@ -137,28 +135,6 @@ class UserPushNotification: ObservableObject {
            let settings = URL(string: UIApplication.openSettingsURLString + bundle) {
             if UIApplication.shared.canOpenURL(settings){
                 UIApplication.shared.open(settings)
-            }
-        }
-    }
-    
-    // check current notification settings
-    func checkAuthorization() {
-        userNotificationCenter.getNotificationSettings { settings in
-            if settings.authorizationStatus == .authorized {
-                UserDefaults.standard.set(true, forKey: "isNotificationAuthorized")
-            }
-            
-            else {
-                UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
-                UserDefaults.standard.set(false, forKey: "isToggleOn")
-            }
-            
-            // set values
-            DispatchQueue.main.async {
-                
-                print("Noti 상태! \(UserDefaults.standard.bool(forKey: "isNotificationAuthorized"))")
-                self.isNotiAuthorized = UserDefaults.standard.bool(forKey: "isNotificationAuthorized")
-                self.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
             }
         }
     }
