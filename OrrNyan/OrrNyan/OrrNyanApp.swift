@@ -17,12 +17,16 @@ struct OrrNyanApp: App {
     
     var body: some Scene {
         WindowGroup {
-			MyPageView()
-//                                    ContentView()
-//                                        .environmentObject(firebaseManager)
-//                                        .environmentObject(stageViewModel)
-//                                    StageView()
-//                                        .environmentObject(StageViewModel())
+//			LoginView()
+//			CreateNameView()
+//			MyPageView()
+//			StageView()
+//				.environmentObject(StageViewModel())
+			
+//			SettingPopupView()
+						ContentView()
+							.environmentObject(firebaseManager)
+							.environmentObject(stageViewModel)
         }
     }
 }
