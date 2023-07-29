@@ -36,8 +36,8 @@ struct SettingPopupView: View {
                 Form {
                     Section{
                         // test =========================
-                        Text("토글 상태 : \(notiManager.isToggleOn.description) // UD값: \(UserDefaults.standard.bool(forKey: "isToggleOn").description)")
-                        Text("권한 상태 : \(notiManager.isNotiAuthorized.description) // UD값: \(UserDefaults.standard.bool(forKey: "isNotificationAuthorized").description)")
+//                        Text("토글 상태 : \(notiManager.isToggleOn.description) // UD값: \(UserDefaults.standard.bool(forKey: "isToggleOn").description)")
+//                        Text("권한 상태 : \(notiManager.isNotiAuthorized.description) // UD값: \(UserDefaults.standard.bool(forKey: "isNotificationAuthorized").description)")
                         // test =========================
                         
                         Toggle("PUSH 알림", isOn: $notiManager.isToggleOn)
