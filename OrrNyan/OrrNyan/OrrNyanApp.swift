@@ -28,16 +28,15 @@ struct OrrNyanApp: App {
 			MyPageView()
 //			ContentView()
 
-
+            
 //                        SantaTestView()
             //
             //            			StageView()
-            //                        ContentView()
-            //                            .environmentObject(firebaseManager)
-            //                            .environmentObject(stageViewModel)
-            //                        StageView()
-            //                            .environmentObject(StageViewModel())
-
+//                                    ContentView()
+//                                        .environmentObject(firebaseManager)
+//                                        .environmentObject(stageViewModel)
+//                                    StageView()
+//                                        .environmentObject(StageViewModel())
         }
     }
 }
