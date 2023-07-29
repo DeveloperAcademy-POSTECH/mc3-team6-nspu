@@ -24,6 +24,7 @@ struct OrrNyanApp: App {
                 .environmentObject(stageViewModel)
 //                        StageView()
 //                            .environmentObject(StageViewModel())
+//            MainParallaxView()
         }
     }
 }

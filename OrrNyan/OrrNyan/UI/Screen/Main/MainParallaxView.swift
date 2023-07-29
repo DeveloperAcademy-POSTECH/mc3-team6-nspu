@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainParallaxView: View {
     @EnvironmentObject var stageViewModel: StageViewModel
+    @StateObject var motionManager: MotionManager = .init()
 //    var arr = ["1", "2", "3"]
     var nameSpace: Namespace.ID
     var body: some View {
@@ -17,17 +18,23 @@ struct MainParallaxView: View {
             //                Image(item)
             //            }
             BackOpacityAnimation()
+                .offset(x: motionManager.xValue*90, y:motionManager.yValue*20)
             FrameSideInAnimation()
+                .offset(x: motionManager.xValue*90, y:motionManager.yValue*20)
             FrameUpAnimation()
+                .offset(x: motionManager.xValue*90, y:motionManager.yValue*20)
             //랜드마크 이미지
             Image("StageSt0\(stageViewModel.selectedIndex + 1)")
                 .resizable()
                 .matchedGeometryEffect(id: "StageStImage0\(stageViewModel.selectedIndex + 1)", in: nameSpace)
                 .aspectRatio(contentMode: .fit)
-                .padding(.top,80)
-                .frame(width: UIScreen.width*0.91, height: UIScreen.height*0.75)
-                .shadow(radius: 5)
+                .frame(width: UIScreen.width, height: UIScreen.height*0.74)
+                .offset(x: motionManager.xValue*20, y: motionManager.yValue*20)
+                .border(.red)
         }
+        .onAppear(perform: motionManager.detectMotion)
+        .onDisappear(perform: motionManager.stopMotionUpdates)
+
     }
 }
 
@@ -37,15 +44,14 @@ struct FrameUpAnimation: View {
 
     var body: some View {
         ZStack{
-            Image("StageEm0\(stageViewModel.selectedIndex + 1)_04")
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_05")
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_06")
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_01")
         }
         .scaledToFit()
-        .offset( y: topImageOffset)
+        .offset(y: topImageOffset)
         .onAppear {
-            withAnimation(Animation.spring(response: 1.0, dampingFraction: 0.83)) {
+            withAnimation(Animation.spring(response: 1.0, dampingFraction: 0.92)) {
                 topImageOffset = 0
             }
         }
@@ -72,7 +78,7 @@ struct FrameSideInAnimation: View {
                 .offset(x: rightImageOffset, y: 0)
         }
         .onAppear{
-            withAnimation(Animation.spring(response:1.8, dampingFraction: 0.85)){
+            withAnimation(Animation.spring(response:1.8, dampingFraction: 0.92)){
                 // 이동 후 고정되는 위치 값
                 leftImageOffset = 0
                 rightImageOffset = 0
@@ -87,13 +93,14 @@ struct BackOpacityAnimation:View{
     var body: some View{
         ZStack{
             Image("StageBg0\(stageViewModel.selectedIndex + 1)")
-                .ignoresSafeArea()
-                .opacity(opacity)
-                .onAppear{
-                    withAnimation(Animation.spring(response:1.5, dampingFraction: 0.85)){
-                        opacity = 1.0
-                    }
-                }
+            Image("StageEm0\(stageViewModel.selectedIndex + 1)_04")
+        }
+        .ignoresSafeArea()
+        .opacity(opacity)
+        .onAppear{
+            withAnimation(Animation.spring(response:1.5, dampingFraction: 0.92)){
+                opacity = 1.0
+            }
         }
     }
 }

@@ -15,6 +15,8 @@ struct MainView: View {
             MainParallaxView(nameSpace: nameSpace)
             VStack {
                 MainTopView()
+                    .ignoresSafeArea()
+                    .border(.red)
                 Spacer()
                 MainBottomView()
                     .onTapGesture {

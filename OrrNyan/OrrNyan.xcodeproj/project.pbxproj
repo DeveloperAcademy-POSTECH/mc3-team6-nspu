@@ -83,6 +83,7 @@
 		DE30A09B2A66A7A1004D94E4 /* MainTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE30A09A2A66A7A1004D94E4 /* MainTopView.swift */; };
 		DEF039D02A67DA32002FEC51 /* UpCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF039CF2A67DA32002FEC51 /* UpCat.swift */; };
 		DEFE7D022A73646C00FDAC81 /* MainPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE7D012A73646C00FDAC81 /* MainPopUpView.swift */; };
+		DEFE7D092A74F63500FDAC81 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE7D082A74F63500FDAC81 /* MotionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -183,6 +184,7 @@
 		DE30A09A2A66A7A1004D94E4 /* MainTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTopView.swift; sourceTree = "<group>"; };
 		DEF039CF2A67DA32002FEC51 /* UpCat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpCat.swift; sourceTree = "<group>"; };
 		DEFE7D012A73646C00FDAC81 /* MainPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPopUpView.swift; sourceTree = "<group>"; };
+		DEFE7D082A74F63500FDAC81 /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +216,7 @@
 			children = (
 				1B3C68E02A6E0E8800FEF920 /* StageViewModel.swift */,
 				1BAF6CD32A6638B0003238FA /* ACarouselViewModel.swift */,
+				DEFE7D082A74F63500FDAC81 /* MotionManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -633,6 +636,7 @@
 				1BAF6CD82A6638B0003238FA /* ACarousel.swift in Sources */,
 				1B3C68E12A6E0E8800FEF920 /* StageViewModel.swift in Sources */,
 				1D22D14C2A6FB649004A8697 /* StageStSvg02.swift in Sources */,
+				DEFE7D092A74F63500FDAC81 /* MotionManager.swift in Sources */,
 				83C38BE82A6625710027D281 /* LottieView.swift in Sources */,
 				69AA2B282A658F090076DC58 /* UserFloor.swift in Sources */,
 				1D22D14A2A6FB5DA004A8697 /* SvgViewExample.swift in Sources */,
