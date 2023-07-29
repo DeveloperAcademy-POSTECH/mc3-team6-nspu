@@ -43,6 +43,7 @@
 		1DE9E0CD2A66AE33004BC9EB /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0C42A66AE33004BC9EB /* Pretendard-Light.otf */; };
 		1DE9E0CE2A66AE33004BC9EB /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1DE9E0C52A66AE33004BC9EB /* Pretendard-Regular.otf */; };
 		1DEA2D122A720EF000090A05 /* BadgePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEA2D112A720EF000090A05 /* BadgePopupView.swift */; };
+		1DFB8B4E2A73A1F500D0D54A /* IconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB8B4D2A73A1F500D0D54A /* IconManager.swift */; };
 		693D31C82A6635C3000EA859 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 693D31C72A6635C3000EA859 /* FirebaseAuth */; };
 		693D31CA2A6635C3000EA859 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 693D31C92A6635C3000EA859 /* FirebaseFirestore */; };
 		693D31CD2A6635EE000EA859 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 693D31CC2A6635EE000EA859 /* GoogleSignIn */; };
@@ -69,6 +70,7 @@
 		69AA2B2C2A658F1C0076DC58 /* UserBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2B2A658F1C0076DC58 /* UserBadge.swift */; };
 		69AA2B2E2A658F2A0076DC58 /* AppPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2D2A658F2A0076DC58 /* AppPush.swift */; };
 		69AA2B302A658F350076DC58 /* StageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2F2A658F350076DC58 /* StageInfo.swift */; };
+		831A131C2A727B550051C422 /* SantaTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A131B2A727B550051C422 /* SantaTestView.swift */; };
 		8322F9E12A6E1EBB00A4DFDB /* TestMeow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */; };
 		833F29072A68D25900EE06CB /* SettingPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29062A68D25900EE06CB /* SettingPopupView.swift */; };
 		833F29092A692FE200EE06CB /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29082A692FE200EE06CB /* AudioManager.swift */; };
@@ -147,6 +149,7 @@
 		1DE9E0C42A66AE33004BC9EB /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		1DE9E0C52A66AE33004BC9EB /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		1DEA2D112A720EF000090A05 /* BadgePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePopupView.swift; sourceTree = "<group>"; };
+		1DFB8B4D2A73A1F500D0D54A /* IconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconManager.swift; sourceTree = "<group>"; };
 		693D31D02A66360A000EA859 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		693D31D22A663633000EA859 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		693D31D32A663673000EA859 /* OrrNyan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OrrNyan.entitlements; sourceTree = "<group>"; };
@@ -171,6 +174,7 @@
 		69AA2B2B2A658F1C0076DC58 /* UserBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBadge.swift; sourceTree = "<group>"; };
 		69AA2B2D2A658F2A0076DC58 /* AppPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPush.swift; sourceTree = "<group>"; };
 		69AA2B2F2A658F350076DC58 /* StageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageInfo.swift; sourceTree = "<group>"; };
+		831A131B2A727B550051C422 /* SantaTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SantaTestView.swift; sourceTree = "<group>"; };
 		8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMeow.wav; sourceTree = "<group>"; };
 		833F29062A68D25900EE06CB /* SettingPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPopupView.swift; sourceTree = "<group>"; };
 		833F29082A692FE200EE06CB /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
@@ -236,12 +240,14 @@
 				1B3FDC112A5E52690081CCBB /* Main */,
 				695B69262A5E442800129A17 /* ContentView.swift */,
 				1B1A95212A60D40800EA1100 /* StageView.swift */,
+				1DFB8B4F2A73A72700D0D54A /* GetBadgeAnimation.swift */,
 				1B8B44802A70A1B300FC651A /* StageBottomView.swift */,
 				83C38BE52A6625530027D281 /* CreateNameView.swift */,
 				1DE47ED52A6D3E65001A4804 /* MyPageView.swift */,
 				1DEA2D112A720EF000090A05 /* BadgePopupView.swift */,
 				1DB82A2F2A67BF2C006FDD4E /* LoginView.swift */,
 				833F29062A68D25900EE06CB /* SettingPopupView.swift */,
+				831A131B2A727B550051C422 /* SantaTestView.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -273,6 +279,7 @@
 		1B3FDC092A5E50E00081CCBB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1D35CD312A739E280032B366 /* Icon */,
 				1D22D1462A6FB4A3004A8697 /* SvgOutline */,
 				1DB82A312A67C107006FDD4E /* Colors */,
 				1DA8BFB62A66AAB900AA8C66 /* Fonts */,
@@ -354,6 +361,14 @@
 				1D22D14D2A6FB692004A8697 /* StageStSvg03.swift */,
 			);
 			path = SvgOutline;
+			sourceTree = "<group>";
+		};
+		1D35CD312A739E280032B366 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				1DFB8B4D2A73A1F500D0D54A /* IconManager.swift */,
+			);
+			path = Icon;
 			sourceTree = "<group>";
 		};
 		1DA8BFB62A66AAB900AA8C66 /* Fonts */ = {
@@ -624,16 +639,19 @@
 				695B69272A5E442800129A17 /* ContentView.swift in Sources */,
 				DEFE7D022A73646C00FDAC81 /* MainPopUpView.swift in Sources */,
 				695C443F2A663952003A2D24 /* SignInWithApple.swift in Sources */,
+				831A131C2A727B550051C422 /* SantaTestView.swift in Sources */,
 				69AA2B2E2A658F2A0076DC58 /* AppPush.swift in Sources */,
 				699EE13E2A726E3E000D7CF3 /* HealthKitManager.swift in Sources */,
 				1B3FDC132A5E52770081CCBB /* MainView.swift in Sources */,
 				1BAF6CDE2A676954003238FA /* StageItem.swift in Sources */,
 				69AA2B2C2A658F1C0076DC58 /* UserBadge.swift in Sources */,
+				1DFB8B502A73A72700D0D54A /* GetBadgeAnimation.swift in Sources */,
 				DE30A0972A66A769004D94E4 /* MainBottomView.swift in Sources */,
 				1B8B44812A70A1B300FC651A /* StageBottomView.swift in Sources */,
 				833F29092A692FE200EE06CB /* AudioManager.swift in Sources */,
 				DE30A09B2A66A7A1004D94E4 /* MainTopView.swift in Sources */,
 				1BAF6CD82A6638B0003238FA /* ACarousel.swift in Sources */,
+				1DFB8B4E2A73A1F500D0D54A /* IconManager.swift in Sources */,
 				1B3C68E12A6E0E8800FEF920 /* StageViewModel.swift in Sources */,
 				1D22D14C2A6FB649004A8697 /* StageStSvg02.swift in Sources */,
 				DEFE7D092A74F63500FDAC81 /* MotionManager.swift in Sources */,
@@ -794,7 +812,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = GPA5CUM32W;
+				DEVELOPMENT_TEAM = U45WRZYDUD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = OrrNyan;
@@ -825,7 +843,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = GPA5CUM32W;
+				DEVELOPMENT_TEAM = U45WRZYDUD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = OrrNyan;
@@ -859,7 +877,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan/Preview Content\"";
-				DEVELOPMENT_TEAM = GPA5CUM32W;
+				DEVELOPMENT_TEAM = U45WRZYDUD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OrrNyan/Info.plist;
@@ -896,7 +914,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"OrrNyan/Preview Content\"";
-				DEVELOPMENT_TEAM = GPA5CUM32W;
+				DEVELOPMENT_TEAM = U45WRZYDUD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OrrNyan/Info.plist;
