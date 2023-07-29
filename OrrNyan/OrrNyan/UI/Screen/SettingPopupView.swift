@@ -15,6 +15,8 @@ struct SettingPopupView: View {
     // Notification manage
     @StateObject private var notiManager = UserPushNotification.instance
     
+	@Binding var isSettingPopupViewShow : Bool
+	
     // test code
     @State var test = false
     
@@ -106,7 +108,9 @@ struct SettingPopupView: View {
                 .toggleStyle(SwitchToggleStyle(tint: Color.Purple200))
                 .bold()
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                .overlay(alignment: .topTrailing){close}
+				.overlay(alignment: .topTrailing){close.onTapGesture {
+					isSettingPopupViewShow = false
+				}}
             }
         }
         .padding(.top, 24)
@@ -152,6 +156,6 @@ private extension SettingPopupView {
 
 struct SettingPopupView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingPopupView()
+		SettingPopupView(isSettingPopupViewShow : .constant(false))
     }
 }

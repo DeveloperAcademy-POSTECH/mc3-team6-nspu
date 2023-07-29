@@ -13,6 +13,7 @@ struct MainTopView: View {
     @State var backDegree = 0.0
     @State var frontDegree = 90.0
     @State var isFlipped = false
+	@State var isSettingPopupViewShow : Bool = false
     @EnvironmentObject var stageViewModel: StageViewModel
     let durationAndDelay: CGFloat = 0.1
 
@@ -61,6 +62,13 @@ struct MainTopView: View {
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(LinearGradient(colors: [.White200, .White200.opacity(0)], startPoint: .leading, endPoint: .topTrailing), lineWidth: 1.5)
                 }
+				.onTapGesture {
+					isSettingPopupViewShow = true
+				}
+				.sheet(isPresented: $isSettingPopupViewShow){
+					SettingPopupView(isSettingPopupViewShow: $isSettingPopupViewShow)
+					
+				}
             }
         }
         .padding(.top, 65)
