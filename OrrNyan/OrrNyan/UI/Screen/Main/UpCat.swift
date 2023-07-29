@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UpCat: View {
-    @State private var imagePositionY: CGFloat = 300
+	@State private var imagePositionY: CGFloat = UIScreen.height / 2.75
     @State private var isMovingUp = false
     //고양이가 멈추는 위치 잡기 위한 position
     @State private var stopPosition: CGFloat = UIScreen.height*0.9
