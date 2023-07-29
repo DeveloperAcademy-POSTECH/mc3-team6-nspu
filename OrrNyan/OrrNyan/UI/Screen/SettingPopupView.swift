@@ -40,21 +40,10 @@ struct SettingPopupView: View {
                         Text("권한 상태 : \(notiManager.isNotiAuthorized.description) // UD값: \(UserDefaults.standard.bool(forKey: "isNotificationAuthorized").description)")
                         // test =========================
                         
-                        
                         Toggle("PUSH 알림", isOn: $notiManager.isToggleOn)
-//                            .onAppear{
-//                                notiManager.checkAuthorization()
-//                                print("나타났다!")
-//                                if notiManager.isNotiAuthorized == false {
-//                                    notiManager.isToggleOn = false
-//                                    print("권한 없엉 \(notiManager.isToggleOn)")
-//                                }
-//                                else {
-//                                    print("권한 있엉 \(notiManager.isToggleOn)")
-//                                    notiManager.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
-//                                }
-//                                notiManager.checkAuthorization()
-//                            }
+                            .onAppear{
+                                checkAuth()
+                            }
                             .onChange(of: notiManager.isToggleOn) { isOn in
                                 if isOn {
                                     notiManager.isToggleOn = true
@@ -64,18 +53,11 @@ struct SettingPopupView: View {
                                 } else {
                                     notiManager.isToggleOn = false
                                 }
-                                
                             }
                             .onChange(of: scenePhase) { phase in
-                                notiManager.checkAuthorization()
                                 switch phase {
                                 case .active:
-                                    if notiManager.isNotiAuthorized {
-                                        notiManager.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")
-                                    }
-                                    else {
-                                        notiManager.isToggleOn = false
-                                    }
+                                    checkAuth()
                                 default: break
                                 }}
                             .confirmationDialog("이거보라냥!",isPresented: $isConfirmationRequired, titleVisibility: .visible,
@@ -132,6 +114,23 @@ struct SettingPopupView: View {
     }
 }
 
+func checkAuth() {
+    UNUserNotificationCenter.current().getNotificationSettings { settings in
+        if settings.authorizationStatus == .authorized {
+            // set values
+            DispatchQueue.main.async {
+                UserPushNotification.instance.isNotiAuthorized = true
+                UserPushNotification.instance.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")}
+        }
+        else {
+            // set values
+            DispatchQueue.main.async {
+                UserPushNotification.instance.isNotiAuthorized = false
+                UserPushNotification.instance.isToggleOn = false
+            }
+        }
+    }
+}
 
 private extension SettingPopupView {
     var close: some View {
@@ -150,9 +149,6 @@ private extension SettingPopupView {
         }
     }
 }
-
-
-
 
 struct SettingPopupView_Previews: PreviewProvider {
     static var previews: some View {
