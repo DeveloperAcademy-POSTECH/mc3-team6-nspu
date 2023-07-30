@@ -72,7 +72,6 @@ struct MainParallaxView: View {
 		.onAppear{
 			catPositionY = stageStructureHeight.height
 		}
-		
         .onDisappear(perform: motionManager.stopMotionUpdates)
 
 

@@ -5,6 +5,7 @@
 //  Created by YouiHyon Kim on 2023/07/11.
 //
 
+//MARK: - 이미지 width,height 가져오는 코드
 import SwiftUI
 
 struct ContentRectSize : PreferenceKey {
