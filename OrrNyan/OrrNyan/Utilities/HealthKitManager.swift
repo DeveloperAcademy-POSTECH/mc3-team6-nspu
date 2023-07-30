@@ -8,15 +8,20 @@
 import Foundation
 import HealthKit
 
+struct FloorData {
+    var date: Date
+    var floors: Int
+}
+
 class HealthKitManager {
     
     private let healthStore = HKHealthStore()
     
     /// date날짜 부터 어제까지의 데이터를 받아옵니다
-    func fetchFloorsData(_ lastVisitDate: Date, completion: @escaping ([Date: Double]?, Error?) -> Void) {
+    func fetchFloorsData(_ lastVisitDate: Date, completion: @escaping ([FloorData]?, Error?) -> Void) {
         // HealthKit을 사용할 수 있는지 확인
         guard HKHealthStore.isHealthDataAvailable() else {
-            completion(nil, NSError(domain: "com.myapp", code: 1, userInfo: [NSLocalizedDescriptionKey: "건강 앱 데이터를 사용할 수 없습니다."]))
+            completion(nil, NSError(domain: "com.OrrNyang", code: 1, userInfo: [NSLocalizedDescriptionKey: "건강 앱 데이터를 사용할 수 없습니다."]))
             return
         }
             
@@ -49,13 +54,13 @@ class HealthKitManager {
                         return
                     }
                     
-                    var stepCountsByDate: [Date: Double] = [:]
+                    var stepCountsByDate: [FloorData] = []
                     results.enumerateStatistics(from: startDate, to: endDate) { statistics, stop in
                         if let sum = statistics.sumQuantity() {
                             let date = statistics.startDate
                             let stepCount = sum.doubleValue(for: HKUnit.count())
-                            stepCountsByDate[date] = stepCount
-                            print(stepCountsByDate)
+                            let floorDate = FloorData(date: date, floors: Int(stepCount))
+                            stepCountsByDate.append(floorDate)
                         }
                     }
                     
@@ -71,10 +76,10 @@ class HealthKitManager {
     
     
     /// 오늘의 층수 데이터를 받아옵니다.
-    func fetchTodayFloorsData(completion: @escaping ([Date: Double]?, Error?) -> Void) {
+    func fetchTodayFloorsData(completion: @escaping (FloorData?, Error?) -> Void) {
         // HealthKit을 사용할 수 있는지 확인
         guard HKHealthStore.isHealthDataAvailable() else {
-            completion(nil, NSError(domain: "com.myapp", code: 1, userInfo: [NSLocalizedDescriptionKey: "건강 앱 데이터를 사용할 수 없습니다."]))
+            completion(nil, NSError(domain: "com.OrrNyang", code: 1, userInfo: [NSLocalizedDescriptionKey: "건강 앱 데이터를 사용할 수 없습니다."]))
             return
         }
         
@@ -105,18 +110,17 @@ class HealthKitManager {
                         return
                     }
                     
-                    var stepCountsByDate: [Date: Double] = [:]
-                    // 테스트
-                    //
                     results.enumerateStatistics(from: startDate, to: endDate) { statistics, stop in
                         if let sum = statistics.sumQuantity() {
                             let date = statistics.startDate
                             let stepCount = sum.doubleValue(for: HKUnit.count())
-                            stepCountsByDate[date] = stepCount
+                            let floorData = FloorData(date: date, floors: Int(stepCount))
+                            completion(floorData, nil)
+
                         }
                     }
                     
-                    completion(stepCountsByDate, nil)
+                    
                 }
                 
                 // 쿼리 실행
