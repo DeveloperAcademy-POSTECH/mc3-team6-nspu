@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MyPageView: View {
 	@State var user : UserInfo? = User.instance.userInfo
+//	@State var userFloor : UserFloor? = nil
+	@State var userInfo = User.instance.userInfo
 	@State var userFloor : UserFloor? = nil
 	@State var popupIndex : Int = 1
 	@State var isShowingPopup : Bool = false
@@ -78,6 +80,9 @@ struct MyPageView: View {
 			.navigationBarHidden(true)
 			.ignoresSafeArea()
 			.background(Color.White200)
+			.onAppear{
+				userFloor = User.instance.userFloor
+			}
 		}
 	}
 	

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct BadgePopupView: View {
-	@State var userFloor : UserFloor? = nil
-	@State var stageInfo : StageInfo? = nil
+	@State var userFloor = User.instance.userInfo
+	@State var stageInfo =  User.instance.userFloor//: StageInfo? = nil
 	@State var stages = Stages()
 	@Binding var showingPopupIndex : Int
 	@Binding var isSowingPopup : Bool
