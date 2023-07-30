@@ -25,7 +25,7 @@ class UserStage: ObservableObject {
     }
 }
 
-var userStageTestInstance: UserStage = .init(id: UUID(), currentStage: 1, currentStageFloors: 4)
+var userStageTestInstance: UserStage = .init(id: UUID(), currentStage: 2, currentStageFloors: 8)
 
 extension Notification.Name {
     static let userStageCurrentStageChanged = Notification.Name("UserStageCurrentStageChanged")

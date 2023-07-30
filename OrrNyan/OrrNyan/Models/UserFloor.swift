@@ -21,4 +21,4 @@ struct UserFloor: Codable {
     }
 }
 
-let userFloorTestInstance: UserFloor = UserFloor(dailyFloors: 5, totalFloors: 43, date: Date())
+let userFloorTestInstance: UserFloor = UserFloor(dailyFloors: 5, totalFloors: 11, date: Date())
