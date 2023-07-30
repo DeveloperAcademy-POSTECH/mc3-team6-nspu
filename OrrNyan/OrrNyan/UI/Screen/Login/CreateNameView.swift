@@ -22,45 +22,31 @@ struct CreateNameView: View {
     @State var catName = ""
     @State var isShowAlert = false
     @State var isInput = false
-
-    // change color of cancel button in Alert
-    //    init() {
-    //        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = .gray
-    //    }
-
+    
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(alignment: .leading, spacing: 0){
                 LottieView(filename: "LottieCreateNameView")
-                    .frame(width: 330, height: 330)
-                    .padding(.top, 50)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: DeviceSize.width > DeviceSize.iPhoneSE  ? 330 : 250)
+                    .padding(.top,  DeviceSize.width > DeviceSize.iPhoneSE  ? 50 : 20 )
+                
                 Text("내 이름은 뭐냥?")
+                    .font(.pretendard(size: 18, .bold))
                     .padding(.top, 20)
-                VStack {
-                    VStack(alignment: .center) {
-                        HStack {
-                            // input field
-                            TextField("정해달라", text: $catName)
-                                .frame(width: 180, height: 0)
-                                .foregroundColor(hasInput(catNameStatus: isValid()) ? Color.Black300 : Color.Pink300)
-                            Text("냥")
-                                .bold()
-                        }
-                        .offset(y: 10)
-                        // underline
-                        Rectangle()
-                            .frame(width: 200, height: 2)
-                    }
-                    .foregroundColor(hasInput(catNameStatus: isValid()) ? Color.Purple300 : Color.Pink300)
-
-                    // inform whether cat name is valid or not
-                    Text(isValid().rawValue)
-                        .foregroundColor(isValid() == catNameStatus.availableName ? Color.Black300 : Color.Pink300)
-                }
-                .frame(width: 330, alignment: .center)
-
+                    .frame(maxWidth: .infinity)
+                
+                
+                nickNameInput(placeHolder: "정해달라")
+                
+                
+                // inform whether cat name is valid or not
+                Text(isValid().rawValue)
+                    .foregroundColor(isValid() == catNameStatus.availableName ? Color.Black300 : Color.Pink300)
+                    .font(.custom("Pretendard-Regular", size: 15))
+                    .padding(.top, 5)
+                    .padding(.leading, 65)
                 Spacer()
-
                 // confirm cat name and complete sign up
                 Button(action: {
                     // alert pop up
@@ -71,28 +57,51 @@ struct CreateNameView: View {
                 })
                 .disabled(isValid() == catNameStatus.availableName ? false : true)
                 .buttonStyle(CatButtonStyle())
-                .padding(.bottom, 50)
+                .padding(.bottom, DeviceSize.width > DeviceSize.iPhoneSE  ? 50 : 20)
                 // alert pop up
                 .alert("이름 확정인거냥?", isPresented: $isShowAlert) {
                     Button(action: {
                         Task {
                             try await firebaseManager.createUser(catName)
-                        }
-                    }) {
+                        }})
+                    {
                         Text("확인")
                     }
-
                     Button("취소") {
                         isShowAlert = false
                     }
-                } message: {
-                    Text("한 번 정하면 바꿀 수 없다냥.")
-                }
+                } message: { Text("한 번 정하면 바꿀 수 없다냥.") }
             }
+            .ignoresSafeArea()
         }
         .padding(.horizontal, 35)
     }
-
+    
+    // input field
+    private func nickNameInput(placeHolder:String) -> some View {
+        VStack {
+            HStack {
+                TextField("정해달라", text: $catName)
+                    .font(.pretendard(size:22, .bold))
+                    .foregroundColor(hasInput(catNameStatus: isValid()) ? Color.Black300 : Color.Pink300)
+                
+                Spacer()
+                
+                Text("냥")
+                    .font(.pretendard(size:22, .bold))
+            }
+            .padding(.bottom, 6)
+            .overlay(alignment:.bottom){
+                Rectangle()
+                    .frame(height: 2)
+            }
+            .padding(.horizontal, 65)
+        }
+        .foregroundColor(hasInput(catNameStatus: isValid()) ? Color.Purple300 : Color.Pink300)
+        .padding(.top, 30)
+    }
+    
+    
     // check if cat name is appropriate
     // has special character
     // has empty space
@@ -103,12 +112,12 @@ struct CreateNameView: View {
         // only en, ko, nums
         let pattern = "[^a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\s]"
         let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-
+        
         if let _ = regex.firstMatch(in: catName, options: [], range: NSMakeRange(0, catName.count))
         {
             return catNameStatus.specialCharater
         }
-
+        
         // check catName length, spaces
         switch catName {
         case _ where catName.contains(" "):
@@ -123,7 +132,7 @@ struct CreateNameView: View {
             return catNameStatus.tooLong
         }
     }
-
+    
     // check name availability
     func hasInput(catNameStatus: catNameStatus) -> Bool {
         switch catNameStatus {
