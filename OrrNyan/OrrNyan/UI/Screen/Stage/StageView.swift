@@ -23,7 +23,11 @@ struct StageView: View {
                                 MainTopView()
                                     .zIndex(.infinity)
                                 Spacer()
-                                StageBottomView()
+//                                StageBottomView()
+								
+								NavigationLink(destination: MyPageView()){
+									StageBottomView()
+								}
                             }
 
                             ACarousel(viewModel.stageCarouselInfo, headspace: 80, nameSpace: nameSpace) { _ in

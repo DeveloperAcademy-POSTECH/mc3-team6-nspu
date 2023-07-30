@@ -10,6 +10,7 @@ import SwiftUI
 struct BadgePopupView: View {
 	@State var userFloor : UserFloor? = nil
 	@State var stageInfo : StageInfo? = nil
+	@State var stages = Stages()
 	@Binding var showingPopupIndex : Int
 	@Binding var isSowingPopup : Bool
 	@Binding var degree : Double
@@ -68,12 +69,12 @@ struct BadgePopupView: View {
 				  )
 
 			
-			Text("대한민국")
+			Text("\(stages.StageInfos[showingPopupIndex - 1].stageLocation)")
 				.font(.pretendard(size: 16, .bold))
 				.foregroundColor(Color.Black100)
 				.padding(.top, 10 )
 			
-			Text("석가탑")
+			Text("\(stages.StageInfos[showingPopupIndex - 1].stageName)")
 				.font(.pretendard(size: 24, .extraBold))
 				.foregroundColor(Color.Black300)
 				.padding(.top, 4)
@@ -83,7 +84,7 @@ struct BadgePopupView: View {
 			VStack(alignment: .leading, spacing: 2) {
 				Text("총 층계")
 					.font(.pretendard(size: 13, .medium))
-				Text("\(stageInfo?.stageFloors ?? 3)층")
+				Text("\(stages.StageInfos[showingPopupIndex - 1].stageFloors)층")
 					.font(.pretendard(size: 24, .bold))
 					.foregroundColor(Color.Purple300)
 				
@@ -91,7 +92,7 @@ struct BadgePopupView: View {
 				
 				Text("높이")
 					.font(.pretendard(size: 13, .medium))
-				Text("\(stageInfo?.stageHeight ?? 20)m")
+				Text("\(stages.StageInfos[showingPopupIndex - 1].stageHeight)m")
 					.font(.pretendard(size: 24, .bold))
 					.foregroundColor(Color.Purple300)
 				
