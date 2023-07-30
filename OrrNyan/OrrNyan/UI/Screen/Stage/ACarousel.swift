@@ -15,6 +15,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
     @StateObject
     private var viewModel: ACarouselViewModel<Data, ID>
     @EnvironmentObject var stageViewModel: StageViewModel
+	@EnvironmentObject var appFirstLaunch : AppFirstLaunch
 
     // ACarousel에 들어갈 Content(View)를 content에 저장합니다.
     private let content: (Data.Element) -> Content
@@ -24,6 +25,8 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
     let catRotationDegree: [Double] = [270, 270, 271]
     let cat3DRotationDegree: [Double] = [180, 0, 0]
     var nameSpace: Namespace.ID
+	
+	@State var test : Bool = true
     @State var cancellables = Set<AnyCancellable>()
 
     public var body: some View {
@@ -60,6 +63,15 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                                         }
                                                     }
                                                 }
+											//앱 처음 실행 시, currentStage 자동 클릭 시키기
+												.onAppear {
+													if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index && appFirstLaunch.isFirstlaunch {
+														stageViewModel.selectedIndex = tempElement.index
+														withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
+															stageViewModel.isMainDisplayed = true
+														}
+													}
+												}
                                         }
                                     }
                                     .frame(width: viewModel.itemWidth)

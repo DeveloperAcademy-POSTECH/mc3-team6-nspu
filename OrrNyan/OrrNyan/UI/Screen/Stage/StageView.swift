@@ -10,7 +10,7 @@ import SwiftUI
 struct StageView: View {
     @State var showAlert: Bool = false
     @EnvironmentObject var viewModel: StageViewModel
-    @Namespace var nameSpace
+	var nameSpace: Namespace.ID
 
     var body: some View {
         NavigationView {
@@ -70,9 +70,10 @@ struct StageView: View {
     }
 }
 
-struct StageView_Previews: PreviewProvider {
-    static var previews: some View {
-        StageView()
-            .environmentObject(StageViewModel())
-    }
-}
+//struct StageView_Previews: PreviewProvider {
+//    static var previews: some View {
+//
+//        StageView()
+//            .environmentObject(StageViewModel())
+//    }
+//}

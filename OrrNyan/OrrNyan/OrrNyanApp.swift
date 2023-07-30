@@ -14,12 +14,14 @@ struct OrrNyanApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var firebaseManager = FirebaseManager()
     @StateObject var stageViewModel = StageViewModel()
+	@StateObject var isFirstLaunch = AppFirstLaunch()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(firebaseManager)
                 .environmentObject(stageViewModel)
+				.environmentObject(isFirstLaunch)
                 .onAppear(){
                     Task {
                         // userInfo
