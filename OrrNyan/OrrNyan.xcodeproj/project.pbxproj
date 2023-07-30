@@ -46,6 +46,7 @@
 		1DFB8B4E2A73A1F500D0D54A /* IconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB8B4D2A73A1F500D0D54A /* IconManager.swift */; };
 		1DFB8B882A755B3D00D0D54A /* DeviceSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB8B872A755B3D00D0D54A /* DeviceSize.swift */; };
 		1DFB8B8E2A76261600D0D54A /* GetHeightModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB8B8D2A76261600D0D54A /* GetHeightModifier.swift */; };
+		1DFB8B902A766C1C00D0D54A /* FloorUpdatedAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB8B8F2A766C1C00D0D54A /* FloorUpdatedAlert.swift */; };
 		693D31C82A6635C3000EA859 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 693D31C72A6635C3000EA859 /* FirebaseAuth */; };
 		693D31CA2A6635C3000EA859 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 693D31C92A6635C3000EA859 /* FirebaseFirestore */; };
 		693D31CD2A6635EE000EA859 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 693D31CC2A6635EE000EA859 /* GoogleSignIn */; };
@@ -153,6 +154,7 @@
 		1DFB8B4D2A73A1F500D0D54A /* IconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconManager.swift; sourceTree = "<group>"; };
 		1DFB8B872A755B3D00D0D54A /* DeviceSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSize.swift; sourceTree = "<group>"; };
 		1DFB8B8D2A76261600D0D54A /* GetHeightModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHeightModifier.swift; sourceTree = "<group>"; };
+		1DFB8B8F2A766C1C00D0D54A /* FloorUpdatedAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorUpdatedAlert.swift; sourceTree = "<group>"; };
 		693D31D02A66360A000EA859 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		693D31D22A663633000EA859 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		693D31D32A663673000EA859 /* OrrNyan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OrrNyan.entitlements; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 		695B69182A5E442800129A17 = {
 			isa = PBXGroup;
 			children = (
+				1DFB8B8F2A766C1C00D0D54A /* FloorUpdatedAlert.swift */,
 				695B69232A5E442800129A17 /* OrrNyan */,
 				695B69352A5E442900129A17 /* OrrNyan Watch App */,
 				695B69222A5E442800129A17 /* Products */,
@@ -685,6 +688,7 @@
 				69AA2B282A658F090076DC58 /* UserFloor.swift in Sources */,
 				1D22D14A2A6FB5DA004A8697 /* SvgViewExample.swift in Sources */,
 				699EE13C2A726D9A000D7CF3 /* User.swift in Sources */,
+				1DFB8B902A766C1C00D0D54A /* FloorUpdatedAlert.swift in Sources */,
 				DE30A0992A66A788004D94E4 /* MainParallaxView.swift in Sources */,
 				69AA2B2A2A658F110076DC58 /* UserStage.swift in Sources */,
 				1B3FDC172A5E540C0081CCBB /* UserInfo.swift in Sources */,
