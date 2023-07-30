@@ -22,8 +22,10 @@ struct OrrNyanApp: App {
                 .environmentObject(stageViewModel)
                 .onAppear(){
                     Task {
+                        // userInfo
                         try await firebaseManager.fetchUserInfo()
-                        print("UserInfo: \(String(describing: User.instance.userInfo))")
+                        // userFloor
+                        User.instance.updateFloorsData()
                     }
                 }
         }

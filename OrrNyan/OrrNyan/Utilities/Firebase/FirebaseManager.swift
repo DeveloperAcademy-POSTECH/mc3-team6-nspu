@@ -73,28 +73,31 @@ extension FirebaseManager {
     
     /// Read userFloor
     /// 가장 최근의 UserFloor 데이터를 가져옵니다.
-    func readUserFloor() async throws -> UserFloor? {
+    func readRecentUserFloor() async throws -> UserFloor? {
         guard let userId = self.getCurrentUserId() else {return nil}
         
-        let te = try await refUserInfo.document(userId).collection("UserFloor").order(by: "date", descending: true).limit(to:5).getDocuments()
-        let userFloor = try te.documents[0].data(as: UserFloor.self)
-        
+        let querySnapshot = try await refUserInfo.document(userId).collection("UserFloor").order(by: "date", descending: true).limit(to:5).getDocuments()
+        guard let firstDocument = querySnapshot.documents.first else {return nil}
+        let documentId = firstDocument.documentID
+        var userFloor = try firstDocument.data(as: UserFloor.self)
+        userFloor.id = documentId
+
         print("최근 유저층수 문서id: \(userFloor.id ?? "")")
         
         return userFloor
     }
     
     /// DB의 UserFloor 데이터를 업데이트 합니다.
-    func updateUserFloor() async throws {
+    func updateUserFloor(oldData: UserFloor ,newData: UserFloor) async throws {
         guard let userId = getCurrentUserId() else {return}
         
-        let userFloor = try await self.readUserFloor()
-        guard let userFloorId = userFloor?.id else {return}
+//        let userFloor = try await self.readRecentUserFloor()
+        guard let userFloorId = oldData.id else {return}
         
         try await self.refUserInfo.document(userId).collection("UserFloor").document(userFloorId).updateData([
-            "dailyFloors" : 1,
-            "totalFloors" : 1,
-            "date" : Date()
+            "dailyFloors" : newData.dailyFloors,
+            "totalFloors" : newData.totalFloors,
+            "date" : newData.date
         ])
     }
 }
@@ -133,10 +136,23 @@ extension FirebaseManager {
             User.instance.userInfo = UserInfo(id: authResultUser.uid, name: authResultUser.displayName ?? "", email: authResultUser.email ?? "", nickName: "")
             self.signUpState = .duringSignUp
         }
+        // 이미 회원가입이 되어있는 유저의 로그인
         else {
             UserDefaults.standard.set(authResultUser.uid, forKey: "userId")
-            UserDefaults.standard.set(Date(), forKey: "lastVisitDate")
+//            UserDefaults.standard.set(Date(), forKey: "lastVisitDate")
+            UserDefaults.standard.set(0, forKey: "focusedStageIndex")
+            // 로그인 시에 가장 최근 유저플로어 데이터 가져와서 유저디폴트에 저장
+            guard let DbUserFloor = try await self.readRecentUserFloor() else {return}
+            self.saveDataToUserDefaults(DbUserFloor)
+    
             self.signUpState = .afterSignUp
+        }
+    }
+    
+    func saveDataToUserDefaults(_ userFloor: UserFloor) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(userFloor){
+            UserDefaults.standard.set(encoded, forKey: "userFloor")
         }
     }
     
@@ -160,10 +176,17 @@ extension FirebaseManager {
             ])
             
             UserDefaults.standard.set(userId, forKey: "userId")
-            //            UserDefaults.standard.set(user?.lastVisitDate, forKey: "lastVisitDate")
-            UserDefaults.standard.set(User.instance.userInfo?.lastVisitDate, forKey: "lastVisitDate")
+            UserDefaults.standard.set(0, forKey: "focusedStageIndex")
+            // 회원가입시, 서버에 처음 유저플로어 데이터 입력.
+//            guard let fivedaysago = Calendar.current.date(byAdding: .day, value: 0, to: Date()) else {return}
+            let userFloor = UserFloor(dailyFloors: 0, totalFloors: 0, date: now)
+            self.createUserFloor(userFloor: userFloor)
+            
+            // 유저디폴트에 입력
+            guard let userFloorFromDB = try await self.readRecentUserFloor() else {return}
+            self.saveDataToUserDefaults(userFloorFromDB)
+
             self.signUpState = .afterSignUp
-            print("New User Create")
         }
     }
     
