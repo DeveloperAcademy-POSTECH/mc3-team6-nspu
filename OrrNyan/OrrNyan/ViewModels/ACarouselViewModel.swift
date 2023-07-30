@@ -24,11 +24,12 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     private let _blurScaling: Double
     private let _opacityScaling: Double
     private var _indexScaling: CGFloat
+    private var cancellables = Set<AnyCancellable>()
+    
     init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool, grayScaling: Double, blurScaling: Double, opacityScaling: Double, indexScaling: CGFloat) {
         guard index.wrappedValue < data.count else {
             fatalError("The index should be less than the count of data ")
         }
-
         _data = data
         _dataId = id
         _spacing = spacing
@@ -42,6 +43,14 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
 
         focusedIndex = UserDefaults.standard.object(forKey: "focusedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int
         _index = index
+        NotificationCenter.default.publisher(for: .userStageCurrentStageChanged)
+            .compactMap { notification in
+                notification.userInfo?["currentStage"] as? Int
+            }
+            .sink { [weak self] newValue in
+                self?.focusedIndex = newValue - 1
+            }
+            .store(in: &cancellables)
     }
 
     /// The index of the currently active subview.
@@ -117,7 +126,7 @@ extension ACarouselViewModel {
             return .spring()
         }
         return isAnimatedOffset ? .spring() : .none
-    }  
+    }
 
     var itemWidth: CGFloat {
         viewSize.width - defaultPadding * 2
@@ -322,7 +331,6 @@ extension ACarouselViewModel {
         /// set drag offset
         dragOffset = offset
         _indexScaling = 1.0 - value.location.x / UIScreen.width
-        print(_indexScaling)
     }
 
     private func dragEnded(_ value: DragGesture.Value) {

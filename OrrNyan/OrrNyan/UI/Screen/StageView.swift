@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct StageView: View {
-    // stageStructureImageTitle을 String 배열로 만들고,
-    // UUID를 포함한 Items배열로 변환해 items 변수에 저장합니다.
-
+    @State var showAlert: Bool = false
     @EnvironmentObject var viewModel: StageViewModel
     @Namespace var nameSpace
 
@@ -36,11 +34,30 @@ struct StageView: View {
                     }
                     else {
                         MainView(nameSpace: nameSpace)
+                        Button("Show Alert") {
+                            showAlert = true
+                        }
+                        .alert(isPresented: $showAlert) {
+                            Alert(title: Text("축하한다냥!"), message: Text("스테이지 클리어!"), dismissButton: .default(Text("클리어!")) {
+                                viewModel.isMainDisplayed = false
+                                if viewModel.stageCarouselInfo.count > userStageTestInstance.currentStage {
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+                                        userStageTestInstance.currentStage += 1
+                                        UserDefaults.standard.set(userStageTestInstance.currentStage - 1, forKey: "focusedStageIndex")
+                                    }
+                                }
+                            })
+                        }
                     }
                 }
             }
             .ignoresSafeArea()
         }
+    }
+
+    func sumOfClearedStages(array: [Int], n: Int) -> Int {
+        let endIndex = min(n, array.count) // n이 배열의 크기를 초과하지 않도록 보장
+        return array.prefix(endIndex).reduce(0, +)
     }
 }
 
