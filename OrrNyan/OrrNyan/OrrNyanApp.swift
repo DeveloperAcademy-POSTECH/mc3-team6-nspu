@@ -24,7 +24,7 @@ struct OrrNyanApp: App {
 //				.environmentObject(StageViewModel())
 			
 //			SettingPopupView()
-						ContentView()
+						StageView()
 							.environmentObject(firebaseManager)
 							.environmentObject(stageViewModel)
         }

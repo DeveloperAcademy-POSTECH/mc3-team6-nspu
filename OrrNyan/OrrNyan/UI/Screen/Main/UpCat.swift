@@ -41,20 +41,6 @@ struct UpCat: View {
                 isMovingUp = false
         }
     }
-	
-	private func moveImageUp2() {
-        guard isMovingUp else { return }
-        if  imagePositionY > -230 {
-            imagePositionY -= 5
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                moveImageUp() // 재귀적으로 계속 이동
-            }
-        } else {
-                isMovingUp = false
-        }
-    }
-	
-	
 }
 
 
