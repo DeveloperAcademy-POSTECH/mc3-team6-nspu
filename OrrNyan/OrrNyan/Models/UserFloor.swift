@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct UserFloor: Codable {
-    @DocumentID var id: String?
+    var id: String?
     var dailyFloors: Int
     var totalFloors: Int
     var date: Date

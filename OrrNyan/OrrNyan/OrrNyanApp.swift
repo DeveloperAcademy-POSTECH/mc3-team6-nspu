@@ -17,16 +17,17 @@ struct OrrNyanApp: App {
     
     var body: some Scene {
         WindowGroup {
-//			LoginView()
-//			CreateNameView()
-//			MyPageView()
-//			StageView()
-//				.environmentObject(StageViewModel())
-			
-//			SettingPopupView()
-						ContentView()
-							.environmentObject(firebaseManager)
-							.environmentObject(stageViewModel)
+            ContentView()
+                .environmentObject(firebaseManager)
+                .environmentObject(stageViewModel)
+                .onAppear(){
+                    Task {
+                        // userInfo
+                        try await firebaseManager.fetchUserInfo()
+                        // userFloor
+                        User.instance.updateFloorsData()
+                    }
+                }
         }
     }
 }

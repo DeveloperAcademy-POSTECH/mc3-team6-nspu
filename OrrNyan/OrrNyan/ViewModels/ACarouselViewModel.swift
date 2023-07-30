@@ -25,7 +25,7 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     private let _opacityScaling: Double
     private var _indexScaling: CGFloat
     private var cancellables = Set<AnyCancellable>()
-    
+
     init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int>, spacing: CGFloat, headspace: CGFloat, sidesScaling: CGFloat, isWrap: Bool, grayScaling: Double, blurScaling: Double, opacityScaling: Double, indexScaling: CGFloat) {
         guard index.wrappedValue < data.count else {
             fatalError("The index should be less than the count of data ")
@@ -41,11 +41,11 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
         _opacityScaling = opacityScaling
         _indexScaling = indexScaling
 
-        if UserDefaults.standard.object(forKey: "focusedStageIndex") == nil{
+        if UserDefaults.standard.object(forKey: "focusedStageIndex") == nil {
             UserDefaults.standard.set(userStageTestInstance.currentStage - 1, forKey: "focusedStageIndex")
         }
         focusedIndex = UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int
-        
+
         _index = index
         NotificationCenter.default.publisher(for: .userStageCurrentStageChanged)
             .compactMap { notification in
@@ -155,16 +155,16 @@ extension ACarouselViewModel {
     }
 
     /// 현재 포커싱된 스테이지가 아닌 스테이지의 블러 조절
-    func blur(_ item: Data.Element) -> Double {
+    func stageBlur(_ item: Data.Element) -> Double {
         guard focusedIndex < data.count else {
             return 0.0
         }
         let tempItem = item as! StageItem
         if focusedIndex != tempItem.index {
-            return indexScaling * 5.0
+            return abs(indexScaling) * 4.0
         }
         else {
-            return 5.0 * (1 - indexScaling)
+            return 4.0 * (1.0 - abs(indexScaling))
         }
     }
 
@@ -211,13 +211,29 @@ extension ACarouselViewModel {
             return 0
         }
         let tempItem = item as! StageItem
+        // 현재 스테이지 스케일 - 1.0
         if focusedIndex == tempItem.index {
-            return 1
-        } else if focusedIndex < tempItem.index {
-            return 1.2 - 0.2 * indexScaling
+            if indexScaling == 1 {
+                return 1.0
+            } else {
+                return 1.0 + 0.2 * indexScaling
+            }
         }
+        // 현재 이후 스테이지 스케일 - 1.2
+        else if focusedIndex < tempItem.index {
+            if indexScaling == 1 {
+                return 1.2
+            } else {
+                return 1.2 + 0.2 * indexScaling
+            }
+        }
+        // 현재 이전 스테이지 스케일 - 0.8
         else {
-            return 1 - 0.2 * indexScaling
+            if indexScaling == 1 {
+                return 0.8
+            } else {
+                return 0.8 + 0.2 * indexScaling
+            }
         }
     }
 
@@ -225,10 +241,59 @@ extension ACarouselViewModel {
     func catOpacityScaling(_ item: Data.Element) -> CGFloat {
         let tempItem = item as! StageItem
         if focusedIndex == tempItem.index {
-            return indexScaling
+            if indexScaling == 1 {
+                return 1
+            }
+            else {
+                return 1 - abs(indexScaling)
+            }
+        }
+        else {
+            if indexScaling == 1 {
+                return 0
+            }
+            else {
+                return abs(indexScaling)
+            }
+        }
+    }
+
+    func flagOpacityScaling(_ item: Data.Element) -> CGFloat {
+        let tempItem = item as! StageItem
+        if tempItem.index <= userStageTestInstance.currentStage - 2 {
+            return 1
         }
         else {
             return 0
+        }
+    }
+
+    func flagOffsetScaling(_ item: Data.Element) ->  CGFloat {
+        var offsetScale = indexScaling
+        let tempItem = item as! StageItem
+
+        if focusedIndex == tempItem.index {
+            if abs(indexScaling) == 1 {
+                return 1
+            } else {
+                return 1.0 + indexScaling * 0.4
+            }
+        }
+        // 현재 이후 스테이지 스케일 - 1.2
+        else if focusedIndex < tempItem.index {
+            if abs(indexScaling) == 1 {
+                return 1.35
+            } else {
+                return 1.35 + indexScaling * 0.4
+            }
+        }
+        // 현재 이전 스테이지 스케일 - 0.8
+        else {
+            if abs(indexScaling) == 1 {
+                return 0.6
+            } else {
+                return 0.6 + abs(indexScaling) * 0.4
+            }
         }
     }
 }
@@ -252,7 +317,6 @@ extension ACarouselViewModel {
     // sidesScaling: 1과 sideScaling의 최솟값, 0이상을 위한 max
     private var sidesScaling: CGFloat {
         return _sidesScaling
-//        return max(min(_sidesScaling, 1), 0)
     }
 
     // isAnimatedOffset: 뷰가 offset에 있을 때(drag됐을 때) true
@@ -299,7 +363,6 @@ extension ACarouselViewModel {
 // MARK: - Drag Gesture
 
 extension ACarouselViewModel {
-    // 뷰가 드래그됐을 때. 드래그 시작 시 dragChanged, 끝날 시 dragEnded
     /// drag gesture of view
     var dragGesture: some Gesture {
         DragGesture()
@@ -323,8 +386,8 @@ extension ACarouselViewModel {
         /// and still only one subview is toggled
         // offset을 한 카드의 실제 너비로 설정
         var offset: CGFloat = itemActualWidth
-        // 드래그되는 값을 value.translation.width로 가져옴
 
+        // 수평으로 드래그되는 값을 value.translation.width로 가져와서 offset에 저장
         if value.translation.width > 0 {
             offset = min(offset, value.translation.width)
         } else {
@@ -334,7 +397,8 @@ extension ACarouselViewModel {
         // 현재 드래그된 값을 dragOffset에 저장
         /// set drag offset
         dragOffset = offset
-        _indexScaling = 1.0 - value.location.x / UIScreen.width
+
+        _indexScaling = max(-1.0, min(1.0, 2 * value.translation.width / UIScreen.width))
     }
 
     private func dragEnded(_ value: DragGesture.Value) {

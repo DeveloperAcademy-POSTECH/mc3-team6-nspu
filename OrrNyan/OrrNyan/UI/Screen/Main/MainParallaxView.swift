@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainParallaxView: View {
     @EnvironmentObject var stageViewModel: StageViewModel
-    @StateObject var motionManager: MotionManager = .init()
+    @StateObject var motionManager: MotionManagerModel = .init()
 	@State private var imagePositionY: CGFloat = 0
 	@State private var stageStructureHeight: CGRect = .zero
 	@State private var stageStructureWidth: CGRect = .zero
