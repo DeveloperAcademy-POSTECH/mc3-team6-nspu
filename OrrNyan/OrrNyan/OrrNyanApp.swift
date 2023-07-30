@@ -27,6 +27,7 @@ struct OrrNyanApp: App {
                         // userInfo
                         try await firebaseManager.fetchUserInfo()
                         // userFloor
+                        User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
                         User.instance.updateFloorsData()
                     }
                 }
