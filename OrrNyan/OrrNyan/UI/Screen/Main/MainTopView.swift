@@ -17,6 +17,9 @@ struct MainTopView: View {
     @EnvironmentObject var stageViewModel: StageViewModel
     let durationAndDelay: CGFloat = 0.1
 
+    // to detect ettingPopupView ScenePhase
+    @Environment(\.scenePhase) private var scenePhase
+    
     // MARK: - View
     
     var body: some View {
@@ -67,7 +70,7 @@ struct MainTopView: View {
 				}
 				.sheet(isPresented: $isSettingPopupViewShow){
 					SettingPopupView(isSettingPopupViewShow: $isSettingPopupViewShow)
-					
+                        .environment(\.scenePhase, scenePhase)
 				}
             }
         }

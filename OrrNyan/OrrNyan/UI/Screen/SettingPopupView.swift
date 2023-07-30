@@ -16,9 +16,6 @@ struct SettingPopupView: View {
     @StateObject private var notiManager = UserPushNotification.instance
     
 	@Binding var isSettingPopupViewShow : Bool
-	
-    // test code
-    @State var test = false
     
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.dismiss) var dismiss
@@ -37,11 +34,6 @@ struct SettingPopupView: View {
                 
                 Form {
                     Section{
-                        // test =========================
-//                        Text("토글 상태 : \(notiManager.isToggleOn.description) // UD값: \(UserDefaults.standard.bool(forKey: "isToggleOn").description)")
-//                        Text("권한 상태 : \(notiManager.isNotiAuthorized.description) // UD값: \(UserDefaults.standard.bool(forKey: "isNotificationAuthorized").description)")
-                        // test =========================
-                        
                         Toggle("PUSH 알림", isOn: $notiManager.isToggleOn)
                             .onAppear{
                                 checkAuth()
@@ -59,6 +51,7 @@ struct SettingPopupView: View {
                             .onChange(of: scenePhase) { phase in
                                 switch phase {
                                 case .active:
+                                    print("화면 전환 \(phase)")
                                     checkAuth()
                                 default: break
                                 }}
