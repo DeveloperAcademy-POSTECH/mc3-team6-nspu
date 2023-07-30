@@ -41,7 +41,11 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
         _opacityScaling = opacityScaling
         _indexScaling = indexScaling
 
-        focusedIndex = UserDefaults.standard.object(forKey: "focusedStageIndex") == nil ? 0 : UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int
+        if UserDefaults.standard.object(forKey: "focusedStageIndex") == nil{
+            UserDefaults.standard.set(userStageTestInstance.currentStage - 1, forKey: "focusedStageIndex")
+        }
+        focusedIndex = UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int
+        
         _index = index
         NotificationCenter.default.publisher(for: .userStageCurrentStageChanged)
             .compactMap { notification in
