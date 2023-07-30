@@ -25,14 +25,14 @@ class SignInWithApple: NSObject, ASAuthorizationControllerDelegate{
     private var completionHandler : ((Result<SignInWithAppleResult,Error>) -> Void)? = nil
     @MainActor
     func startSignInWithAppleFlow() async throws -> SignInWithAppleResult {
-        await withCheckedContinuation{ continuation in
+        try await withCheckedThrowingContinuation{ continuation in
             self.startSignInWithAppleFlow { result in
                 switch result {
                 case .success(let signInAppleResult):
                     continuation.resume(returning: signInAppleResult)
                     return
                 case .failure(let error):
-                    continuation.resume(throwing: error as! Never)
+                    continuation.resume(throwing: error)
                     return
                 }
             }
