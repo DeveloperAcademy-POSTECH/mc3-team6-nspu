@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreMotion
 
-class MotionManager: ObservableObject {
+class MotionManagerModel: ObservableObject {
     //MARK: - 모션 매니져 프로퍼티
     @Published var manager: CMMotionManager = .init()
     @Published var xValue: CGFloat = 0
