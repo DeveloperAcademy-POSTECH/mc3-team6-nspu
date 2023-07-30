@@ -24,8 +24,8 @@ struct MainView: View {
                 }
             }
             .frame(height: UIScreen.height)
-            UpCat()
-                .frame(width: UIScreen.width)
+//            UpCat()
+//                .frame(width: UIScreen.width)
             
         }
 		.border(.green)
