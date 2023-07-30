@@ -8,9 +8,9 @@
 import Combine
 import Foundation
 
-class UserStage: ObservableObject {
+class UserStage {
     let id: UUID
-    @Published var currentStage: Int {
+    var currentStage: Int {
         didSet {
             NotificationCenter.default.post(name: .userStageCurrentStageChanged, object: self, userInfo: ["currentStage": currentStage])
         }
