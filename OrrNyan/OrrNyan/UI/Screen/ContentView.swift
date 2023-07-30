@@ -10,9 +10,11 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var firebaseManager: FirebaseManager
     @AppStorage("userId") var userId: String?
-    @State var test = false
+    @State var isFloorUpdated = false
+    @State var isMainViewShow = false
     @State var increasedFloors = 0
     @State var cancellables = Set<AnyCancellable>()
+	@Namespace var nameSpace
     var body: some View {
         VStack{
             switch firebaseManager.signUpState {
@@ -21,9 +23,14 @@ struct ContentView: View {
             case .duringSignUp:
                 CreateNameView()
             case .afterSignUp:
-                StageView()
+				StageView(nameSpace: nameSpace)
+				if isMainViewShow {
+					MainView(nameSpace: nameSpace)
+				}
+			
             }
-            if test {
+			
+            if isFloorUpdated {
                 Button("+\(increasedFloors)층"){
                     Task {
                         guard let lastVisitData = try await firebaseManager.readRecentUserFloor() else {return}
@@ -69,7 +76,7 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .isFloorsChanged).receive(on: RunLoop.main).eraseToAnyPublisher()){ newValue in
             
             guard let isChanged = newValue.userInfo?.first?.value as? Bool else {return}
-            self.test = isChanged
+            self.isFloorUpdated = isChanged
             self.increasedFloors = User.instance.increasedFloorsCount
             
             print("데이터 : \(User.instance.lastVisitDateUserFloor)")
