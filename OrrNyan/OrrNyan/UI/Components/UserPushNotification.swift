@@ -14,69 +14,85 @@ class UserPushNotification: ObservableObject {
     static let instance = UserPushNotification()
     private init() {}
     
-    var isAlertEnabled: Bool = false
+    //save last alert time
     var lastSetTime: Date? = nil
     
+    // user notification center
+    let userNotificationCenter = UNUserNotificationCenter.current()
+    let notificationAuthOptions = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
+    
+    // current setting value
+    @Published var isNotiAuthorized: Bool = UserDefaults.standard.bool(forKey: "isNotificationAuthorized"){
+        didSet{
+            if isNotiAuthorized {
+                UserDefaults.standard.set(true, forKey: "isNotificationAuthorized")
+            } else {
+                UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
+            }
+        }
+    }
+    
+    
+    
     // user sets notification authorization
-    @Published var isToggleOn: Bool = UserDefaults.standard.bool(forKey: "agreedNoti"){
+    @Published var isToggleOn: Bool = UserDefaults.standard.bool(forKey: "isToggleOn"){
         didSet{
             if isToggleOn {
-                UserDefaults.standard.set(true, forKey: "agreedNoti")
-                isAlertEnabled = true
-                
-                requestNotificationAuthorization()
-            }
-            else {
-                UserDefaults.standard.set(false, forKey: "agreedNoti")
-                isAlertEnabled = false
+                UserDefaults.standard.set(true, forKey: "isToggleOn")
+                // execute only once
+                if UserDefaults.standard.bool(forKey: "launchedBefore") == false {
+                    requestNotificationAuthorization()
+                }
+                addNotification(with: notiTime)
+            } else {
+                UserDefaults.standard.set(false, forKey: "isToggleOn")
                 cancelNotification()
             }
         }
     }
     
     // notification time
-    @Published var notiTime: Date = UserDefaults.standard.object(forKey: "AlertTime") as? Date ?? Date() {
+    @Published var notiTime: Date = UserDefaults.standard.object(forKey: "AlertTime") as? Date ?? Date(){
         didSet{
             // remove old noti time
             cancelNotification()
-            
-            guard isAlertEnabled else { return }
+            guard isToggleOn else { return }
             
             UserDefaults.standard.set(notiTime, forKey: "AlertTime")
-            
             // set to new noti time
             addNotification(with: notiTime)
         }
     }
     
-    // notification non authorized
-    @Published var isShowAuthAlert: Bool = false
-    
-    let userNotificationCenter = UNUserNotificationCenter.current()
-    let notificationAuthOptions = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
-    
     // request notification authorization
     func requestNotificationAuthorization() {
         userNotificationCenter.getNotificationSettings { settings in
-            
             // if not authorized
             if settings.authorizationStatus != .authorized {
                 self.userNotificationCenter.requestAuthorization(options: self.notificationAuthOptions) { (granted, error) in
                     if let error = error {
                         print("권한 오류다냥! \(error.localizedDescription)")
                     }
-                    
                     // first auth granted
-                    if granted { }
-                    // first denied
-                    else { }
+                    if granted {
+                        UserDefaults.standard.set(true, forKey: "launchedBefore")
+                        UserDefaults.standard.set(true, forKey: "isNotificationAuthorized")
+                        UserDefaults.standard.set(true, forKey: "isToggleOn")
+                        DispatchQueue.main.async {
+                            self.isNotiAuthorized = true
+                            self.isToggleOn = true
+                        }
                     }
-                }
-            
-            // if auth set to deny
-            if settings.authorizationStatus == .denied {
-                DispatchQueue.main.async {
-                    self.isShowAuthAlert = true
+                    // first denied
+                    else{
+                        UserDefaults.standard.set(true, forKey: "launchedBefore")
+                        UserDefaults.standard.set(false, forKey: "isNotificationAuthorized")
+                        UserDefaults.standard.set(false, forKey: "isToggleOn")
+                        DispatchQueue.main.async {
+                            self.isNotiAuthorized = false
+                            self.isToggleOn = false
+                        }
+                    }
                 }
             }
         }

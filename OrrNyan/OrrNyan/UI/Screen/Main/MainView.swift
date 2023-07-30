@@ -12,9 +12,11 @@ struct MainView: View {
     var nameSpace: Namespace.ID
     var body: some View {
         ZStack {
-            MainParallaxView(nameSpace: nameSpace)
+			MainParallaxView(nameSpace: nameSpace)
             VStack {
                 MainTopView()
+                    .ignoresSafeArea()
+                    .border(.red)
                 Spacer()
                 MainBottomView()
                     .onTapGesture {
@@ -26,6 +28,7 @@ struct MainView: View {
                 .frame(width: UIScreen.width)
             
         }
+		.border(.green)
         // 이거 없으면 옆으로 옮겨짐->밀리지 말고 뷰 안에서 작용하도록 함
         .frame(height: UIScreen.height)
     }

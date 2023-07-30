@@ -7,72 +7,155 @@
 import SwiftUI
 
 struct SettingPopupView: View {
-    @State var advertisement = false
-    @State var alarmTime = Date()
     @State var isWheelShow = false
-    @State var isAnimating = false
     
     // Audio manage
     @StateObject var myAudio = AudioManager.instance
     
     // Notification manage
     @StateObject private var notiManager = UserPushNotification.instance
-
+    
+	@Binding var isSettingPopupViewShow : Bool
+	
+    // test code
+    @State var test = false
+    
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.dismiss) var dismiss
+    
+    // is confirmation dialog required == not authorized notification
+    @State var isConfirmationRequired = false
+    
     var body: some View {
-        Form {
-            Toggle("PUSH 알림", isOn: $notiManager.isToggleOn)
-                .alert(isPresented: $notiManager.isShowAuthAlert){
-                    Alert(title: Text("알림 권한을 달라냥!"))
-                }
-            
-            HStack{
-                Text("알림시간")
-                Spacer()
-                Button(action: {
-                    withAnimation(.easeIn){
-                        self.isWheelShow.toggle()
+        ZStack{
+            VStack{
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .frame(width: 36, height: 5)
+                    .background(Color.White100)
+                    .cornerRadius(2.5)
+                
+                Form {
+                    Section{
+                        // test =========================
+//                        Text("토글 상태 : \(notiManager.isToggleOn.description) // UD값: \(UserDefaults.standard.bool(forKey: "isToggleOn").description)")
+//                        Text("권한 상태 : \(notiManager.isNotiAuthorized.description) // UD값: \(UserDefaults.standard.bool(forKey: "isNotificationAuthorized").description)")
+                        // test =========================
+                        
+                        Toggle("PUSH 알림", isOn: $notiManager.isToggleOn)
+                            .onAppear{
+                                checkAuth()
+                            }
+                            .onChange(of: notiManager.isToggleOn) { isOn in
+                                if isOn {
+                                    notiManager.isToggleOn = true
+                                    
+                                    if UserDefaults.standard.bool(forKey: "launchedBefore") {
+                                        isConfirmationRequired = !UserDefaults.standard.bool(forKey: "isNotificationAuthorized")}
+                                } else {
+                                    notiManager.isToggleOn = false
+                                }
+                            }
+                            .onChange(of: scenePhase) { phase in
+                                switch phase {
+                                case .active:
+                                    checkAuth()
+                                default: break
+                                }}
+                            .confirmationDialog("이거보라냥!",isPresented: $isConfirmationRequired, titleVisibility: .visible,
+                                                actions: {
+                                Button("알림 설정냥") {notiManager.openDeviceSetting()}
+                                Button("취소냥", role:.cancel) {
+                                    notiManager.isToggleOn = false
+                                }}, message: {
+                                    Text("알림 권한이 필요하다냥!")
+                                })
+                        HStack{
+                            Text("알림시간")
+                            Spacer()
+                            Button(action: {
+                                withAnimation(.easeIn){
+                                    self.isWheelShow.toggle()
+                                }
+                            },label: {
+                                Text(notiManager.notiTime, style: .time)
+                                    .bold()
+                                    .foregroundColor(Color.Purple200)
+                                    .padding(.horizontal, 11)
+                                    .padding(.vertical, 6)
+                                    .background(Color.White200)
+                                    .cornerRadius(10)
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                        }
+                        
+                        if isWheelShow{
+                            DatePicker(selection: $notiManager.notiTime, displayedComponents: .hourAndMinute, label: {})
+                                .labelsHidden()
+                                .datePickerStyle(.wheel)
+                        }
+                        
+                        // turn on and off BGM
+                        Toggle("배경음", isOn: $myAudio.isBGMEnabled)
+                        
+                        // turn on and off sound effects
+                        Toggle("효과음", isOn: $myAudio.isSFXEnabled)
+                    } header: {
+                        Text("")
+                            .padding(.top, 10)
                     }
-                },label: {
-                    Text(notiManager.notiTime, style: .time)
-                        .bold()
-                        .foregroundColor(Color.Purple200)
-                        .padding(.horizontal, 11)
-                        .padding(.vertical, 6)
-                        .background(Color.White200)
-                        .cornerRadius(10)
-                })
-                .buttonStyle(BorderlessButtonStyle())
+                }
+                .toggleStyle(SwitchToggleStyle(tint: Color.Purple200))
+                .bold()
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+				.overlay(alignment: .topTrailing){close.onTapGesture {
+					isSettingPopupViewShow = false
+				}}
             }
-            
-            if isWheelShow{
-                DatePicker(selection: $notiManager.notiTime, displayedComponents: .hourAndMinute, label: {})
-                    .labelsHidden()
-                    .datePickerStyle(.wheel)
-            }
-            
-            // turn on and off BGM
-            Toggle("배경음", isOn: $myAudio.isBGMEnabled)
-            
-            // turn on and off sound effects
-            Toggle("효과음", isOn: $myAudio.isSFXEnabled)
-            
-            
-            // test code =========================================
-            
-            Button("Test Button"){
-                AudioManager.instance.playSFX(fileName: "TestMeow", fileType: "wav")
-            }
-            
-            // test code =========================================
         }
-        .toggleStyle(SwitchToggleStyle(tint: Color.Purple200))
-        .bold()
+        .padding(.top, 24)
+        .background(Color.White200)
     }
 }
 
+func checkAuth() {
+    UNUserNotificationCenter.current().getNotificationSettings { settings in
+        if settings.authorizationStatus == .authorized {
+            // set values
+            DispatchQueue.main.async {
+                UserPushNotification.instance.isNotiAuthorized = true
+                UserPushNotification.instance.isToggleOn = UserDefaults.standard.bool(forKey: "isToggleOn")}
+        }
+        else {
+            // set values
+            DispatchQueue.main.async {
+                UserPushNotification.instance.isNotiAuthorized = false
+                UserPushNotification.instance.isToggleOn = false
+            }
+        }
+    }
+}
+
+private extension SettingPopupView {
+    var close: some View {
+        Button {
+            dismiss()
+        } label: {
+            Image(systemName: "xmark")
+                .bold()
+                .frame(width: 30, height: 30)
+                .foregroundColor(Color.Black200.opacity(0.5))
+                .background(Color.Gray200.opacity(0.2))
+                .clipShape(Circle())
+                .padding(.horizontal, 16)
+                .padding(.bottom, 0.0)
+                .padding(.top, 0)
+        }
+    }
+}
 
 struct SettingPopupView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingPopupView()
+		SettingPopupView(isSettingPopupViewShow : .constant(false))
     }
 }

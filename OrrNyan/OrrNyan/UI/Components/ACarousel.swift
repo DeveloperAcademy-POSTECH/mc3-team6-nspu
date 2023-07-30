@@ -48,16 +48,19 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .opacity(viewModel.opacityScaling(element))
                                     .matchedGeometryEffect(id: "StageStImage0\(tempElement.index + 1)", in: nameSpace)
                                     .overlay {
-                                        stageStSvgs[tempElement.index]
-                                            .foregroundColor(.blue.opacity(0.01))
-                                            .onTapGesture {
-                                                if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
-                                                    stageViewModel.selectedIndex = tempElement.index
-                                                    withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
-                                                        stageViewModel.isMainDisplayed = true
-                                                    }
-                                                }
-                                            }
+										//out of range error 잡아주기
+										if tempElement.index < stageStSvgs.count {
+											stageStSvgs[tempElement.index]
+												.foregroundColor(.blue.opacity(0.01))
+												.onTapGesture {
+													if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
+														stageViewModel.selectedIndex = tempElement.index
+														withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
+															stageViewModel.isMainDisplayed = true
+														}
+													}
+												}
+										}
                                     }
                                     .frame(width: viewModel.itemWidth)
                                 Image(systemName: "lock.fill")
