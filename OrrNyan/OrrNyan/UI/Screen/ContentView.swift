@@ -44,6 +44,8 @@ struct ContentView: View {
                                 
                                 guard let userFloorTempLast = try await firebaseManager.readRecentUserFloor() else {return}
                                 User.instance.saveFloorsToUserDefaults(userFloorTempLast)
+                                // 앱 실행시 항상 가지고 있어야하는 유저플로어에도 반영
+                                User.instance.userFloor = userFloorTempLast
                             }
                         }
                         
@@ -58,6 +60,8 @@ struct ContentView: View {
                                 }
                                 guard let userFloorTempLast = try await firebaseManager.readRecentUserFloor() else {return}
                                 User.instance.saveFloorsToUserDefaults(userFloorTempLast)
+                                // 앱 실행시 항상 가지고 있어야하는 유저플로어에도 반영
+                                User.instance.userFloor = userFloorTempLast
                             }
                         }
                     }
