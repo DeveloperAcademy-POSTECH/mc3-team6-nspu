@@ -18,6 +18,7 @@ class User {
     private init(){}
     var isToday = false
     var userInfo: UserInfo?
+    var userFloor: UserFloor?
     var lastVisitDateUserFloor: UserFloor?
     var userFloorsTemp = [UserFloor]()
     
