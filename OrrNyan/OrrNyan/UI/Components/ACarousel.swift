@@ -5,25 +5,26 @@
 //  Created by 박상원 on 2023/07/12.
 //
 
+import Combine
 import SwiftUI
 
 @available(iOS 13.0, OSX 10.15, *)
 
 public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollection, ID: Hashable, Content: View {
     // viewModel 인스턴스 생성
-    @ObservedObject
+    @StateObject
     private var viewModel: ACarouselViewModel<Data, ID>
     @EnvironmentObject var stageViewModel: StageViewModel
 
     // ACarousel에 들어갈 Content(View)를 content에 저장합니다.
     private let content: (Data.Element) -> Content
-//    let stageStSvgs: [AnyView] = [AnyView(Circle()), AnyView(Rectangle()), AnyView(Text("global"))]
     var stageStSvgs: [AnyView] = [AnyView(StageStSvg01()), AnyView(StageStSvg02()), AnyView(StageStSvg03())]
     let lottieOffset: [(CGFloat, CGFloat)] = [(0.13, 0.07), (-0.1, -0.05), (-0.1, -0.08)]
     let pawOffset: [(CGFloat, CGFloat)] = [(-0.08, 0.15), (-0.05, 0.08), (-0.05, -0.01)]
     let catRotationDegree: [Double] = [270, 270, 271]
     let cat3DRotationDegree: [Double] = [180, 0, 0]
     var nameSpace: Namespace.ID
+    @State var cancellables = Set<AnyCancellable>()
 
     public var body: some View {
         GeometryReader { proxy in
@@ -46,10 +47,6 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .blur(radius: viewModel.blur(element))
                                     .opacity(viewModel.opacityScaling(element))
                                     .matchedGeometryEffect(id: "StageStImage0\(tempElement.index + 1)", in: nameSpace)
-                                    .onAppear {
-                                        print("arrCount \(tempElement.index)")
-                                        print(tempElement)
-                                    }
                                     .overlay {
 										//out of range error 잡아주기
 										if tempElement.index < stageStSvgs.count {
@@ -89,7 +86,6 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .offset(x: UIScreen.width * pawOffset[tempElement.index].0, y: UIScreen.height * pawOffset[tempElement.index].1)
                                     .opacity(viewModel.catOpacityScaling(element))
                                     .blur(radius: viewModel.blur(element))
-
                                 }
                             }
                             .padding(.top, UIScreen.height * 0.1)
@@ -176,7 +172,8 @@ public extension ACarousel {
     ///   - isWrap: Define views to scroll through in a loop, default is false.
     ///   - content: The view builder that creates views dynamically.
     init(_ data: Data, id: KeyPath<Data.Element, ID>, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, grayScaling: Double = 1.0, blurScaling: Double = 1.0, opacityScaling: Double = 0.0, indexScaling: CGFloat = 1.0, nameSpace: Namespace.ID, @ViewBuilder content: @escaping (Data.Element) -> Content) {
-        viewModel = ACarouselViewModel(data, id: id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScaling: grayScaling, blurScaling: blurScaling, opacityScaling: opacityScaling, indexScaling: indexScaling)
+        _viewModel = StateObject(wrappedValue: ACarouselViewModel(data, id: id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScaling: grayScaling, blurScaling: blurScaling, opacityScaling: opacityScaling, indexScaling: indexScaling))
+//        viewModel = ACarouselViewModel(data, id: id, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScaling: grayScaling, blurScaling: blurScaling, opacityScaling: opacityScaling, indexScaling: indexScaling)
         self.nameSpace = nameSpace
         self.content = content
     }
@@ -198,7 +195,8 @@ public extension ACarousel where ID == Data.Element.ID, Data.Element: Identifiab
     ///   - isWrap: Define views to scroll through in a loop, default is false.
     ///   - content: The view builder that creates views dynamically.
     init(_ data: Data, index: Binding<Int> = .constant(0), spacing: CGFloat = 10, headspace: CGFloat = 10, sidesScaling: CGFloat = 0.8, isWrap: Bool = false, grayScaling: Double = 1.0, blurScaling: Double = 0.0, opacityScaling: Double = 1.0, indexScaling: CGFloat = 1.0, nameSpace: Namespace.ID, @ViewBuilder content: @escaping (Data.Element) -> Content) {
-        viewModel = ACarouselViewModel(data, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScaling: grayScaling, blurScaling: blurScaling, opacityScaling: opacityScaling, indexScaling: indexScaling)
+        _viewModel = StateObject(wrappedValue: ACarouselViewModel(data, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScaling: grayScaling, blurScaling: blurScaling, opacityScaling: opacityScaling, indexScaling: indexScaling))
+//        viewModel = ACarouselViewModel(data, index: index, spacing: spacing, headspace: headspace, sidesScaling: sidesScaling, isWrap: isWrap, grayScaling: grayScaling, blurScaling: blurScaling, opacityScaling: opacityScaling, indexScaling: indexScaling)
         self.nameSpace = nameSpace
         self.content = content
     }
