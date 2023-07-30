@@ -10,6 +10,12 @@ import SwiftUI
 struct MainParallaxView: View {
     @EnvironmentObject var stageViewModel: StageViewModel
     @StateObject var motionManager: MotionManager = .init()
+	@State private var imagePositionY: CGFloat = 0
+	@State private var stageStructureHeight: CGRect = .zero
+	@State private var stageStructureWidth: CGRect = .zero
+	@State private var catPositionY: CGFloat = .zero
+	
+	
 //    var arr = ["1", "2", "3"]
     var nameSpace: Namespace.ID
     var body: some View {
@@ -18,23 +24,57 @@ struct MainParallaxView: View {
             //                Image(item)
             //            }
             BackOpacityAnimation()
-                .offset(x: overlayOffsetX(offsetLimit: 500, value: 80), y:overlayOffsetY(offsetLimit: 30, value: 20))
+                .offset(x: overlayOffsetX(offsetLimit: 500, value: 80), y:overlayOffsetY(offsetLimit: 0, value: 0))
             FrameSideInAnimation()
-                .offset(x: overlayOffsetX(offsetLimit: 1000, value: 160), y:overlayOffsetY(offsetLimit: 500, value: 130))
+                .offset(x: overlayOffsetX(offsetLimit: 600, value: 30), y:overlayOffsetY(offsetLimit: 0, value: 0))
             FrameUpAnimation()
-				.offset(x: overlayOffsetX(offsetLimit: 600, value: 80), y:overlayOffsetY(offsetLimit: 10, value: 2))
+				.offset(x: overlayOffsetX(offsetLimit: 600, value: 80), y:overlayOffsetY(offsetLimit: 0, value: 0))
+
             //랜드마크 이미지
+			
+			
             Image("StageSt0\(stageViewModel.selectedIndex + 1)")
                 .resizable()
                 .matchedGeometryEffect(id: "StageStImage0\(stageViewModel.selectedIndex + 1)", in: nameSpace)
                 .aspectRatio(contentMode: .fit)
-                .frame(height: UIScreen.height*0.66)
+                .frame(height: UIScreen.height*0.736)
 //				.offset(x: overlayOffsetX(offsetLimit: 600, value: 80), y:overlayOffsetY(offsetLimit: 10, value: 2))
-				.padding(.bottom, DeviceSize.width > DeviceSize.iPhoneSE  ? 94 : 70)
+				.modifier(GetHeightModifier())
+				.padding(.bottom, DeviceSize.width > DeviceSize.iPhoneSE  ? 94 : 45)
                 .border(.red)
+				.onPreferenceChange(ContentRectSize.self) { rects in
+					self.stageStructureWidth = rects
+					self.stageStructureHeight = rects
+				}
+				.overlay(alignment:.trailing){
+					UpCat()
+						.frame(width: UIScreen.width)
+						.position(x:stageStructureWidth.width - (DeviceSize.width > DeviceSize.iPhoneSE  ? 14 : -22), y: catPositionY )
+				}
+			
+			Button {
+				withAnimation(.spring(response: 3, dampingFraction: 0.8)){
+					stageStructureHeight = .zero
+					
+						//버튼 눌렀을때, 고양이 높이 값을 수정하는 코드는 여기입니다!
+					catPositionY = stageStructureHeight.height + 20
+				}
+			} label: {
+				Text("UPUPUPUPUPUP")
+			}
+			.padding(.bottom, 100)
+
+			
+		
+			
         }
-        .onAppear(perform: motionManager.detectMotion)
+		.onAppear(perform: motionManager.detectMotion)
+		.onAppear{
+			catPositionY = stageStructureHeight.height
+		}
+		
         .onDisappear(perform: motionManager.stopMotionUpdates)
+
 
     }
 	
