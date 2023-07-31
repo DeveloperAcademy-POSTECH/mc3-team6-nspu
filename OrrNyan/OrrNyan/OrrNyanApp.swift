@@ -20,9 +20,9 @@ struct OrrNyanApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(firebaseManager)
-                .environmentObject(stageViewModel)
+			ContentView()
+				.environmentObject(firebaseManager)
+				.environmentObject(stageViewModel)
 				.environmentObject(isFirstLaunch)
                 .environmentObject(user)
 //                .onAppear(){
