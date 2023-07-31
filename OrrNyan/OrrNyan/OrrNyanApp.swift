@@ -19,21 +19,22 @@ struct OrrNyanApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(firebaseManager)
-                .environmentObject(stageViewModel)
+			ContentView()
+				.environmentObject(firebaseManager)
+				.environmentObject(stageViewModel)
 				.environmentObject(isFirstLaunch)
-                .environmentObject(user)
-                .onAppear(){
-                    Task {
-                        // userInfo
-                        try await firebaseManager.fetchUserInfo()
-                        // userFloor
-                        User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
-                        User.instance.updateFloorsData()
-                        User.instance.userStage = try await firebaseManager.readUserStage()
-                    }
-                }
+				.environmentObject(user)
+				.onAppear(){
+					Task {
+						// userInfo
+						try await firebaseManager.fetchUserInfo()
+						// userFloor
+						User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
+						User.instance.updateFloorsData()
+						User.instance.userStage = try await firebaseManager.readUserStage()
+					}
+				}
+//			MyPageView()
         }
     }
 }

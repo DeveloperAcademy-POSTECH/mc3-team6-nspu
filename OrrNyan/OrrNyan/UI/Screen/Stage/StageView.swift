@@ -10,7 +10,7 @@ import SwiftUI
 struct StageView: View {
     @State var showAlert: Bool = false
     @EnvironmentObject var viewModel: StageViewModel
-	var nameSpace: Namespace.ID
+	@Namespace var nameSpace
 
     var body: some View {
         NavigationView {
@@ -25,9 +25,9 @@ struct StageView: View {
                                 Spacer()
 //                                StageBottomView()
 								
-								NavigationLink(destination: MyPageView()){
+								NavigationLink(destination: MyPageView(), label: {
 									StageBottomView()
-								}
+								})
                             }
 
                             ACarousel(viewModel.stageCarouselInfo, headspace: 80, nameSpace: nameSpace) { _ in

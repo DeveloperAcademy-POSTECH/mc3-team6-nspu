@@ -129,12 +129,12 @@ struct Stair: View {
     @EnvironmentObject var user: User
 
     var body: some View {
-        VStack(alignment: .leading) {
+		VStack(alignment: .leading, spacing  : 4) {
             Text("총 오른 계단")
                 .font(.pretendard(size: UIScreen.width * 0.045, .semiBold))
                 .foregroundColor(stageViewModel.isMainDisplayed ? .White200 : .Black100)
             Text("\((user.userFloor?.totalFloors ?? 77) * 16)계단")
-                .font(.pretendard(size: UIScreen.width * 0.1, .semiBold))
+                .font(.pretendard(size: UIScreen.width * 0.1, .bold))
                 .foregroundColor(.Purple300)
         }
         .rotation3DEffect(Angle(degrees: degree), axis: (x: 1, y: 0, z: 0))
