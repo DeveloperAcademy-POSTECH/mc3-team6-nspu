@@ -98,6 +98,7 @@ extension FirebaseManager {
             guard let DbUserFloor = try await self.readRecentUserFloor() else {return}
             self.saveDataToUserDefaults(DbUserFloor)
             
+            // 로그인 직후 층수 업데이트 로직 시작
             User.instance.updateFloorsData()
             User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
 
@@ -134,7 +135,7 @@ extension FirebaseManager {
             UserDefaults.standard.set(userId, forKey: "userId")
             UserDefaults.standard.set(0, forKey: "focusedStageIndex")
             // 회원가입시, 서버에 처음 유저플로어 데이터 입력.
-//            guard let fivedaysago = Calendar.current.date(byAdding: .day, value: 0, to: Date()) else {return}
+//            guard let fivedaysago = Calendar.current.date(byAdding: .day, value: -3, to: Date()) else {return}
             let userFloor = UserFloor(dailyFloors: 0, totalFloors: 0, date: now)
             self.createUserFloor(userFloor: userFloor)
             
@@ -143,6 +144,10 @@ extension FirebaseManager {
             self.saveDataToUserDefaults(userFloorFromDB)
             
             self.createUserStage()
+            // 회원가입 직후 층수 업데이트 로직 시작
+            User.instance.updateFloorsData()
+            User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
+            
             self.signUpState = .afterSignUp
         }
     }

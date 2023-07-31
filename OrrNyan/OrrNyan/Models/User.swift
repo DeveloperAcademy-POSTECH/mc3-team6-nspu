@@ -122,6 +122,10 @@ class User: ObservableObject {
                     // 총 증가량
                     self.increasedFloorsCount = didntLogIngap + todayFloor
                 }
+                // 오늘의 데이터가 없을 때는 앞의 갭들만 더해서 넣어줘여 함.
+                if todayFloor == 0 && didntLogIngap != 0{
+                    self.increasedFloorsCount = didntLogIngap
+                }
             }
         }
     }
@@ -149,7 +153,7 @@ class User: ObservableObject {
         guard let savedData = UserDefaults.standard.object(forKey: "userFloor") as? Data else {return nil}
         let decoder = JSONDecoder()
         guard let userFloor = try? decoder.decode(UserFloor.self, from: savedData) else {return nil}
-        
+        print("defalut에있는 userfloor \(userFloor)")
         return userFloor
     }
     

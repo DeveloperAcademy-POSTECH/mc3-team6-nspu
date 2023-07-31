@@ -9,15 +9,16 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var stageViewModel: StageViewModel
+    @State var isFloorUpdated = false
+
     var nameSpace: Namespace.ID
+    
     var body: some View {
         ZStack {
 			MainParallaxView(nameSpace: nameSpace)
-
             VStack {
                 MainTopView()
                     .ignoresSafeArea()
-//                    .border(.red)
                 Spacer()
                 MainBottomView()
                     .onTapGesture {
@@ -25,15 +26,19 @@ struct MainView: View {
                 }
             }
             .frame(height: UIScreen.height)
-//            UpCat()
-//                .frame(width: UIScreen.width)
-            
+            if isFloorUpdated {
+                FloorUpdatedAlert(isFloorUpdated: $isFloorUpdated)
+            }
         }
-//		.onAppear{
-//            
-//		}
-        // 이거 없으면 옆으로 옮겨짐->밀리지 말고 뷰 안에서 작용하도록 함
         .frame(height: UIScreen.height)
+        .onReceive(NotificationCenter.default.publisher(for: .isFloorsChanged).receive(on: RunLoop.main).eraseToAnyPublisher()){ newValue in
+            
+            guard let isChanged = newValue.userInfo?.first?.value as? Bool else {return}
+            self.isFloorUpdated = isChanged
+        }
+        .onAppear() {
+            self.isFloorUpdated = User.instance.isFloorsChanged
+        }
     }
 }
 
