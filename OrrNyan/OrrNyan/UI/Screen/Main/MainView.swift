@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var stageViewModel: StageViewModel
-	@EnvironmentObject var appFirstLaunch : AppFirstLaunch
+//	@EnvironmentObject var appFirstLaunch : AppFirstLaunch
     var nameSpace: Namespace.ID
     var body: some View {
         ZStack {
@@ -29,10 +29,9 @@ struct MainView: View {
 //                .frame(width: UIScreen.width)
             
         }
-		.onAppear{
-			appFirstLaunch.isFirstlaunch = false
-			
-		}
+//		.onAppear{
+//            
+//		}
         // 이거 없으면 옆으로 옮겨짐->밀리지 말고 뷰 안에서 작용하도록 함
         .frame(height: UIScreen.height)
     }
