@@ -75,6 +75,9 @@
 		69AA2B2E2A658F2A0076DC58 /* AppPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2D2A658F2A0076DC58 /* AppPush.swift */; };
 		69AA2B302A658F350076DC58 /* StageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AA2B2F2A658F350076DC58 /* StageInfo.swift */; };
 		8322F9E12A6E1EBB00A4DFDB /* TestMeow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */; };
+		833D36DB2A77468100C4C9E3 /* SDWebImageLottieCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 833D36DA2A77468100C4C9E3 /* SDWebImageLottieCoder */; };
+		833D36DE2A77472500C4C9E3 /* LottieViewWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833D36DD2A77472500C4C9E3 /* LottieViewWatch.swift */; };
+		833D36E12A774CA000C4C9E3 /* Lottie_MainView_Walk.json in Resources */ = {isa = PBXBuildFile; fileRef = 833D36E02A774CA000C4C9E3 /* Lottie_MainView_Walk.json */; };
 		833F29072A68D25900EE06CB /* SettingPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29062A68D25900EE06CB /* SettingPopupView.swift */; };
 		833F29092A692FE200EE06CB /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29082A692FE200EE06CB /* AudioManager.swift */; };
 		836E49E82A6E1EF000F57B78 /* TestBGM.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 836E49E72A6E1EF000F57B78 /* TestBGM.mp3 */; };
@@ -182,6 +185,8 @@
 		69AA2B2D2A658F2A0076DC58 /* AppPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPush.swift; sourceTree = "<group>"; };
 		69AA2B2F2A658F350076DC58 /* StageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageInfo.swift; sourceTree = "<group>"; };
 		8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMeow.wav; sourceTree = "<group>"; };
+		833D36DD2A77472500C4C9E3 /* LottieViewWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieViewWatch.swift; sourceTree = "<group>"; };
+		833D36E02A774CA000C4C9E3 /* Lottie_MainView_Walk.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Lottie_MainView_Walk.json; sourceTree = "<group>"; };
 		833F29062A68D25900EE06CB /* SettingPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPopupView.swift; sourceTree = "<group>"; };
 		833F29082A692FE200EE06CB /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		836E49E72A6E1EF000F57B78 /* TestBGM.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestBGM.mp3; sourceTree = "<group>"; };
@@ -215,6 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				833D36DB2A77468100C4C9E3 /* SDWebImageLottieCoder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +318,7 @@
 		1B3FDC0C2A5E51370081CCBB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				833D36DF2A774C7100C4C9E3 /* WatchLottie */,
 				695B693A2A5E442900129A17 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -320,6 +327,7 @@
 		1B3FDC0D2A5E51420081CCBB /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				833D36DC2A7746F200C4C9E3 /* Components */,
 				1B3FDC0E2A5E51480081CCBB /* Screen */,
 			);
 			path = UI;
@@ -500,6 +508,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		833D36DC2A7746F200C4C9E3 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				833D36DD2A77472500C4C9E3 /* LottieViewWatch.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		833D36DF2A774C7100C4C9E3 /* WatchLottie */ = {
+			isa = PBXGroup;
+			children = (
+				833D36E02A774CA000C4C9E3 /* Lottie_MainView_Walk.json */,
+			);
+			path = WatchLottie;
+			sourceTree = "<group>";
+		};
 		DEFE7D0A2A765E1300FDAC81 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -573,6 +597,9 @@
 			dependencies = (
 			);
 			name = "OrrNyan Watch App";
+			packageProductDependencies = (
+				833D36DA2A77468100C4C9E3 /* SDWebImageLottieCoder */,
+			);
 			productName = "OrrNyan Watch App";
 			productReference = 695B69312A5E442900129A17 /* OrrNyan Watch App.app */;
 			productType = "com.apple.product-type.application";
@@ -608,6 +635,7 @@
 				83C38BE92A6626F00027D281 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				693D31C62A6635C3000EA859 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				693D31CB2A6635EE000EA859 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				833D36D92A77468100C4C9E3 /* XCRemoteSwiftPackageReference "SDWebImageLottieCoder" */,
 			);
 			productRefGroup = 695B69222A5E442800129A17 /* Products */;
 			projectDirPath = "";
@@ -654,6 +682,7 @@
 			files = (
 				695B693E2A5E442900129A17 /* Preview Assets.xcassets in Resources */,
 				695B693B2A5E442900129A17 /* Assets.xcassets in Resources */,
+				833D36E12A774CA000C4C9E3 /* Lottie_MainView_Walk.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +752,7 @@
 				695B69392A5E442900129A17 /* ContentView.swift in Sources */,
 				695B69372A5E442900129A17 /* OrrNyanApp.swift in Sources */,
 				695B69492A5E465E00129A17 /* StairTest.swift in Sources */,
+				833D36DE2A77472500C4C9E3 /* LottieViewWatch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1033,6 +1063,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		833D36D92A77468100C4C9E3 /* XCRemoteSwiftPackageReference "SDWebImageLottieCoder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageLottieCoder";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 		83C38BE92A6626F00027D281 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -1068,6 +1106,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 693D31C62A6635C3000EA859 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		833D36DA2A77468100C4C9E3 /* SDWebImageLottieCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 833D36D92A77468100C4C9E3 /* XCRemoteSwiftPackageReference "SDWebImageLottieCoder" */;
+			productName = SDWebImageLottieCoder;
 		};
 		83C38BEA2A6626F00027D281 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
