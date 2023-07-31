@@ -14,6 +14,7 @@ struct MyPageView: View {
 	@State var userInfo : UserInfo? = nil
 	@State var popupIndex : Int = 1
 	@State var isShowingPopup : Bool = false
+	@State var LottieViewChange : Bool = false
 	@State var degree : Double = 0
 	@Namespace var namespace
 	//	let Dday = Calendar.current.dateComponents([.day], from: user?.createdAt ?? Date(), to: Date())
@@ -41,7 +42,13 @@ struct MyPageView: View {
 					
 					// MARK: - 01_로티영역
 					Section(header: header(title: "").padding(.top, 80)) {
-						myCharacter(animation: "LottieMypageViewSleep", nickName: user?.nickName ?? "제트의냥이", date: Date())
+						
+						if LottieViewChange {
+							myCharacter(animation: "LottieMypageViewawake", nickName: user?.nickName ?? "제트의냥이", date: Date())
+							
+						} else {
+							myCharacter(animation: "LottieMypageViewSleep", nickName: user?.nickName ?? "제트의냥이", date: Date())
+						}
 					}
 					.listRowInsets(EdgeInsets())
 					
@@ -74,7 +81,6 @@ struct MyPageView: View {
 						  Image.chevronBackward
 							  .font(.system(size:17, weight: .semibold))
 							  .foregroundColor(Color.Purple300)
-							  .border(.red)
 					  })
 				
 				
@@ -139,6 +145,12 @@ struct MyPageView: View {
 		return LottieView(filename: animation)
 			.frame(maxWidth: .infinity)
 			.frame(height:230)
+			.shadow(color: Color(red: 0.03, green: 0, blue: 0.21).opacity(0.1), radius: 9, x: 0, y: 24)
+			.onTapGesture {
+				let generator = UINotificationFeedbackGenerator()
+				generator.notificationOccurred(.success)
+					LottieViewChange.toggle()
+			}
 			.overlay(alignment:.bottom){
 				VStack(spacing:8){
 					Text("\(nickName)냥")
