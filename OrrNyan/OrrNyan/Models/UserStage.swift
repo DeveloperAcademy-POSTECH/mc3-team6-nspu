@@ -13,6 +13,7 @@ class UserStage: Codable{
     var currentStage: Int {
         didSet {
             NotificationCenter.default.post(name: .userStageCurrentStageChanged, object: self, userInfo: ["currentStage": currentStage])
+            UserDefaults.standard.set(currentStage, forKey: "CurrentStage")
         }
     }
     var currentStageFloors: Int

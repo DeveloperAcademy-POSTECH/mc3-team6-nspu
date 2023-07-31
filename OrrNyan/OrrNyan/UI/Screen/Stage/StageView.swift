@@ -10,6 +10,7 @@ import SwiftUI
 struct StageView: View {
     @State var showAlert: Bool = false
     @EnvironmentObject var viewModel: StageViewModel
+    @EnvironmentObject var firebaseManager: FirebaseManager
     @EnvironmentObject var user: User
     @Namespace var nameSpace
 
@@ -47,10 +48,13 @@ struct StageView: View {
                         .alert(isPresented: $showAlert) {
                             Alert(title: Text("축하한다냥!"), message: Text("스테이지 클리어!"), dismissButton: .default(Text("클리어!")) {
                                 viewModel.isMainDisplayed = false
-                                if viewModel.stageCarouselInfo.count > (user.userStage?.currentStage ?? 1){
+                                if viewModel.stageCarouselInfo.count > (user.userStage?.currentStage ?? 1) {
                                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
                                         User.instance.userStage?.currentStage += 1
-                                        UserDefaults.standard.set(User.instance.userStage!.currentStage - 1, forKey: "focusedStageIndex")
+                                        UserDefaults.standard.set((user.userStage?.currentStage ?? 1) - 1, forKey: "focusedStageIndex")
+                                        Task {
+                                            try await firebaseManager.updateUserStage(User.instance.userStage!)
+                                        }
                                     }
                                 }
                             })

@@ -42,10 +42,8 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
 
         if UserDefaults.standard.object(forKey: "focusedStageIndex") == nil {
             UserDefaults.standard.set(User.instance.userStage?.currentStage ?? 0, forKey: "focusedStageIndex")
-//            UserDefaults.standard.set(User.instance.userStage?.currentStage ?? 1, forKey: "CurrentStage")
         }
         focusedIndex = UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int
-        currentStage = User.instance.userStage?.currentStage ?? 1
         _index = index
         NotificationCenter.default.publisher(for: .userStageCurrentStageChanged)
             .compactMap { notification in
@@ -79,9 +77,6 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
 
     /// size of GeometryProxy
     var viewSize: CGSize = .init(width: UIScreen.width, height: UIScreen.height)
-
-    /// currentStage
-    @Published var currentStage: Int = User.instance.userStage?.currentStage ?? 1
     
     /// reduce active index by 1
     func decreaseFocusedIndex() {
@@ -97,7 +92,8 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
 
     /// syuc focused index with currentStage
     func syncFocusedIndex() {
-        focusedIndex = (User.instance.userStage?.currentStage ?? 1) - 1
+        print("focusedIndex: \(focusedIndex)")
+        focusedIndex = UserDefaults.standard.object(forKey: "CurrentStage") as! Int - 1
         setUserDefaultsFocusedIndex(index: focusedIndex)
     }
 
