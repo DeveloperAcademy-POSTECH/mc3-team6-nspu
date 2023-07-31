@@ -57,7 +57,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                                     if UserDefaults.standard.object(forKey: "IsFirstLaunch") == nil{
                                                         UserDefaults.standard.set(false, forKey: "IsFirstLaunch")
                                                     }
-                                                    if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && User.instance.userStage!.currentStage > tempElement.index {
+                                                    if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && (User.instance.userStage?.currentStage ?? 1) > tempElement.index {
                                                         stageViewModel.selectedIndex = tempElement.index
                                                         withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
                                                             stageViewModel.isMainDisplayed = true
@@ -66,6 +66,9 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                                 }
                                                 // 앱 처음 실행이 아닐 때, currentStage 자동 클릭 시키기
 												.onAppear {
+                                                    if appFirstLaunch.isFirstlaunch{
+                                                        UserDefaults.standard.set(1, forKey: "CurrentStage")
+                                                    }
                                                     if !appFirstLaunch.isFirstlaunch && stageViewModel.isLaunched {
                                                         viewModel.syncFocusedIndex()
                                                         stageViewModel.selectedIndex = viewModel.focusedIndex
