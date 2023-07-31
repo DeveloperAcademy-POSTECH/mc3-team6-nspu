@@ -17,6 +17,8 @@ class UserPushNotification: ObservableObject {
     //save last alert time
     var lastSetTime: Date? = nil
     
+    @State var user : UserInfo? = User.instance.userInfo
+    
     // user notification center
     let userNotificationCenter = UNUserNotificationCenter.current()
     let notificationAuthOptions = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
@@ -103,8 +105,8 @@ class UserPushNotification: ObservableObject {
         let notificationContent = UNMutableNotificationContent()
         
         // set title and content of nofitication
-        notificationContent.title = "테스트다냥!"
-        notificationContent.body = "알림 테스트다냥!"
+        notificationContent.title = "(\(user?.nickName ?? "제트의냥이") : 설마.. 엘레베이터 탈꺼냥?"
+        notificationContent.body = "계단 오르자냥!"
         notificationContent.sound = UNNotificationSound.default
         
         // set time
