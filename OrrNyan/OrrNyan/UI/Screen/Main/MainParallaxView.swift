@@ -53,7 +53,7 @@ struct MainParallaxView: View {
 				}
 			
 			Button {
-				withAnimation(.spring(response: 3, dampingFraction: 0.8)){
+                withAnimation(.spring(response: 4, dampingFraction: 1.0)){
 					stageStructureHeight = .zero
 					
 						//버튼 눌렀을때, 고양이 높이 값을 수정하는 코드는 여기입니다!
