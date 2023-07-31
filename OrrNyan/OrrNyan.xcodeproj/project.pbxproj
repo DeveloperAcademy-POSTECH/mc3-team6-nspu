@@ -77,7 +77,7 @@
 		8322F9E12A6E1EBB00A4DFDB /* TestMeow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */; };
 		833D36DB2A77468100C4C9E3 /* SDWebImageLottieCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 833D36DA2A77468100C4C9E3 /* SDWebImageLottieCoder */; };
 		833D36DE2A77472500C4C9E3 /* LottieViewWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833D36DD2A77472500C4C9E3 /* LottieViewWatch.swift */; };
-		833D36E12A774CA000C4C9E3 /* Lottie_MainView_Walk.json in Resources */ = {isa = PBXBuildFile; fileRef = 833D36E02A774CA000C4C9E3 /* Lottie_MainView_Walk.json */; };
+		833D36E52A77603200C4C9E3 /* Lottie_WatchView.json in Resources */ = {isa = PBXBuildFile; fileRef = 833D36E42A77603200C4C9E3 /* Lottie_WatchView.json */; };
 		833F29072A68D25900EE06CB /* SettingPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29062A68D25900EE06CB /* SettingPopupView.swift */; };
 		833F29092A692FE200EE06CB /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F29082A692FE200EE06CB /* AudioManager.swift */; };
 		836E49E82A6E1EF000F57B78 /* TestBGM.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 836E49E72A6E1EF000F57B78 /* TestBGM.mp3 */; };
@@ -186,7 +186,7 @@
 		69AA2B2F2A658F350076DC58 /* StageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageInfo.swift; sourceTree = "<group>"; };
 		8322F9E02A6E1EBB00A4DFDB /* TestMeow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMeow.wav; sourceTree = "<group>"; };
 		833D36DD2A77472500C4C9E3 /* LottieViewWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieViewWatch.swift; sourceTree = "<group>"; };
-		833D36E02A774CA000C4C9E3 /* Lottie_MainView_Walk.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Lottie_MainView_Walk.json; sourceTree = "<group>"; };
+		833D36E42A77603200C4C9E3 /* Lottie_WatchView.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Lottie_WatchView.json; sourceTree = "<group>"; };
 		833F29062A68D25900EE06CB /* SettingPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPopupView.swift; sourceTree = "<group>"; };
 		833F29082A692FE200EE06CB /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		836E49E72A6E1EF000F57B78 /* TestBGM.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestBGM.mp3; sourceTree = "<group>"; };
@@ -519,7 +519,7 @@
 		833D36DF2A774C7100C4C9E3 /* WatchLottie */ = {
 			isa = PBXGroup;
 			children = (
-				833D36E02A774CA000C4C9E3 /* Lottie_MainView_Walk.json */,
+				833D36E42A77603200C4C9E3 /* Lottie_WatchView.json */,
 			);
 			path = WatchLottie;
 			sourceTree = "<group>";
@@ -682,7 +682,7 @@
 			files = (
 				695B693E2A5E442900129A17 /* Preview Assets.xcassets in Resources */,
 				695B693B2A5E442900129A17 /* Assets.xcassets in Resources */,
-				833D36E12A774CA000C4C9E3 /* Lottie_MainView_Walk.json in Resources */,
+				833D36E52A77603200C4C9E3 /* Lottie_WatchView.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
