@@ -55,13 +55,13 @@ struct BadgePopupView: View {
 							  // 위에서 구한 값들에 애니메이션 효과를 줌
 							  // 가속도 값이 120보다 낮을 경우, degree에 가장 가까운 180 배수 숫자를 구해냄
 							  withAnimation(.interpolatingSpring(stiffness: 50, damping: 50)) {
-								  if abs(velocity) > 120  {
+								  if abs(velocity) > 240  {
 									  // 가장 가까운 180의 배수로 보정
 									  let adjustedDegree = 180 * round(finalDegree / 180)
 									  degree = adjustedDegree
 								  }
 							  }
-							  if abs(velocity) < 120  {
+							  if abs(velocity) < 240  {
 								  
 								  degree = finalDegree
 							  }
