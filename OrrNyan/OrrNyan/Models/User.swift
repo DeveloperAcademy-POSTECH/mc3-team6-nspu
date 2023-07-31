@@ -9,17 +9,16 @@
 import Foundation
 
 /// User 관련한 객체들을 하나로 통합해서 관리할 싱글톤 입니다.
-class User {
+class User: ObservableObject {
     
     static var instance = User()
     
     private let healthKitManager = HealthKitManager()
-    
-    private init(){}
+
     var isToday = false
     var userInfo: UserInfo?
-    var userFloor: UserFloor?
-    var userStage: UserStage?
+    @Published var userFloor: UserFloor?
+    @Published var userStage: UserStage?
     var lastVisitDateUserFloor: UserFloor?
     var userFloorsTemp = [UserFloor]()
     
@@ -35,6 +34,8 @@ class User {
             isFloorsChanged = true
         }
     }
+    
+    private init(){}
     
     /// 날짜의 차이를 계산합니다.
     func calculateDate(_ lastVistDate: Date) -> Int? {
