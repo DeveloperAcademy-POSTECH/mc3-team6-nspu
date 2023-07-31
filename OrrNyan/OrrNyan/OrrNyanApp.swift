@@ -16,22 +16,38 @@ struct OrrNyanApp: App {
     @StateObject var stageViewModel = StageViewModel()
     @StateObject var user = User.instance
 	@StateObject var isFirstLaunch = AppFirstLaunch()
-    
+    @Environment(\.scenePhase) private var scenePhase
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(firebaseManager)
-                .environmentObject(stageViewModel)
+			ContentView()
+				.environmentObject(firebaseManager)
+				.environmentObject(stageViewModel)
 				.environmentObject(isFirstLaunch)
                 .environmentObject(user)
-                .onAppear(){
-                    Task {
-                        // userInfo
-                        try await firebaseManager.fetchUserInfo()
-                        // userFloor
-                        User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
-                        User.instance.updateFloorsData()
-                        User.instance.userStage = try await firebaseManager.readUserStage()
+//                .onAppear(){
+//                    Task {
+//                        // userInfo
+//                        try await firebaseManager.fetchUserInfo()
+//                        // userFloor
+//                        User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
+//                        User.instance.updateFloorsData()
+//                        User.instance.userStage = try await firebaseManager.readUserStage()
+//                    }
+//                }
+                .onChange(of: scenePhase) { phase in
+                    if phase == .background {
+                        
+                    }
+                    else if phase == .active {
+                        Task {
+                            // userInfo
+                            try await firebaseManager.fetchUserInfo()
+                            // userFloor
+                            User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
+                            User.instance.updateFloorsData()
+                            User.instance.userStage = try await firebaseManager.readUserStage()
+                        }
                     }
                 }
         }

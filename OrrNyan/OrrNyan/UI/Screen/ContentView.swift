@@ -14,7 +14,7 @@ struct ContentView: View {
     @State var isMainViewShow = false
     @State var increasedFloors = 0
     @State var cancellables = Set<AnyCancellable>()
-	@Namespace var nameSpace
+	
     var body: some View {
         VStack{
             switch firebaseManager.signUpState {
@@ -23,10 +23,7 @@ struct ContentView: View {
             case .duringSignUp:
                 CreateNameView()
             case .afterSignUp:
-				StageView(nameSpace: nameSpace)
-				if isMainViewShow {
-					MainView(nameSpace: nameSpace)
-				}
+				StageView()
 			
             }
 			
