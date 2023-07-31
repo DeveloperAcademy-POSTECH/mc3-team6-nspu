@@ -14,6 +14,7 @@ struct OrrNyanApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var firebaseManager = FirebaseManager()
     @StateObject var stageViewModel = StageViewModel()
+    @StateObject var user = User.instance
 	@StateObject var isFirstLaunch = AppFirstLaunch()
     
     var body: some Scene {
@@ -22,6 +23,7 @@ struct OrrNyanApp: App {
                 .environmentObject(firebaseManager)
                 .environmentObject(stageViewModel)
 				.environmentObject(isFirstLaunch)
+                .environmentObject(user)
                 .onAppear(){
                     Task {
                         // userInfo
@@ -29,6 +31,7 @@ struct OrrNyanApp: App {
                         // userFloor
                         User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
                         User.instance.updateFloorsData()
+                        User.instance.userStage = try await firebaseManager.readUserStage()
                     }
                 }
         }
