@@ -218,7 +218,7 @@ extension FirebaseManager {
 extension FirebaseManager {
     /// UserStage를 데이터베이스에 생성합니다. (회원가입시 처음에만 생성할 예정)
     func createUserStage() {
-        let userStage = UserStage(currentStage: 0, currentStageFloors: 0)
+        let userStage = UserStage(currentStage: 1, currentStageFloors: 0)
         guard let userId = self.getCurrentUserId() else {return}
         do {
             try refUserInfo.document(userId).collection("UserStage").document().setData(from: userStage)

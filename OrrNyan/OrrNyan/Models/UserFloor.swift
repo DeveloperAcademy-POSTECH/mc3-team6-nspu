@@ -20,5 +20,3 @@ struct UserFloor: Codable {
         self.totalFloors = totalFloors + floor
     }
 }
-
-let userFloorTestInstance: UserFloor = UserFloor(dailyFloors: 5, totalFloors: 11, date: Date())

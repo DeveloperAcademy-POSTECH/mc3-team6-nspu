@@ -13,7 +13,6 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     /// external index
     @Binding
     private var index: Int
-    @EnvironmentObject var user: User
     private let _data: Data
     private let _dataId: KeyPath<Data.Element, ID>
     private let _spacing: CGFloat
@@ -42,12 +41,11 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
         _indexScaling = indexScaling
 
         if UserDefaults.standard.object(forKey: "focusedStageIndex") == nil {
-            UserDefaults.standard.set((User.instance.userStage?.currentStage ?? 0), forKey: "focusedStageIndex")
+            UserDefaults.standard.set(User.instance.userStage?.currentStage ?? 0, forKey: "focusedStageIndex")
+//            UserDefaults.standard.set(User.instance.userStage?.currentStage ?? 1, forKey: "CurrentStage")
         }
-        print("CurrentStage: \(User.instance.userStage?.currentStage)")
-//        print("CurrentStage from Server: \(UserDefaults.standard.object(forKey: ""))")
         focusedIndex = UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int
-
+        currentStage = User.instance.userStage?.currentStage ?? 1
         _index = index
         NotificationCenter.default.publisher(for: .userStageCurrentStageChanged)
             .compactMap { notification in
@@ -82,6 +80,9 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     /// size of GeometryProxy
     var viewSize: CGSize = .init(width: UIScreen.width, height: UIScreen.height)
 
+    /// currentStage
+    @Published var currentStage: Int = User.instance.userStage?.currentStage ?? 1
+    
     /// reduce active index by 1
     func decreaseFocusedIndex() {
         focusedIndex = max(0, focusedIndex - 1)
@@ -95,11 +96,11 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     }
 
     /// syuc focused index with currentStage
-    func syncFocusedIndex(){
-        focusedIndex = userStageTestInstance.currentStage - 1
+    func syncFocusedIndex() {
+        focusedIndex = (User.instance.userStage?.currentStage ?? 1) - 1
         setUserDefaultsFocusedIndex(index: focusedIndex)
     }
-    
+
     func setUserDefaultsFocusedIndex(index: Int) {
         UserDefaults.standard.set(index, forKey: "focusedStageIndex")
     }
@@ -154,7 +155,7 @@ extension ACarouselViewModel {
         }
         let tempItem = item as! StageItem
         // 현재 클리어중인 스테이지보다 높은 스테이지는 흑백처리
-        if userStageTestInstance.currentStage - 1 < tempItem.index {
+        if (User.instance.userStage?.currentStage ?? 1) - 1 < tempItem.index {
             return 1.0
         }
         else {
@@ -185,7 +186,7 @@ extension ACarouselViewModel {
         if focusedIndex != tempItem.index {
             return 0.3
         }
-        else if userStageTestInstance.currentStage - 1 < tempItem.index {
+        else if (User.instance.userStage?.currentStage ?? 1) - 1 < tempItem.index {
             return 0.6
         }
         else {
@@ -200,7 +201,7 @@ extension ACarouselViewModel {
         }
         let tempItem = item as! StageItem
 
-        if userStageTestInstance.currentStage - 1 < tempItem.index {
+        if (User.instance.userStage?.currentStage ?? 1) - 1 < tempItem.index {
             return 1.0
         }
         else {
@@ -268,7 +269,7 @@ extension ACarouselViewModel {
 
     func flagOpacityScaling(_ item: Data.Element) -> CGFloat {
         let tempItem = item as! StageItem
-        if tempItem.index <= userStageTestInstance.currentStage - 2 {
+        if tempItem.index < (User.instance.userStage?.currentStage ?? 1) - 1 {
             return 1
         }
         else {
@@ -276,7 +277,7 @@ extension ACarouselViewModel {
         }
     }
 
-    func flagOffsetScaling(_ item: Data.Element) ->  CGFloat {
+    func flagOffsetScaling(_ item: Data.Element) -> CGFloat {
         let tempItem = item as! StageItem
 
         if focusedIndex == tempItem.index {
