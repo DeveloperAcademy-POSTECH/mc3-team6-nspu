@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var stageViewModel: StageViewModel
-//	@EnvironmentObject var appFirstLaunch : AppFirstLaunch
     var nameSpace: Namespace.ID
     var body: some View {
         ZStack {

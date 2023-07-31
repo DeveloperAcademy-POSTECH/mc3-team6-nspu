@@ -13,7 +13,7 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     /// external index
     @Binding
     private var index: Int
-
+    @EnvironmentObject var user: User
     private let _data: Data
     private let _dataId: KeyPath<Data.Element, ID>
     private let _spacing: CGFloat
@@ -42,8 +42,10 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
         _indexScaling = indexScaling
 
         if UserDefaults.standard.object(forKey: "focusedStageIndex") == nil {
-            UserDefaults.standard.set(userStageTestInstance.currentStage - 1, forKey: "focusedStageIndex")
+            UserDefaults.standard.set((User.instance.userStage?.currentStage ?? 0), forKey: "focusedStageIndex")
         }
+        print("CurrentStage: \(User.instance.userStage?.currentStage)")
+//        print("CurrentStage from Server: \(UserDefaults.standard.object(forKey: ""))")
         focusedIndex = UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int
 
         _index = index
@@ -275,7 +277,6 @@ extension ACarouselViewModel {
     }
 
     func flagOffsetScaling(_ item: Data.Element) ->  CGFloat {
-        var offsetScale = indexScaling
         let tempItem = item as! StageItem
 
         if focusedIndex == tempItem.index {

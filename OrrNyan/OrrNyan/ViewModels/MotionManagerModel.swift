@@ -15,7 +15,6 @@ class MotionManagerModel: ObservableObject {
     @Published var yValue: CGFloat = 0
     
     func detectMotion(){
-        print("isCalled")
         //MARK: - 모션 활성화 됐을 때
         if !manager.isDeviceMotionActive{
             manager.deviceMotionUpdateInterval = 1/40
@@ -23,8 +22,6 @@ class MotionManagerModel: ObservableObject {
                 if let attitude = motion?.attitude{
                     self?.xValue = attitude.roll
                     self?.yValue = attitude.yaw
-                    print("x = \(attitude.roll)")
-                    print("y = \(attitude.yaw)")
                 }
             }
         }

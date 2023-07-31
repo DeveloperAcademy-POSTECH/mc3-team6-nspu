@@ -25,9 +25,9 @@ struct MainTopView: View {
     var body: some View {
         HStack {
             ZStack(alignment: .leading) {
-                StairCase(degree: $frontDegree)
+                Stair(degree: $frontDegree)
+                StairCase(degree: $backDegree)
 //                    .environmentObject(StageViewModel())
-                Stair(degree: $backDegree)
             }
             .onTapGesture {
                 flipTitle()
@@ -114,7 +114,7 @@ struct StairCase: View {
                 .font(.pretendard(size: UIScreen.width * 0.045, .semiBold))
                 .foregroundColor(stageViewModel.isMainDisplayed ? .White200 : .Black100)
             
-            Text("\(user.userFloor?.totalFloors ?? 77)층")
+            Text("\(user.userFloor?.totalFloors ?? 0)층")
                 .font(.pretendard(size: UIScreen.width * 0.1, .semiBold))
                 .foregroundColor(.Purple300)
                 .padding(.top, 6)
