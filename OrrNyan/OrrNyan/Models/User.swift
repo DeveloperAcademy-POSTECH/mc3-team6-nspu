@@ -19,6 +19,7 @@ class User {
     var isToday = false
     var userInfo: UserInfo?
     var userFloor: UserFloor?
+    var userStage: UserStage?
     var lastVisitDateUserFloor: UserFloor?
     var userFloorsTemp = [UserFloor]()
     
@@ -138,7 +139,7 @@ class User {
             return nil
         }
         else {
-            if let lastData = userFloorsTemp.last {}
+//            if let lastData = userFloorsTemp.last {}
             return userFloorsTemp
         }
     }
