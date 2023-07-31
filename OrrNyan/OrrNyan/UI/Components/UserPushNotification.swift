@@ -18,7 +18,7 @@ class UserPushNotification: ObservableObject {
     
     //save last alert time
     var lastSetTime: Date? = nil
-    
+  
     // user notification center
     let userNotificationCenter = UNUserNotificationCenter.current()
     let notificationAuthOptions = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
