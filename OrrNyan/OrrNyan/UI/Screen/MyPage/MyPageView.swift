@@ -9,14 +9,14 @@ import SwiftUI
 
 struct MyPageView: View {
 	@State var user : UserInfo? = User.instance.userInfo
-//	@State var userFloor : UserFloor? = nil
-	@State var userInfo = User.instance.userInfo
+//	@State var userInfo = User.instance.userInfo
 	@State var userFloor : UserFloor? = nil
+	@State var userInfo : UserInfo? = nil
 	@State var popupIndex : Int = 1
 	@State var isShowingPopup : Bool = false
 	@State var degree : Double = 0
 	@Namespace var namespace
-	
+//	let Dday = Calendar.current.dateComponents([.day], from: user?.createdAt ?? Date(), to: Date())
 	//테스트성 코드입니다.
 	var userBadges =  UserBadge(stageCompleteArray: [true, true, false, false, false, false, false, false, false,false,false,false ])
 	
@@ -45,8 +45,8 @@ struct MyPageView: View {
 					Section(header: header(title: "내 기록")) {
 						myRecord(title: "오늘 오른 층계", data: userFloor?.dailyFloors ?? 0, unit: "층")
 						myRecord(title: "총 오른 층계", data: userFloor?.totalFloors ?? 0, unit: "층")
-						myRecord(title: "총 오른 계단", data: userFloor?.totalFloors ?? 0, unit: "계단")
-						myRecord(title: "총 오른 높이", data: userFloor?.totalFloors ?? 0, unit: "m")
+						myRecord(title: "총 오른 계단", data: (userFloor?.totalFloors ?? 0) * 16 , unit: "계단")
+						myRecord(title: "총 오른 높이", data: (userFloor?.totalFloors ?? 0) * 4, unit: "m")
 					}.listRowInsets(EdgeInsets())
 					
 					
@@ -82,6 +82,7 @@ struct MyPageView: View {
 			.background(Color.White200)
 			.onAppear{
 				userFloor = User.instance.userFloor
+				userInfo = User.instance.userInfo
 			}
 		}
 	}
@@ -110,7 +111,22 @@ struct MyPageView: View {
 	
 	///01_로띠 영역 컴포넌트
 	private func myCharacter(animation : String, nickName: String, date: Date) -> some View {
-		LottieView(filename: animation)
+//		let calendar = Calendar.current
+//		let from = calendar.startOfDay(for: userInfo?.createdAt ?? Date())
+//		let to = calendar.startOfDay(for: Date())
+//		let difference = calendar.dateComponents([.day], from: from	, to: to)
+//		let Dday = difference.day ?? 99
+//
+//		print("가입 날짜 = \(from)")
+//		print("현재 날짜 = \(to)")
+		
+		let Dday = Calendar.current.dateComponents([.day], from: userInfo?.createdAt ?? Date(), to: Date()).day
+		
+		print("가입 날짜 = \(userInfo?.createdAt)")
+		print("현재 날짜 = \(Date())")
+		
+		
+		return LottieView(filename: animation)
 			.frame(maxWidth: .infinity)
 			.frame(height:230)
 			.overlay(alignment:.bottom){
@@ -124,7 +140,7 @@ struct MyPageView: View {
 							.foregroundColor(Color.Purple100)
 							.font(.system(size:12))
 						
-						Text("\(date, style: .date)")
+						Text("\(Dday ?? 1)")
 							.font(.pretendard(size: 13, .semiBold))
 					}
 					.padding(.horizontal, 10)
