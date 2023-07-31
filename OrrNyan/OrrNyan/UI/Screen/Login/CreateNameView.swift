@@ -26,7 +26,7 @@ struct CreateNameView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 0){
-                LottieView(filename: "LottieCreateNameView")
+                LottieView(filename: "WatchLottie")
                     .frame(maxWidth: .infinity)
                     .frame(height: DeviceSize.width > DeviceSize.iPhoneSE  ? 330 : 250)
                     .padding(.top,  DeviceSize.width > DeviceSize.iPhoneSE  ? 50 : 20 )

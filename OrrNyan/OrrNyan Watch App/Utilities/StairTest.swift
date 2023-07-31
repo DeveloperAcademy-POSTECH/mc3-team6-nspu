@@ -13,22 +13,28 @@ struct StairTest: View {
     let cmPedometer = CMPedometer()
     
     // lottie view for watchOS
-    @ObservedObject var LottieViewModel: LottieViewWatch = .init()
+    @ObservedObject var LottieViewModel : LottieViewWatch = .init()
     
     @State var stairCount = 0
     
     var body: some View {
         VStack {
+            Text("오늘 오른 층계")
+                .font(.pretendard(size: 13, .medium))
+            
+            Text("\(stairCount)층")
+                .font(.pretendard(size:32, .bold))
+                .foregroundColor(Color.Purple300)
+                .onAppear {
+                    startFloorsCount()
+                }
+            
             Image(uiImage: LottieViewModel.image)
                 .resizable()
                 .scaledToFit()
+                .cornerRadius(20)
                 .onAppear{
-                    self.LottieViewModel.loadAnimationFromFile(filename: "Lottie_MainView_Walk")
-                }
-
-            Text("계단 : \(stairCount)")
-                .onAppear {
-                    startFloorsCount()
+                    self.LottieViewModel.loadAnimationFromFile(filename: "watchLottie")
                 }
         }
         .padding()

@@ -105,7 +105,7 @@ class UserPushNotification: ObservableObject {
         let notificationContent = UNMutableNotificationContent()
         
         // set title and content of nofitication
-        notificationContent.title = "(\(user?.nickName ?? "제트의냥이") : 설마.. 엘레베이터 탈꺼냥?"
+        notificationContent.title = "\(user?.nickName ?? "길냥이") : 설마.. 엘레베이터 탈꺼냥?"
         notificationContent.body = "계단 오르자냥!"
         notificationContent.sound = UNNotificationSound.default
         
