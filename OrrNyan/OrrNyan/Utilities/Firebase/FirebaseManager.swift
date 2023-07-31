@@ -93,12 +93,14 @@ extension FirebaseManager {
         // 이미 회원가입이 되어있는 유저의 로그인
         else {
             UserDefaults.standard.set(authResultUser.uid, forKey: "userId")
-//            UserDefaults.standard.set(Date(), forKey: "lastVisitDate")
             UserDefaults.standard.set(0, forKey: "focusedStageIndex")
             // 로그인 시에 가장 최근 유저플로어 데이터 가져와서 유저디폴트에 저장
             guard let DbUserFloor = try await self.readRecentUserFloor() else {return}
             self.saveDataToUserDefaults(DbUserFloor)
-    
+            
+            User.instance.updateFloorsData()
+            User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
+
             self.signUpState = .afterSignUp
         }
     }
