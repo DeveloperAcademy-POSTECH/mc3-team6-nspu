@@ -25,8 +25,6 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
     let catRotationDegree: [Double] = [270, 270, 271]
     let cat3DRotationDegree: [Double] = [180, 0, 0]
     var nameSpace: Namespace.ID
-    @State var str: Bool = true
-	@State var test : Bool = true
     @State var cancellables = Set<AnyCancellable>()
 
     public var body: some View {
@@ -59,7 +57,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                                     if UserDefaults.standard.object(forKey: "IsFirstLaunch") == nil{
                                                         UserDefaults.standard.set(false, forKey: "IsFirstLaunch")
                                                     }
-                                                    if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
+                                                    if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && User.instance.userStage!.currentStage > tempElement.index {
                                                         stageViewModel.selectedIndex = tempElement.index
                                                         withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
                                                             stageViewModel.isMainDisplayed = true
@@ -95,7 +93,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .font(.system(size: 30))
                                     .shadow(radius: 7)
                                     .opacity(viewModel.buttonOpacity(element))
-                                if tempElement.index == userStageTestInstance.currentStage - 1 {
+                                if tempElement.index == (User.instance.userStage?.currentStage ?? 1) - 1 {
                                     LottieView(filename: "LottieMainViewSit")
                                         .rotationEffect(Angle(degrees: catRotationDegree[tempElement.index]))
                                         .rotation3DEffect(.degrees(cat3DRotationDegree[tempElement.index]), axis: (x: 0, y: 1, z: 0))

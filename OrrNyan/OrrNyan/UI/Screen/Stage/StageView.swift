@@ -10,7 +10,8 @@ import SwiftUI
 struct StageView: View {
     @State var showAlert: Bool = false
     @EnvironmentObject var viewModel: StageViewModel
-	@Namespace var nameSpace
+    @EnvironmentObject var user: User
+    @Namespace var nameSpace
 
     var body: some View {
         NavigationView {
@@ -23,11 +24,9 @@ struct StageView: View {
                                 MainTopView()
                                     .zIndex(.infinity)
                                 Spacer()
-//                                StageBottomView()
-								
-								NavigationLink(destination: MyPageView(), label: {
-									StageBottomView()
-								})
+                                NavigationLink(destination: MyPageView(), label: {
+                                    StageBottomView()
+                                })
                             }
 
                             ACarousel(viewModel.stageCarouselInfo, headspace: 80, nameSpace: nameSpace) { _ in
@@ -40,18 +39,18 @@ struct StageView: View {
                         MainView(nameSpace: nameSpace)
                         // 다음 스테이지 넘어가기 테스트용 버튼
                         Button("Show Alert") {
-                            // (현재 스테이지에서 오른 층수) >= (전체 층수 - 클리어한 스테이지들의 층수) && (현재 진행하고 있는 스테이지 == 보여지고있는 스테이지) 일 때 팝업 띄움 
-                            if userStageTestInstance.currentStageFloors >= userFloorTestInstance.totalFloors - sumOfClearedStages(array: viewModel.stageCarouselInfo.map { $0.floors }, n: userStageTestInstance.currentStage - 1) && userStageTestInstance.currentStage - 1 == viewModel.selectedIndex {
+                            // (현재 스테이지에서 오른 층수) >= (현재 스테이지의 전체 층수) && (현재 진행하고 있는 스테이지 == 보여지고있는 스테이지) 일 때 팝업 띄움
+                            if (user.userStage?.currentStageFloors ?? 0) >= viewModel.stageCarouselInfo[(user.userStage?.currentStage ?? 1) - 1].floors && (user.userStage?.currentStage ?? 1) - 1 == viewModel.selectedIndex {
                                 showAlert = true
                             }
                         }
                         .alert(isPresented: $showAlert) {
                             Alert(title: Text("축하한다냥!"), message: Text("스테이지 클리어!"), dismissButton: .default(Text("클리어!")) {
                                 viewModel.isMainDisplayed = false
-                                if viewModel.stageCarouselInfo.count > userStageTestInstance.currentStage {
+                                if viewModel.stageCarouselInfo.count > (user.userStage?.currentStage ?? 1){
                                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
-                                        userStageTestInstance.currentStage += 1
-                                        UserDefaults.standard.set(userStageTestInstance.currentStage - 1, forKey: "focusedStageIndex")
+                                        User.instance.userStage?.currentStage += 1
+                                        UserDefaults.standard.set(User.instance.userStage!.currentStage - 1, forKey: "focusedStageIndex")
                                     }
                                 }
                             })
@@ -62,7 +61,7 @@ struct StageView: View {
             .ignoresSafeArea()
         }
     }
-    
+
     /// 지금껏 클리어한 스테이지들의 계단 수 합
     ///
     /// - Parameters:
@@ -74,10 +73,10 @@ struct StageView: View {
     }
 }
 
-//struct StageView_Previews: PreviewProvider {
+// struct StageView_Previews: PreviewProvider {
 //    static var previews: some View {
 //
 //        StageView()
 //            .environmentObject(StageViewModel())
 //    }
-//}
+// }

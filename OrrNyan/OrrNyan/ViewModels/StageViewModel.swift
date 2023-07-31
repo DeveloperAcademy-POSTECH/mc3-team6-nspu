@@ -13,5 +13,7 @@ class StageViewModel: ObservableObject {
     @Published var isMainDisplayed: Bool = false
     @Published var isLaunched: Bool = true
     
+    var currentStage: Int = User.instance.userStage?.currentStage ?? 1
+    var currentStageFloors: Int = User.instance.userStage?.currentStageFloors ?? 0
     let stageCarouselInfo = Stages().StageInfos.map { ($0.stageStructureImageTitle, $0.stageName, $0.stageFloors) }.map { StageItem(image: Image($0), name: String($1), floors: Int($2)) }
 }
