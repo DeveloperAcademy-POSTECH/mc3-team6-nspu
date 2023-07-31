@@ -25,7 +25,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
     let catRotationDegree: [Double] = [270, 270, 271]
     let cat3DRotationDegree: [Double] = [180, 0, 0]
     var nameSpace: Namespace.ID
-	
+    @State var str: Bool = true
 	@State var test : Bool = true
     @State var cancellables = Set<AnyCancellable>()
 
@@ -40,7 +40,6 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
 
                         VStack(spacing: 0) {
                             // MARK: - Carousel에 배치될 이미지와 잠금 표시를 렌더링합니다.
-
                             ZStack {
                                 tempElement.image
                                     .resizable()
@@ -56,6 +55,10 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                             stageStSvgs[tempElement.index]
                                                 .foregroundColor(.blue.opacity(0.01))
                                                 .onTapGesture {
+                                                    // IsFirstLaunch false로 set.
+                                                    if UserDefaults.standard.object(forKey: "IsFirstLaunch") == nil{
+                                                        UserDefaults.standard.set(false, forKey: "IsFirstLaunch")
+                                                    }
                                                     if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
                                                         stageViewModel.selectedIndex = tempElement.index
                                                         withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
@@ -63,10 +66,14 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                                         }
                                                     }
                                                 }
-											//앱 처음 실행 시, currentStage 자동 클릭 시키기
+                                                // 앱 처음 실행이 아닐 때, currentStage 자동 클릭 시키기
 												.onAppear {
-													if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index && appFirstLaunch.isFirstlaunch {
-														stageViewModel.selectedIndex = tempElement.index
+                                                    if !appFirstLaunch.isFirstlaunch && stageViewModel.isLaunched {
+                                                        viewModel.syncFocusedIndex()
+                                                        stageViewModel.selectedIndex = viewModel.focusedIndex
+                                                        appFirstLaunch.isFirstlaunch = false
+                                                        stageViewModel.isLaunched = false
+                                                        UserDefaults.standard.set(false, forKey: "isFirstLaunch")
 														withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
 															stageViewModel.isMainDisplayed = true
 														}
@@ -145,14 +152,14 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
 
                 HStack {
                     Button {
-                        viewModel.reduceActiveIndex()
+                        viewModel.decreaseFocusedIndex()
                     } label: {
                         Image(systemName: "chevron.left")
                     }
                     .opacity(viewModel.focusedIndex == 0 ? 0 : 1)
                     Spacer()
                     Button {
-                        viewModel.increaseActiveIndex()
+                        viewModel.increaseFocusedIndex()
                     } label: {
                         Image(systemName: "chevron.right")
                     }
