@@ -107,13 +107,14 @@ struct StairCase: View {
     @Binding var degree: Double
     @State var showingPopup = false
     @EnvironmentObject var stageViewModel: StageViewModel
+    @EnvironmentObject var user: User
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("총 오른 층계")
                 .font(.pretendard(size: UIScreen.width * 0.045, .semiBold))
                 .foregroundColor(stageViewModel.isMainDisplayed ? .White200 : .Black100)
             
-            Text("\(userFloorTestInstance.totalFloors)층")
+            Text("\(user.userFloor?.totalFloors ?? 77)층")
                 .font(.pretendard(size: UIScreen.width * 0.1, .semiBold))
                 .foregroundColor(.Purple300)
                 .padding(.top, 6)
@@ -125,13 +126,14 @@ struct StairCase: View {
 struct Stair: View {
     @Binding var degree: Double
     @EnvironmentObject var stageViewModel: StageViewModel
+    @EnvironmentObject var user: User
 
     var body: some View {
         VStack(alignment: .leading) {
             Text("총 오른 계단")
                 .font(.pretendard(size: UIScreen.width * 0.045, .semiBold))
                 .foregroundColor(stageViewModel.isMainDisplayed ? .White200 : .Black100)
-            Text("\(userFloorTestInstance.totalFloors * 16)계단")
+            Text("\((user.userFloor?.totalFloors ?? 77) * 16)계단")
                 .font(.pretendard(size: UIScreen.width * 0.1, .semiBold))
                 .foregroundColor(.Purple300)
         }

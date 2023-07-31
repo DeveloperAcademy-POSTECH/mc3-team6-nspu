@@ -56,52 +56,6 @@ class FirebaseManager: ObservableObject {
     }
 }
 
-// MARK: - Floor data 계산 CRUD
-extension FirebaseManager {
-    /// Create userFloor: UserFloor row를 db에 생성합니다.
-    /// Parameter userFloor: UserFloor 모델 객체
-    func createUserFloor(userFloor: UserFloor) {
-        if let userId = self.getCurrentUserId(){
-            do {
-                try refUserInfo.document(userId).collection("UserFloor").document().setData(from: userFloor)
-            }
-            catch {
-                print(error)
-            }
-        }
-    }
-    
-    /// Read userFloor
-    /// 가장 최근의 UserFloor 데이터를 가져옵니다.
-    func readRecentUserFloor() async throws -> UserFloor? {
-        guard let userId = self.getCurrentUserId() else {return nil}
-        
-        let querySnapshot = try await refUserInfo.document(userId).collection("UserFloor").order(by: "date", descending: true).limit(to:5).getDocuments()
-        guard let firstDocument = querySnapshot.documents.first else {return nil}
-        let documentId = firstDocument.documentID
-        var userFloor = try firstDocument.data(as: UserFloor.self)
-        userFloor.id = documentId
-
-        print("최근 유저층수 문서id: \(userFloor.id ?? "")")
-        
-        return userFloor
-    }
-    
-    /// DB의 UserFloor 데이터를 업데이트 합니다.
-    func updateUserFloor(oldData: UserFloor ,newData: UserFloor) async throws {
-        guard let userId = getCurrentUserId() else {return}
-        
-//        let userFloor = try await self.readRecentUserFloor()
-        guard let userFloorId = oldData.id else {return}
-        
-        try await self.refUserInfo.document(userId).collection("UserFloor").document(userFloorId).updateData([
-            "dailyFloors" : newData.dailyFloors,
-            "totalFloors" : newData.totalFloors,
-            "date" : newData.date
-        ])
-    }
-}
-
 
 // MARK: - LogIn
 extension FirebaseManager {
@@ -182,10 +136,11 @@ extension FirebaseManager {
             let userFloor = UserFloor(dailyFloors: 0, totalFloors: 0, date: now)
             self.createUserFloor(userFloor: userFloor)
             
-            // 유저디폴트에 입력
+            // 유저디폴트에 floors 입력
             guard let userFloorFromDB = try await self.readRecentUserFloor() else {return}
             self.saveDataToUserDefaults(userFloorFromDB)
-
+            
+            self.createUserStage()
             self.signUpState = .afterSignUp
         }
     }
@@ -207,3 +162,93 @@ extension FirebaseManager {
         return result
     }
 }
+
+
+
+// MARK: - Floor data 계산 CRUD
+extension FirebaseManager {
+    /// Create userFloor: UserFloor row를 db에 생성합니다.
+    /// Parameter userFloor: UserFloor 모델 객체
+    func createUserFloor(userFloor: UserFloor) {
+        if let userId = self.getCurrentUserId(){
+            do {
+                try refUserInfo.document(userId).collection("UserFloor").document().setData(from: userFloor)
+            }
+            catch {
+                print(error)
+            }
+        }
+    }
+    
+    /// Read userFloor
+    /// 가장 최근의 UserFloor 데이터를 가져옵니다.
+    func readRecentUserFloor() async throws -> UserFloor? {
+        guard let userId = self.getCurrentUserId() else {return nil}
+        
+        let querySnapshot = try await refUserInfo.document(userId).collection("UserFloor").order(by: "date", descending: true).limit(to:5).getDocuments()
+        guard let firstDocument = querySnapshot.documents.first else {return nil}
+        let documentId = firstDocument.documentID
+        var userFloor = try firstDocument.data(as: UserFloor.self)
+        userFloor.id = documentId
+
+        print("최근 유저층수 문서id: \(userFloor.id ?? "")")
+        
+        return userFloor
+    }
+    
+    /// DB의 UserFloor 데이터를 업데이트 합니다.
+    func updateUserFloor(oldData: UserFloor ,newData: UserFloor) async throws {
+        guard let userId = getCurrentUserId() else {return}
+        
+//        let userFloor = try await self.readRecentUserFloor()
+        guard let userFloorId = oldData.id else {return}
+        
+        try await self.refUserInfo.document(userId).collection("UserFloor").document(userFloorId).updateData([
+            "dailyFloors" : newData.dailyFloors,
+            "totalFloors" : newData.totalFloors,
+            "date" : newData.date
+        ])
+    }
+}
+
+
+// MARK: - Stage
+extension FirebaseManager {
+    /// UserStage를 데이터베이스에 생성합니다. (회원가입시 처음에만 생성할 예정)
+    func createUserStage() {
+        let userStage = UserStage(currentStage: 0, currentStageFloors: 0)
+        guard let userId = self.getCurrentUserId() else {return}
+        do {
+            try refUserInfo.document(userId).collection("UserStage").document().setData(from: userStage)
+        }
+        catch {
+            print(error)
+        }
+    }
+    
+    /// UserStage를 데이터베이스에서 불러와 리턴합니다.
+    func readUserStage() async throws -> UserStage?{
+        guard let userId = self.getCurrentUserId() else {return nil}
+        
+        let querySnapshot = try await refUserInfo.document(userId).collection("UserStage").getDocuments()
+        guard let document = querySnapshot.documents.first else {return nil}
+        let documentId = document.documentID
+        var userStage = try document.data(as: UserStage.self)
+        userStage.id = documentId
+        
+        return userStage
+    }
+    
+    /// newData 값으로 데이터베이스의 데이터를 업데이트 합니다.
+    func updateUserStage(_ newData: UserStage) async throws {
+        guard let userId = self.getCurrentUserId() else {return}
+        let oldData = try await self.readUserStage()
+        guard let documentId = oldData?.id else {return}
+        
+        try await self.refUserInfo.document(userId).collection("UserStage").document(documentId).updateData([
+            "currentStage" : newData.currentStage,
+            "currentStageFloors": newData.currentStageFloors,
+        ])
+    }
+}
+

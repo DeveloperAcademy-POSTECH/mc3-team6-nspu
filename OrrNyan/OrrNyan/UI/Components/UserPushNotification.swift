@@ -14,6 +14,8 @@ class UserPushNotification: ObservableObject {
     static let instance = UserPushNotification()
     private init() {}
     
+    @State var user : UserInfo? = User.instance.userInfo
+    
     //save last alert time
     var lastSetTime: Date? = nil
     
