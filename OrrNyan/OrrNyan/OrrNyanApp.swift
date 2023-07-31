@@ -14,19 +14,23 @@ struct OrrNyanApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var firebaseManager = FirebaseManager()
     @StateObject var stageViewModel = StageViewModel()
+	@StateObject var isFirstLaunch = AppFirstLaunch()
     
     var body: some Scene {
         WindowGroup {
-//			LoginView()
-//			CreateNameView()
-//			MyPageView()
-//			StageView()
-//				.environmentObject(StageViewModel())
-			
-//			SettingPopupView()
-						StageView()
-							.environmentObject(firebaseManager)
-							.environmentObject(stageViewModel)
+            ContentView()
+                .environmentObject(firebaseManager)
+                .environmentObject(stageViewModel)
+				.environmentObject(isFirstLaunch)
+                .onAppear(){
+                    Task {
+                        // userInfo
+                        try await firebaseManager.fetchUserInfo()
+                        // userFloor
+                        User.instance.userFloor = User.instance.fetchFloorsFromUserDefaults()
+                        User.instance.updateFloorsData()
+                    }
+                }
         }
     }
 }

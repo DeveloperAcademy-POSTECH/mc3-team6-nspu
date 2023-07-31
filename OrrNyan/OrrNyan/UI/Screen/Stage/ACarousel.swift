@@ -15,6 +15,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
     @StateObject
     private var viewModel: ACarouselViewModel<Data, ID>
     @EnvironmentObject var stageViewModel: StageViewModel
+	@EnvironmentObject var appFirstLaunch : AppFirstLaunch
 
     // ACarousel에 들어갈 Content(View)를 content에 저장합니다.
     private let content: (Data.Element) -> Content
@@ -24,6 +25,8 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
     let catRotationDegree: [Double] = [270, 270, 271]
     let cat3DRotationDegree: [Double] = [180, 0, 0]
     var nameSpace: Namespace.ID
+	
+	@State var test : Bool = true
     @State var cancellables = Set<AnyCancellable>()
 
     public var body: some View {
@@ -44,25 +47,42 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .scaledToFill()
                                     .scaleEffect(x: 1, y: viewModel.itemScaling(element), anchor: .bottom)
                                     .grayscale(viewModel.grayScaling(element))
-                                    .blur(radius: viewModel.blur(element))
+                                    .blur(radius: viewModel.stageBlur(element))
                                     .opacity(viewModel.opacityScaling(element))
                                     .matchedGeometryEffect(id: "StageStImage0\(tempElement.index + 1)", in: nameSpace)
                                     .overlay {
-										//out of range error 잡아주기
-										if tempElement.index < stageStSvgs.count {
-											stageStSvgs[tempElement.index]
-												.foregroundColor(.blue.opacity(0.01))
-												.onTapGesture {
-													if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
+                                        // out of range error 잡아주기
+                                        if tempElement.index < stageStSvgs.count {
+                                            stageStSvgs[tempElement.index]
+                                                .foregroundColor(.blue.opacity(0.01))
+                                                .onTapGesture {
+                                                    if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index {
+                                                        stageViewModel.selectedIndex = tempElement.index
+                                                        withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
+                                                            stageViewModel.isMainDisplayed = true
+                                                        }
+                                                    }
+                                                }
+											//앱 처음 실행 시, currentStage 자동 클릭 시키기
+												.onAppear {
+													if UserDefaults.standard.object(forKey: "focusedStageIndex") as! Int == tempElement.index && userStageTestInstance.currentStage > tempElement.index && appFirstLaunch.isFirstlaunch {
 														stageViewModel.selectedIndex = tempElement.index
 														withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6)) {
 															stageViewModel.isMainDisplayed = true
 														}
 													}
 												}
-										}
+                                        }
                                     }
                                     .frame(width: viewModel.itemWidth)
+                                Image("Flag")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: UIScreen.width * 0.1)
+                                    .offset(x: UIScreen.width * 0.046, y: -UIScreen.height * 0.275 * viewModel.flagOffsetScaling(element))
+                                    .zIndex(-10)
+                                    .opacity(viewModel.flagOpacityScaling(element))
+                                    .blur(radius: viewModel.stageBlur(element))
                                 Image(systemName: "lock.fill")
                                     .foregroundColor(.White300)
                                     .font(.system(size: 30))
@@ -75,7 +95,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                         .frame(width: UIScreen.width * 0.1, height: UIScreen.width * 0.1)
                                         .offset(x: UIScreen.width * lottieOffset[tempElement.index].0, y: UIScreen.height * lottieOffset[tempElement.index].1)
                                         .opacity(viewModel.catOpacityScaling(element))
-                                        .blur(radius: viewModel.blur(element))
+                                        .blur(radius: viewModel.stageBlur(element))
 
                                     VStack(spacing: 2) {
                                         Image(systemName: "pawprint.fill")
@@ -85,7 +105,7 @@ public struct ACarousel<Data, ID, Content>: View where Data: RandomAccessCollect
                                     .font(.system(size: 11))
                                     .offset(x: UIScreen.width * pawOffset[tempElement.index].0, y: UIScreen.height * pawOffset[tempElement.index].1)
                                     .opacity(viewModel.catOpacityScaling(element))
-                                    .blur(radius: viewModel.blur(element))
+                                    .blur(radius: viewModel.stageBlur(element))
                                 }
                             }
                             .padding(.top, UIScreen.height * 0.1)
