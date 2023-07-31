@@ -81,17 +81,23 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data: RandomAccessCol
     var viewSize: CGSize = .init(width: UIScreen.width, height: UIScreen.height)
 
     /// reduce active index by 1
-    func reduceActiveIndex() {
+    func decreaseFocusedIndex() {
         focusedIndex = max(0, focusedIndex - 1)
         setUserDefaultsFocusedIndex(index: focusedIndex)
     }
 
     /// increase active index by 1
-    func increaseActiveIndex() {
+    func increaseFocusedIndex() {
         focusedIndex = min(focusedIndex + 1, data.count - 1)
         setUserDefaultsFocusedIndex(index: focusedIndex)
     }
 
+    /// syuc focused index with currentStage
+    func syncFocusedIndex(){
+        focusedIndex = userStageTestInstance.currentStage - 1
+        setUserDefaultsFocusedIndex(index: focusedIndex)
+    }
+    
     func setUserDefaultsFocusedIndex(index: Int) {
         UserDefaults.standard.set(index, forKey: "focusedStageIndex")
     }
@@ -413,11 +419,11 @@ extension ACarouselViewModel {
 
         // 이전으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width > dragThreshold {
-            reduceActiveIndex()
+            decreaseFocusedIndex()
         }
         // 다음 방향으로 드래그할때 && 한계점 넘었을 때
         if value.translation.width < -dragThreshold {
-            increaseActiveIndex()
+            increaseFocusedIndex()
         }
         _indexScaling = 1
         // activeIndex가 음수가 되는 것 방지, activeIndex가 최댓값을 넘어가는 것 방지
