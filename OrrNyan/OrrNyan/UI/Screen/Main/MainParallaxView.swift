@@ -31,8 +31,6 @@ struct MainParallaxView: View {
 				.offset(x: overlayOffsetX(offsetLimit: 600, value: 80), y:overlayOffsetY(offsetLimit: 0, value: 0))
 
             //랜드마크 이미지
-			
-			
             Image("StageSt0\(stageViewModel.selectedIndex + 1)")
                 .resizable()
                 .matchedGeometryEffect(id: "StageStImage0\(stageViewModel.selectedIndex + 1)", in: nameSpace)
@@ -53,7 +51,7 @@ struct MainParallaxView: View {
 				}
 			
 			Button {
-				withAnimation(.spring(response: 3, dampingFraction: 0.8)){
+                withAnimation(.spring(response: 4, dampingFraction: 1.0)){
 					stageStructureHeight = .zero
 					
 						//버튼 눌렀을때, 고양이 높이 값을 수정하는 코드는 여기입니다!
@@ -109,9 +107,9 @@ struct FrameUpAnimation: View {
 				.resizable()
         }
 		
-        .scaledToFit()
+        .scaledToFill()
 		.frame(height: UIScreen.height)
-		.border(.blue)
+//		.border(.blue)
         .offset(y: topImageOffset)
         .onAppear {
             withAnimation(Animation.spring(response: 1.0, dampingFraction: 0.92)) {
@@ -159,14 +157,14 @@ struct BackOpacityAnimation:View{
         ZStack{
             Image("StageBg0\(stageViewModel.selectedIndex + 1)")
 				.resizable()
-				.aspectRatio(contentMode: .fit)
+				.aspectRatio(contentMode: .fill)
 				.frame(height: UIScreen.height)
             Image("StageEm0\(stageViewModel.selectedIndex + 1)_04")
-				.frame(height: UIScreen.height)
-				.aspectRatio(contentMode: .fit)
-				.frame(height: UIScreen.height)
+//				.frame(height: UIScreen.height)
+                .aspectRatio(contentMode: .fit)
+                .ignoresSafeArea()
         }
-        .ignoresSafeArea()
+        .border(.black)
         .opacity(opacity)
         .onAppear{
             withAnimation(Animation.spring(response:1.5, dampingFraction: 0.92)){

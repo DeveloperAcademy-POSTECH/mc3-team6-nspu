@@ -14,10 +14,11 @@ struct MainView: View {
     var body: some View {
         ZStack {
 			MainParallaxView(nameSpace: nameSpace)
+
             VStack {
                 MainTopView()
                     .ignoresSafeArea()
-                    .border(.red)
+//                    .border(.red)
                 Spacer()
                 MainBottomView()
                     .onTapGesture {

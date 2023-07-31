@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct FloorUpdatedAlert: View {
-	@State var isFloorUpdated : Bool = false
+	@State var isFloorUpdated : Bool = false // 여기가 업데이트 된 계단 가져옴
+//    @State var userFloor = User.instance.userInfo
+//    @State var stageInfo =  User.instance.userFloor//: StageInfo? = nil
+//    @State var stages = Stages()
     var body: some View {
 		
 		VStack(spacing: 0){
